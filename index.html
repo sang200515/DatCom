@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Gọi Món</title>
+    <title>Menu Gọi Món - Nhiều Món</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -11,6 +11,7 @@
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
             --border-color: #e2e8f0;
+            --success-color: #2ecc71;
         }
 
         body {
@@ -25,25 +26,26 @@
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.11fr 1.29fr;
             gap: 20px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 850px) {
             .container {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Common Section Styling */
         .section {
             background: var(--card-bg);
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
         }
 
         h2 {
@@ -54,7 +56,7 @@
             font-size: 1.3rem;
         }
 
-        /* Section 1: Selection Controls */
+        /* Section 1: Controls */
         .search-box {
             width: 100%;
             padding: 12px;
@@ -71,7 +73,7 @@
         }
 
         .menu-list {
-            max-height: 250px;
+            max-height: 200px;
             overflow-y: auto;
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -101,7 +103,7 @@
         }
 
         .options-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .options-group label {
@@ -127,10 +129,6 @@
             font-size: 1.1rem;
         }
 
-        .btn-qty:hover {
-            background: #cbd5e1e0;
-        }
-
         #quantity-val {
             font-size: 1.2rem;
             font-weight: bold;
@@ -143,43 +141,87 @@
             padding: 10px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            resize: vertical;
+            resize: none;
             box-sizing: border-box;
         }
 
-        /* Section 2: Results Result */
-        .result-placeholder {
+        .btn-add {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: auto;
+        }
+
+        .btn-add:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-add:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        /* Section 2: Order Table */
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .order-table th, .order-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .order-table th {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cart-placeholder {
             color: #a0aec0;
             text-align: center;
             padding: 40px 0;
             font-style: italic;
         }
 
-        .result-details {
-            display: none;
-        }
-
-        .result-row {
+        .total-section {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 2px dashed var(--border-color);
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 1.05rem;
-        }
-
-        .result-label {
-            color: #718096;
-        }
-
-        .result-value {
-            font-weight: 600;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: bold;
         }
 
         .total-price {
-            border-top: 2px dashed var(--border-color);
-            margin-top: 15px;
-            padding-top: 15px;
-            font-size: 1.3rem;
             color: var(--accent-color);
+        }
+
+        .item-note-text {
+            display: block;
+            font-size: 0.8rem;
+            color: #718096;
+            font-style: italic;
         }
     </style>
 </head>
@@ -190,7 +232,6 @@
         <h2>1. Chọn Món & Tùy Chọn</h2>
         
         <input type="text" id="search" class="search-box" placeholder="Nhập tên món ăn cần tìm..." oninput="filterMenu()">
-        
         <div class="menu-list" id="menu-container"></div>
 
         <div class="options-group">
@@ -203,61 +244,58 @@
         </div>
 
         <div class="options-group">
-            <label for="note">Ghi chú (Tùy chọn):</label>
-            <textarea id="note" class="note-box" rows="2" placeholder="Ví dụ: Ít cơm, nhiều nước sốt..." oninput="updateResult()"></textarea>
+            <label for="note">Ghi chú:</label>
+            <textarea id="note" class="note-box" rows="2" placeholder="Ví dụ: Ít cơm, nhiều sốt..."></textarea>
         </div>
+
+        <button id="add-btn" class="btn-add" onclick="addToCart()" disabled>Thêm vào đơn hàng</button>
     </div>
 
     <div class="section">
         <h2>2. Thông Tin Đơn Hàng</h2>
         
-        <div id="placeholder" class="result-placeholder">
-            Vui lòng chọn một món ăn ở Section 1 để xem thông tin.
+        <div id="cart-placeholder" class="cart-placeholder">
+            Đơn hàng trống. Vui lòng thêm món ở Section 1.
         </div>
 
-        <div id="result-content" class="result-details">
-            <div class="result-row">
-                <span class="result-label">Tên món:</span>
-                <span class="result-value" id="res-name">-</span>
-            </div>
-            <div class="result-row">
-                <span class="result-label">Đơn giá:</span>
-                <span class="result-value" id="res-price">0 đ</span>
-            </div>
-            <div class="result-row">
-                <span class="result-label">Số lượng:</span>
-                <span class="result-value" id="res-qty">1</span>
-            </div>
-            <div class="result-row">
-                <span class="result-label">Ghi chú:</span>
-                <span class="result-value" id="res-note" style="font-weight: normal; font-style: italic;">Không có</span>
-            </div>
-            <div class="result-row total-price">
-                <span>Tổng tiền:</span>
-                <span class="result-value" id="res-total">0 đ</span>
-            </div>
+        <table id="order-table" class="order-table" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Món ăn</th>
+                    <th style="text-align: center;">SL</th>
+                    <th style="text-align: right;">Thành tiền</th>
+                    <th style="text-align: center;">Xóa</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                </tbody>
+        </table>
+
+        <div class="total-section">
+            <span>Tổng đơn hàng:</span>
+            <span class="total-price" id="cart-total">0 đ</span>
         </div>
     </div>
 </div>
 
 <script>
-    // DANH SÁCH MÓN ĂN (JSON ARRAY)
-    // Bạn có thể copy/paste thêm các item mới trực tiếp vào array này
+    // Dữ liệu gốc
     const menuData = [
         { id: 1, name: "Cá điêu hồng chiên", price: 45000 },
         { id: 2, name: "Cá đối chiên", price: 45000 }
     ];
 
+    // State của ứng dụng
     let selectedItem = null;
     let currentQuantity = 1;
+    let cart = [];
 
-    // Render danh sách món ăn ban đầu
     function renderMenu(items) {
         const container = document.getElementById('menu-container');
         container.innerHTML = '';
         
         if(items.length === 0) {
-            container.innerHTML = '<div style="padding:15px; color:#999; text-align:center;">Không tìm thấy món ăn</div>';
+            container.innerHTML = '<div style="padding:15px; color:#999; text-align:center;">Không tìm thấy món</div>';
             return;
         }
 
@@ -270,55 +308,109 @@
         });
     }
 
-    // Bộ lọc tìm kiếm món ăn
     function filterMenu() {
         const keyword = document.getElementById('search').value.toLowerCase().trim();
-        // Convert tiếng Việt có dấu thành không dấu đơn giản (Optional nâng cấp sau nếu cần)
         const filtered = menuData.filter(item => item.name.toLowerCase().includes(keyword));
         renderMenu(filtered);
     }
 
-    // Chọn món ăn từ list
     function selectItem(item) {
         selectedItem = item;
-        // Re-render để highlight item được chọn
+        document.getElementById('add-btn').disabled = false;
         filterMenu();
-        updateResult();
     }
 
-    // Tăng giảm số lượng
     function updateQuantity(amount) {
         currentQuantity += amount;
         if (currentQuantity < 1) currentQuantity = 1;
         document.getElementById('quantity-val').innerText = currentQuantity;
-        updateResult();
     }
 
-    // Cập nhật kết quả hiển thị ở Section 2
-    function updateResult() {
-        const placeholder = document.getElementById('placeholder');
-        const content = document.getElementById('result-content');
+    // Logic thêm món vào giỏ hàng (Section 2)
+    function addToCart() {
+        if (!selectedItem) return;
 
-        if (!selectedItem) {
+        const note = document.getElementById('note').value.trim();
+        
+        // Kiểm tra xem món trùng tên + trùng ghi chú đã có trong giỏ chưa
+        const existingIndex = cart.findIndex(cartItem => 
+            cartItem.id === selectedItem.id && cartItem.note === note
+        );
+
+        if (existingIndex > -1) {
+            // Nếu trùng hoàn toàn thì cộng dồn số lượng
+            cart[existingIndex].quantity += currentQuantity;
+        } else {
+            // Nếu mới hoặc khác ghi chú thì tạo dòng mới
+            cart.push({
+                id: selectedItem.id,
+                name: selectedItem.name,
+                price: selectedItem.price,
+                quantity: currentQuantity,
+                note: note
+            });
+        }
+
+        // Reset form ở Section 1 về trạng thái ban đầu
+        selectedItem = null;
+        currentQuantity = 1;
+        document.getElementById('quantity-val').innerText = '1';
+        document.getElementById('note').value = '';
+        document.getElementById('add-btn').disabled = true;
+        
+        filterMenu();
+        renderCart();
+    }
+
+    // Xóa món khỏi giỏ hàng
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        renderCart();
+    }
+
+    // Render toàn bộ Section 2 dựa trên mảng cart
+    function renderCart() {
+        const placeholder = document.getElementById('cart-placeholder');
+        const table = document.getElementById('order-table');
+        const tbody = document.getElementById('cart-items');
+        const totalSpan = document.getElementById('cart-total');
+
+        if (cart.length === 0) {
             placeholder.style.display = 'block';
-            content.style.display = 'none';
+            table.style.display = 'none';
+            totalSpan.innerText = '0 đ';
             return;
         }
 
         placeholder.style.display = 'none';
-        content.style.display = 'block';
+        table.style.display = 'table';
+        tbody.innerHTML = '';
 
-        const note = document.getElementById('note').value.trim();
-        const total = selectedItem.price * currentQuantity;
+        let totalOrderPrice = 0;
 
-        document.getElementById('res-name').innerText = selectedItem.name;
-        document.getElementById('res-price').innerText = `${selectedItem.price.toLocaleString('vi-VN')} đ`;
-        document.getElementById('res-qty').innerText = currentQuantity;
-        document.getElementById('res-note').innerText = note ? note : "Không có";
-        document.getElementById('res-total').innerText = `${total.toLocaleString('vi-VN')} đ`;
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            totalOrderPrice += itemTotal;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>
+                    <strong>${item.name}</strong>
+                    ${item.note ? `<span class="item-note-text">- Ghi chú: ${item.note}</span>` : ''}
+                </td>
+                <td style="text-align: center;">${item.quantity}</td>
+                <td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+                <td style="text-align: center;">
+                    <button class="btn-delete" onclick="removeFromCart(${index})">✕</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        totalSpan.innerText = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
     }
 
-    // Khởi chạy lần đầu
+    // Chạy lần đầu
     renderMenu(menuData);
 </script>
 

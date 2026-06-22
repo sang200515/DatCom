@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Gọi Món - Chốt Đơn Ra Ảnh</title>
+    <title>Menu Gọi Món - Chốt Đơn Chuyên Nghiệp</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -108,10 +108,10 @@
         .badge-foodonly { background-color: #ffeede; color: #d35400; }
         .badge-brownrice { background-color: #eafaf1; color: #27ae60; }
 
-        /* Wrapper riêng phục vụ việc chụp ảnh để đảm bảo ảnh có background trắng đẹp */
+        /* Wrapper phục vụ việc chụp ảnh để đảm bảo ảnh có nền trắng tinh tế */
         .capture-area {
             background: #ffffff;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
         }
 
@@ -197,10 +197,8 @@
         </div>
     </div>
 
-    <!-- SECTION 3: CHECKOUT (Gói gọn vùng capture ảnh) -->
     <div class="section full-width" id="section-checkout">
         
-        <!-- Bao bọc vùng này để export ảnh nguyên vẹn không bao gồm cụm Button -->
         <div id="print-area" class="capture-area">
             <h2 id="checkout-title" style="border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px;">Menu Thứ ...</h2>
             
@@ -210,15 +208,14 @@
                 <thead>
                     <tr>
                         <th>Món ăn</th>
-                        <th style="text-align: center; width: 100px;">Số lượng</th>
-                        <th style="text-align: right; width: 120px;">Thành tiền</th>
+                        <th style="text-align: center; width: 120px;">Số lượng</th>
+                        <th style="text-align: right; width: 140px;">Thành tiền</th>
                     </tr>
                 </thead>
                 <tbody id="checkout-items"></tbody>
             </table>
         </div>
 
-        <!-- Nhóm nút hành động bên ngoài vùng capture -->
         <div class="action-group" id="action-buttons" style="display: none;">
             <button id="share-img-btn" class="btn-action btn-share" onclick="shareOrderAsImage()">
                 📸 Chia sẻ file ẢNH qua ShareSheet
@@ -231,6 +228,7 @@
 </div>
 
 <script>
+    // Khởi tạo dữ liệu thực tế của bạn từ menu Excel
     const menuData = [
         { id: 3, name: "Cá ngừ kho thơm", price: 45000 },
         { id: 6, name: "Cá điêu hồng chiên", price: 45000 },
@@ -243,13 +241,14 @@
 
     let selectedItem = null; let currentQuantity = 1; let cart = [];
 
+    // Tự động set Title theo Thứ và ngày thực tế (Ví dụ: Thứ 2 (23/06))
     function initTitleDate() {
         const days = ["Chủ Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
         const today = new Date();
         const dayName = days[today.getDay()];
         const dd = String(today.getDate()).padStart(2, '0');
         const mm = String(today.getMonth() + 1).padStart(2, '0');
-        document.getElementById('checkout-title').innerText = `${dayName} (${dd}/${mm})`;
+        document.getElementById('checkout-title').innerText = `Menu ${dayName} (${dd}/${mm})`;
     }
 
     function renderMenu(items) {
@@ -297,19 +296,19 @@
 
     function removeFromCart(index) { cart.splice(index, 1); renderCart(); }
 
+    // RENDER ĐỒNG THỜI SECTION 2 VÀ SECTION 3 THEO BỐ CỤC MỚI
     function renderCart() {
         const placeholder2 = document.getElementById('cart-placeholder'); const table2 = document.getElementById('order-table'); const tbody2 = document.getElementById('cart-items'); const totalSpan2 = document.getElementById('cart-total');
-        const placeholder3 = document.getElementById('checkout-placeholder'); const table3 = document.getElementById('checkout-table'); const tbody3 = document.getElementById('checkout-items'); const totalSpan3 = document.getElementById('checkout-total');
-        const totalQtyCount = document.getElementById('total-qty-count'); const totalGroup3 = document.getElementById('checkout-total-group'); const actionButtons = document.getElementById('action-buttons');
+        const placeholder3 = document.getElementById('checkout-placeholder'); const table3 = document.getElementById('checkout-table'); const tbody3 = document.getElementById('checkout-items'); const actionButtons = document.getElementById('action-buttons');
 
         if (cart.length === 0) {
             placeholder2.style.display = 'block'; table2.style.display = 'none'; totalSpan2.innerText = '0 đ';
-            placeholder3.style.display = 'block'; table3.style.display = 'none'; totalGroup3.style.display = 'none'; actionButtons.style.display = 'none';
+            placeholder3.style.display = 'block'; table3.style.display = 'none'; actionButtons.style.display = 'none';
             return;
         }
 
         placeholder2.style.display = 'none'; table2.style.display = 'table';
-        placeholder3.style.display = 'none'; table3.style.display = 'table'; totalGroup3.style.display = 'flex'; actionButtons.style.display = 'grid';
+        placeholder3.style.display = 'none'; table3.style.display = 'table'; actionButtons.style.display = 'grid';
 
         tbody2.innerHTML = ''; tbody3.innerHTML = '';
         let totalOrderPrice = 0; let totalQuantity = 0;
@@ -325,26 +324,42 @@
                 ${showBadge || showNote ? `
                     <div class="item-meta-text">
                         ${showBadge ? `<span class="${item.badgeClass}">${item.optionLabel}</span>` : ''}
-                        ${showNote ? `<span style="font-style: italic; color:#718096; ${showBadge ? 'margin-left: 5px;' : ''}">- GC: ${item.textNote}</span>` : ''}
+                        ${showNote ? `<span style="font-style: italic; color:#718096; ${showBadge ? 'margin-left: 5px;' : ''}">- Ghi chú: ${item.textNote}</span>` : ''}
                     </div>
                 ` : ''}
             `;
 
+            // Row cho mục sửa đổi (Section 2)
             const tr2 = document.createElement('tr');
-            tr2.innerHTML = `<td>幕<strong>${item.name}</strong>${metaHTML}</td><td style="text-align: center; font-weight: 600;">${item.quantity}</td><td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td><td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>`;
+            tr2.innerHTML = `<td><strong>${item.name}</strong>${metaHTML}</td><td style="text-align: center; font-weight: 600;">${item.quantity}</td><td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td><td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>`;
             tbody2.appendChild(tr2);
 
+            // Row dữ liệu cho mục chốt đơn phiếu ảnh (Section 3)
             const tr3 = document.createElement('tr');
-            tr3.innerHTML = `<td><strong>${item.name}</strong>${metaHTML}</td><td style="text-align: center; font-weight: 600;">${item.quantity} phần</td><td style="text-align: right; font-weight: 600; color: var(--primary-color);">${itemTotal.toLocaleString('vi-VN')} đ</td>`;
+            tr3.innerHTML = `
+                <td><strong>${item.name}</strong>${metaHTML}</td>
+                <td style="text-align: center; font-weight: 500; color: #4a5568;">${item.quantity} phần</td>
+                <td style="text-align: right; font-weight: 600; color: #2c3e50;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+            `;
             tbody3.appendChild(tr3);
         });
 
+        // Đổ tổng giá tạm tính lên Section 2
         totalSpan2.innerText = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
-        totalSpan3.innerText = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
-        totalQtyCount.innerText = totalQuantity;
+
+        // TẠO HÀNG TỔNG CỘNG GỘP THẲNG VÀO TABLE SECTION 3 CHO THẲNG HÀNG
+        const totalRow3 = document.createElement('tr');
+        totalRow3.style.backgroundColor = '#f8fafc'; 
+        totalRow3.style.borderTop = '2px dashed var(--border-color)';
+        totalRow3.innerHTML = `
+            <td style="text-align: left; font-weight: bold; padding: 14px 10px; color: var(--primary-color);">Tổng cộng</td>
+            <td style="text-align: center; font-weight: bold; font-size: 1.1rem; color: var(--primary-color);">${totalQuantity} phần</td>
+            <td style="text-align: right; font-weight: bold; font-size: 1.1rem; color: var(--accent-color);">${totalOrderPrice.toLocaleString('vi-VN')} đ</td>
+        `;
+        tbody3.appendChild(totalRow3);
     }
 
-    // LOGIC CHỤP GIAO DIỆN VÀ CHIA SẺ DẠNG FILE ẢNH (.PNG)
+    // XỬ LÝ CHỤP ẢNH VÀ CHIA SẺ FILE QUA NATIVE SHARESHEET
     async function shareOrderAsImage() {
         if (cart.length === 0) return;
 
@@ -357,24 +372,17 @@
             const printArea = document.getElementById('print-area');
             const titleText = document.getElementById('checkout-title').innerText;
 
-            // Sử dụng html2canvas để render element thành <canvas>
             const canvas = await html2canvas(printArea, {
-                scale: 2, // Nhân đôi độ phân giải để ảnh sắc nét trên màn hình Retina/Mobile
+                scale: 2, // Đảm bảo chất lượng ảnh căng nét khi gửi qua ứng dụng chat
                 backgroundColor: '#ffffff',
                 useCORS: true
             });
 
-            // Chuyển canvas thành file nhị phân (Blob) định dạng PNG
             canvas.toBlob(async (blob) => {
-                if (!blob) {
-                    alert("Không thể tạo file ảnh.");
-                    return;
-                }
+                if (!blob) { alert("Không thể tạo file ảnh."); return; }
 
-                // Đóng gói blob thành một đối tượng File có tên cụ thể để Sharesheet hiểu
                 const file = new File([blob], `Menu_${titleText.replace(/[\s()\/]/g, '_')}.png`, { type: 'image/png' });
 
-                // Kiểm tra xem trình duyệt hiện tại có hỗ trợ share FILE hay không
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({
                         files: [file],
@@ -382,23 +390,21 @@
                         text: `Gửi danh sách đơn hàng ${titleText}`
                     });
                 } else {
-                    // Fallback tải xuống nếu trình duyệt (như Chrome cũ trên PC) không cho share File trực tiếp
+                    // Fallback download tự động dành cho PC/Trình duyệt không hỗ trợ share file trực tiếp
                     const a = document.createElement('a');
                     a.href = URL.createObjectURL(blob);
                     a.download = `Menu_${titleText}.png`;
                     a.click();
-                    alert("Trình duyệt không hỗ trợ Share file ảnh trực tiếp. Hệ thống đã tự động TẢI FILE ẢNH về máy của bạn!");
+                    alert("Hệ thống đã tự động TẢI FILE ẢNH về thiết bị do trình duyệt chưa hỗ trợ Share file ảnh trực tiếp!");
                 }
 
-                shareBtn.innerText = originalText;
-                shareBtn.disabled = false;
+                shareBtn.innerText = originalText; shareBtn.disabled = false;
             }, 'image/png');
 
         } catch (error) {
             console.error("Lỗi khi tạo và share ảnh:", error);
             alert("Có lỗi xảy ra khi xuất ảnh.");
-            shareBtn.innerText = originalText;
-            shareBtn.disabled = false;
+            shareBtn.innerText = originalText; shareBtn.disabled = false;
         }
     }
 

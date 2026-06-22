@@ -470,15 +470,26 @@
             const itemTotal = item.calculatedPrice * item.quantity;
             totalOrderPrice += itemTotal;
 
+            // LOGIC ẨN/HIỆN THEO YÊU CẦU:
+            // 1 & 2. Chỉ hiện badge option khi KHÁC "Bình thường" (tức là chỉ hiện cho Chỉ lấy đồ ăn / Gạo lức)
+            const showBadge = item.optionLabel !== "Bình thường";
+            
+            // 3. Chỉ hiện note text khi user THỰC SỰ nhập nội dung vào ô note
+            const showNote = item.textNote && item.textNote.length > 0;
+
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>
                     <strong>${item.name}</strong>
-                    <div class="item-meta-text">
-                        <span class="${item.badgeClass}">${item.optionLabel}</span>
-                        ${item.textNote ? `<span style="font-style: italic; color:#718096; margin-left: 5px;">- Gi chú: ${item.textNote}</span>` : ''}
-                    </div>
-                    <span style="font-size: 0.8rem; color: #a0aec0;">Đơn giá tính lại: ${item.calculatedPrice.toLocaleString('vi-VN')} đ</span>
+                    
+                    ${showBadge || showNote ? `
+                        <div class="item-meta-text">
+                            ${showBadge ? `<span class="${item.badgeClass}">${item.optionLabel}</span>` : ''}
+                            ${showNote ? `<span style="font-style: italic; color:#718096; ${showBadge ? 'margin-left: 5px;' : ''}">- Ghi chú: ${item.textNote}</span>` : ''}
+                        </div>
+                    ` : ''}
+                    
+                    ${showBadge ? `<span style="font-size: 0.8rem; color: #a0aec0; display: block; margin-top: 2px;">Đơn giá tính lại: ${item.calculatedPrice.toLocaleString('vi-VN')} đ</span>` : ''}
                 </td>
                 <td style="text-align: center; font-weight: 600;">${item.quantity}</td>
                 <td style="text-align: right; font-weight: 600; color: var(--primary-color);">${itemTotal.toLocaleString('vi-VN')} đ</td>

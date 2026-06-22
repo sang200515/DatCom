@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Gọi Món - Nhiều Món</title>
+    <title>Menu Gọi Món - Tùy Chọn Nâng Cao</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -26,9 +26,9 @@
 
         .container {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1150px;
             display: grid;
-            grid-template-columns: 1.11fr 1.29fr;
+            grid-template-columns: 1.1fr 1.3fr;
             gap: 20px;
         }
 
@@ -73,7 +73,7 @@
         }
 
         .menu-list {
-            max-height: 200px;
+            max-height: 180px;
             overflow-y: auto;
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -106,7 +106,7 @@
             margin-bottom: 15px;
         }
 
-        .options-group label {
+        .options-group label.group-title {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
@@ -136,13 +136,30 @@
             text-align: center;
         }
 
+        /* Radio options styling */
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .radio-option input {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
         .note-box {
             width: 100%;
-            padding: 10px;
+            padding: 8px 10px;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 6px;
             resize: none;
             box-sizing: border-box;
+            margin-top: 5px;
         }
 
         .btn-add {
@@ -155,7 +172,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: background 0.2s;
-            margin-top: auto;
+            margin-top: 10px;
         }
 
         .btn-add:hover {
@@ -217,12 +234,23 @@
             color: var(--accent-color);
         }
 
-        .item-note-text {
+        .item-meta-text {
             display: block;
             font-size: 0.8rem;
-            color: #718096;
-            font-style: italic;
+            color: #4a5568;
+            margin-top: 2px;
         }
+        .badge-option {
+            display: inline-block;
+            padding: 1px 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border-radius: 4px;
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+        .badge-foodonly { background-color: #ffeede; color: #d35400; }
+        .badge-brownrice { background-color: #eafaf1; color: #27ae60; }
     </style>
 </head>
 <body>
@@ -235,7 +263,7 @@
         <div class="menu-list" id="menu-container"></div>
 
         <div class="options-group">
-            <label>Số lượng:</label>
+            <label class="group-title">Số lượng:</label>
             <div class="quantity-control">
                 <button class="btn-qty" onclick="updateQuantity(-1)">-</button>
                 <span id="quantity-val">1</span>
@@ -244,8 +272,26 @@
         </div>
 
         <div class="options-group">
-            <label for="note">Ghi chú:</label>
-            <textarea id="note" class="note-box" rows="2" placeholder="Ví dụ: Ít cơm, nhiều sốt..."></textarea>
+            <label class="group-title">Tùy chọn món ăn:</label>
+            
+            <label class="radio-option">
+                <input type="radio" name="meal-option" value="normal" checked onchange="toggleCustomNote(true)">
+                <span>Bình thường (Cơm trắng)</span>
+            </label>
+            
+            <label class="radio-option">
+                <input type="radio" name="meal-option" value="food_only" onchange="toggleCustomNote(false)">
+                <span>Chỉ lấy đồ ăn <span style="color: #e74c3c; font-weight:500;">(-15.000 đ)</span></span>
+            </label>
+            
+            <label class="radio-option">
+                <input type="radio" name="meal-option" value="brown_rice" onchange="toggleCustomNote(false)">
+                <span>Lấy gạo lức <span style="color: #2ecc71; font-weight:500;">(+5.000 đ)</span></span>
+            </label>
+
+            <div id="custom-note-container">
+                <input type="text" id="custom-note" class="note-box" placeholder="Nhập ghi chú thêm nếu có (ví dụ: ít cơm, nhiều sốt...)">
+            </div>
         </div>
 
         <button id="add-btn" class="btn-add" onclick="addToCart()" disabled>Thêm vào đơn hàng</button>
@@ -279,13 +325,13 @@
 </div>
 
 <script>
-    // Dữ liệu gốc
+    // Dữ liệu món ăn gốc (JSON)
     const menuData = [
         { id: 1, name: "Cá điêu hồng chiên", price: 45000 },
         { id: 2, name: "Cá đối chiên", price: 45000 }
     ];
 
-    // State của ứng dụng
+    // State ứng dụng
     let selectedItem = null;
     let currentQuantity = 1;
     let cart = [];
@@ -326,49 +372,81 @@
         document.getElementById('quantity-val').innerText = currentQuantity;
     }
 
-    // Logic thêm món vào giỏ hàng (Section 2)
+    // Ẩn/Hiện/Reset ô ghi chú tùy theo radio button được chọn
+    function toggleCustomNote(show) {
+        const customNoteInput = document.getElementById('custom-note');
+        if(show) {
+            customNoteInput.disabled = false;
+            customNoteInput.style.opacity = "1";
+        } else {
+            customNoteInput.value = "";
+            customNoteInput.disabled = true;
+            customNoteInput.style.opacity = "0.5";
+        }
+    }
+
+    // Xử lý thêm món kèm biến động giá dựa trên option
     function addToCart() {
         if (!selectedItem) return;
 
-        const note = document.getElementById('note').value.trim();
-        
-        // Kiểm tra xem món trùng tên + trùng ghi chú đã có trong giỏ chưa
-        const existingIndex = cart.findIndex(cartItem => 
-            cartItem.id === selectedItem.id && cartItem.note === note
-        );
+        // Lấy option đang check
+        const optionRadio = document.querySelector('input[name="meal-option"]:checked').value;
+        let finalPrice = selectedItem.price;
+        let optionLabel = "Bình thường";
+        let badgeClass = "badge-option";
+        let textNote = "";
+
+        if (optionRadio === "food_only") {
+            finalPrice = selectedItem.price - 15000;
+            optionLabel = "Chỉ lấy đồ ăn";
+            badgeClass += " badge-foodonly";
+        } else if (optionRadio === "brown_rice") {
+            finalPrice = selectedItem.price + 5000;
+            optionLabel = "Gạo lức";
+            badgeClass += " badge-brownrice";
+        } else {
+            textNote = document.getElementById('custom-note').value.trim();
+        }
+
+        // Tạo chuỗi định danh duy nhất (Món ID + Loại Option + Text ghi chú) để gộp dòng chính xác
+        const cartItemId = `${selectedItem.id}_${optionRadio}_${textNote}`;
+
+        const existingIndex = cart.findIndex(cartItem => cartItem.cartItemId === cartItemId);
 
         if (existingIndex > -1) {
-            // Nếu trùng hoàn toàn thì cộng dồn số lượng
             cart[existingIndex].quantity += currentQuantity;
         } else {
-            // Nếu mới hoặc khác ghi chú thì tạo dòng mới
             cart.push({
+                cartItemId: cartItemId,
                 id: selectedItem.id,
                 name: selectedItem.name,
-                price: selectedItem.price,
+                calculatedPrice: finalPrice,
                 quantity: currentQuantity,
-                note: note
+                optionLabel: optionLabel,
+                badgeClass: badgeClass,
+                textNote: textNote
             });
         }
 
-        // Reset form ở Section 1 về trạng thái ban đầu
+        // Reset Section 1 về ban đầu
         selectedItem = null;
         currentQuantity = 1;
         document.getElementById('quantity-val').innerText = '1';
-        document.getElementById('note').value = '';
+        document.getElementById('custom-note').value = '';
+        document.getElementById('search').value = '';
+        document.querySelectorAll('input[name="meal-option"]')[0].checked = true; // reset về Bình thường
+        toggleCustomNote(true);
         document.getElementById('add-btn').disabled = true;
         
         filterMenu();
         renderCart();
     }
 
-    // Xóa món khỏi giỏ hàng
     function removeFromCart(index) {
         cart.splice(index, 1);
         renderCart();
     }
 
-    // Render toàn bộ Section 2 dựa trên mảng cart
     function renderCart() {
         const placeholder = document.getElementById('cart-placeholder');
         const table = document.getElementById('order-table');
@@ -389,17 +467,21 @@
         let totalOrderPrice = 0;
 
         cart.forEach((item, index) => {
-            const itemTotal = item.price * item.quantity;
+            const itemTotal = item.calculatedPrice * item.quantity;
             totalOrderPrice += itemTotal;
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>
                     <strong>${item.name}</strong>
-                    ${item.note ? `<span class="item-note-text">- Ghi chú: ${item.note}</span>` : ''}
+                    <div class="item-meta-text">
+                        <span class="${item.badgeClass}">${item.optionLabel}</span>
+                        ${item.textNote ? `<span style="font-style: italic; color:#718096; margin-left: 5px;">- Gi chú: ${item.textNote}</span>` : ''}
+                    </div>
+                    <span style="font-size: 0.8rem; color: #a0aec0;">Đơn giá tính lại: ${item.calculatedPrice.toLocaleString('vi-VN')} đ</span>
                 </td>
-                <td style="text-align: center;">${item.quantity}</td>
-                <td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+                <td style="text-align: center; font-weight: 600;">${item.quantity}</td>
+                <td style="text-align: right; font-weight: 600; color: var(--primary-color);">${itemTotal.toLocaleString('vi-VN')} đ</td>
                 <td style="text-align: center;">
                     <button class="btn-delete" onclick="removeFromCart(${index})">✕</button>
                 </td>
@@ -410,7 +492,7 @@
         totalSpan.innerText = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
     }
 
-    // Chạy lần đầu
+    // Khởi tạo ban đầu
     renderMenu(menuData);
 </script>
 

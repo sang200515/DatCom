@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Gọi Món - Tùy Chọn Nâng Cao</title>
+    <title>Menu Gọi Món - Chốt Đơn</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -12,6 +12,7 @@
             --card-bg: #ffffff;
             --border-color: #e2e8f0;
             --success-color: #2ecc71;
+            --share-color: #3498db;
         }
 
         body {
@@ -26,15 +27,23 @@
 
         .container {
             width: 100%;
-            max-width: 1150px;
+            max-width: 1200px;
             display: grid;
-            grid-template-columns: 1.1fr 1.3fr;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
 
-        @media (max-width: 850px) {
+        /* Khi màn hình lớn, cho Section 3 chiếm full dòng bên dưới hoặc tùy biến */
+        .full-width {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 900px) {
             .container {
                 grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
             }
         }
 
@@ -56,7 +65,7 @@
             font-size: 1.3rem;
         }
 
-        /* Section 1: Controls */
+        /* Section 1 & 2 styles */
         .search-box {
             width: 100%;
             padding: 12px;
@@ -65,11 +74,6 @@
             font-size: 1rem;
             box-sizing: border-box;
             margin-bottom: 15px;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: var(--primary-color);
         }
 
         .menu-list {
@@ -84,17 +88,8 @@
             padding: 12px;
             cursor: pointer;
             border-bottom: 1px solid var(--border-color);
-            transition: background 0.2s;
             display: flex;
             justify-content: space-between;
-        }
-
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-
-        .menu-item:hover {
-            background-color: #f1f5f9;
         }
 
         .menu-item.selected {
@@ -102,10 +97,7 @@
             font-weight: bold;
         }
 
-        .options-group {
-            margin-bottom: 15px;
-        }
-
+        .options-group { margin-bottom: 15px; }
         .options-group label.group-title {
             display: block;
             margin-bottom: 8px;
@@ -113,144 +105,73 @@
             color: #4a5568;
         }
 
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .quantity-control { display: flex; align-items: center; gap: 10px; }
         .btn-qty {
-            background: #cbd5e1;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1rem;
+            background: #cbd5e1; border: none; padding: 8px 16px;
+            border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1rem;
         }
 
-        #quantity-val {
-            font-size: 1.2rem;
-            font-weight: bold;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        /* Radio options styling */
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
-        .radio-option input {
-            cursor: pointer;
-            width: 16px;
-            height: 16px;
-        }
-
-        .note-box {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            resize: none;
-            box-sizing: border-box;
-            margin-top: 5px;
-        }
+        #quantity-val { font-size: 1.2rem; font-weight: bold; min-width: 30px; text-align: center; }
+        .radio-option { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; cursor: pointer; }
+        .note-box { width: 100%; padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 6px; box-sizing: border-box; }
 
         .btn-add {
-            background-color: var(--success-color);
-            color: white;
+            background-color: var(--success-color); color: white; border: none; padding: 14px;
+            border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
+        .btn-add:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+
+        /* Tables */
+        .order-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .order-table th, .order-table td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .order-table th { background-color: #f1f5f9; color: var(--primary-color); font-weight: 600; }
+        .btn-delete { background: none; border: none; color: var(--accent-color); cursor: pointer; font-weight: bold; }
+
+        .cart-placeholder { color: #a0aec0; text-align: center; padding: 30px 0; font-style: italic; }
+        
+        .total-section {
+            margin-top: 20px; padding-top: 15px; border-top: 2px dashed var(--border-color);
+            display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; font-weight: bold;
+        }
+        .total-price { color: var(--accent-color); }
+        .item-meta-text { display: block; font-size: 0.8rem; color: #4a5568; margin-top: 2px; }
+        
+        .badge-option { display: inline-block; padding: 1px 6px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; background-color: #e2e8f0; }
+        .badge-foodonly { background-color: #ffeede; color: #d35400; }
+        .badge-brownrice { background-color: #eafaf1; color: #27ae60; }
+
+        /* Section 3 Specifics */
+        .action-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-action {
+            padding: 12px;
             border: none;
-            padding: 14px;
             border-radius: 8px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 10px;
-        }
-
-        .btn-add:hover {
-            background-color: #27ae60;
-        }
-
-        .btn-add:disabled {
-            background-color: #cbd5e1;
-            cursor: not-allowed;
-        }
-
-        /* Section 2: Order Table */
-        .order-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        .order-table th, .order-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.95rem;
-        }
-
-        .order-table th {
-            background-color: #f1f5f9;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .btn-delete {
-            background: none;
-            border: none;
-            color: var(--accent-color);
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .cart-placeholder {
-            color: #a0aec0;
-            text-align: center;
-            padding: 40px 0;
-            font-style: italic;
-        }
-
-        .total-section {
-            margin-top: auto;
-            padding-top: 15px;
-            border-top: 2px dashed var(--border-color);
+            color: white;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            font-size: 1.3rem;
-            font-weight: bold;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .total-price {
-            color: var(--accent-color);
-        }
+        .btn-share { background-color: var(--share-color); }
+        .btn-download { background-color: var(--primary-color); }
 
-        .item-meta-text {
-            display: block;
-            font-size: 0.8rem;
-            color: #4a5568;
-            margin-top: 2px;
+        /* CSS TRONG KHI IN (PRINT) - CHỈ IN MỖI SECTION 3 */
+        @media print {
+            body * { visibility: hidden; background: transparent !important; box-shadow: none !important; }
+            #section-checkout, #section-checkout * { visibility: visible; }
+            #section-checkout { position: absolute; left: 0; top: 0; width: 100%; border: none; padding: 0; }
+            .action-group { display: none; } /* Ẩn nút bấm khi in */
         }
-        .badge-option {
-            display: inline-block;
-            padding: 1px 6px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            border-radius: 4px;
-            background-color: #e2e8f0;
-            color: #4a5568;
-        }
-        .badge-foodonly { background-color: #ffeede; color: #d35400; }
-        .badge-brownrice { background-color: #eafaf1; color: #27ae60; }
     </style>
 </head>
 <body>
@@ -258,7 +179,6 @@
 <div class="container">
     <div class="section">
         <h2>1. Chọn Món & Tùy Chọn</h2>
-        
         <input type="text" id="search" class="search-box" placeholder="Nhập tên món ăn cần tìm..." oninput="filterMenu()">
         <div class="menu-list" id="menu-container"></div>
 
@@ -273,37 +193,28 @@
 
         <div class="options-group">
             <label class="group-title">Tùy chọn món ăn:</label>
-            
             <label class="radio-option">
                 <input type="radio" name="meal-option" value="normal" checked onchange="toggleCustomNote(true)">
                 <span>Bình thường (Cơm trắng)</span>
             </label>
-            
             <label class="radio-option">
                 <input type="radio" name="meal-option" value="food_only" onchange="toggleCustomNote(false)">
                 <span>Chỉ lấy đồ ăn <span style="color: #e74c3c; font-weight:500;">(-15.000 đ)</span></span>
             </label>
-            
             <label class="radio-option">
                 <input type="radio" name="meal-option" value="brown_rice" onchange="toggleCustomNote(false)">
                 <span>Lấy gạo lức <span style="color: #2ecc71; font-weight:500;">(+5.000 đ)</span></span>
             </label>
-
             <div id="custom-note-container">
-                <input type="text" id="custom-note" class="note-box" placeholder="Nhập ghi chú thêm nếu có (ví dụ: ít cơm, nhiều sốt...)">
+                <input type="text" id="custom-note" class="note-box" placeholder="Ghi chú thêm (ví dụ: ít cơm, nhiều sốt...)">
             </div>
         </div>
-
         <button id="add-btn" class="btn-add" onclick="addToCart()" disabled>Thêm vào đơn hàng</button>
     </div>
 
     <div class="section">
-        <h2>2. Thông Tin Đơn Hàng</h2>
-        
-        <div id="cart-placeholder" class="cart-placeholder">
-            Đơn hàng trống. Vui lòng thêm món ở Section 1.
-        </div>
-
+        <h2>2. Sửa Đổi Đơn Hàng</h2>
+        <div id="cart-placeholder" class="cart-placeholder">Đơn hàng trống.</div>
         <table id="order-table" class="order-table" style="display: none;">
             <thead>
                 <tr>
@@ -313,38 +224,80 @@
                     <th style="text-align: center;">Xóa</th>
                 </tr>
             </thead>
-            <tbody id="cart-items">
-                </tbody>
+            <tbody id="cart-items"></tbody>
+        </table>
+        <div class="total-section">
+            <span>Tạm tính:</span>
+            <span class="total-price" id="cart-total">0 đ</span>
+        </div>
+    </div>
+
+    <div class="section full-width" id="section-checkout">
+        <h2 id="checkout-title">Menu Thứ ...</h2>
+        
+        <div id="checkout-placeholder" class="cart-placeholder">Chưa có dữ liệu để chốt đơn.</div>
+        
+        <table id="checkout-table" class="order-table" style="display: none; margin-top: 15px;">
+            <thead>
+                <tr>
+                    <th>Món ăn</th>
+                    <th style="text-align: center;">Số lượng</th>
+                    <th style="text-align: right;">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody id="checkout-items"></tbody>
         </table>
 
-        <div class="total-section">
-            <span>Tổng đơn hàng:</span>
-            <span class="total-price" id="cart-total">0 đ</span>
+        <div class="total-section" id="checkout-total-group" style="display: none;">
+            <span>Tổng số phần: <span id="total-qty-count" style="color: var(--primary-color);">0</span> phần</span>
+            <span>Tổng tiền: <span class="total-price" id="checkout-total">0 đ</span></span>
+        </div>
+
+        <div class="action-group" id="action-buttons" style="display: none;">
+            <button class="btn-action btn-share" onclick="shareOrder()">
+                🔗 Chia sẻ qua ShareSheet
+            </button>
+            <button class="btn-action btn-download" onclick="downloadReceipt()">
+                🖨️ Tải phiếu / In
+            </button>
         </div>
     </div>
 </div>
 
 <script>
-    // Dữ liệu món ăn gốc (JSON)
+    // Dữ liệu gốc từ Excel của bạn
     const menuData = [
-        { id: 1, name: "Cá điêu hồng chiên", price: 45000 },
-        { id: 2, name: "Cá đối chiên", price: 45000 }
+        { id: 3, name: "Cá ngừ kho thơm", price: 45000 },
+        { id: 6, name: "Cá điêu hồng chiên", price: 45000 },
+        { id: 11, name: "Ba rọi chiên", price: 45000 },
+        { id: 14, name: "Gà chiên xả", price: 45000 },
+        { id: 18, name: "Mắm ruốc xào thịt", price: 45000 },
+        { id: 20, name: "Rau muống xào chao", price: 45000 },
+        { id: 21, name: "Giò heo nấu nấm đông cô", price: 50000 }
     ];
 
-    // State ứng dụng
     let selectedItem = null;
     let currentQuantity = 1;
     let cart = [];
 
+    // Tự động định dạng Title ngày hôm nay dạng: Menu Thứ X (DD/MM)
+    function initTitleDate() {
+        const days = ["Chủ Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+        const today = new Date();
+        const dayName = days[today.getDay()];
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        
+        document.getElementById('checkout-title').innerText = `${dayName} (${dd}/${mm})`;
+    }
+
     function renderMenu(items) {
         const container = document.getElementById('menu-container');
         container.innerHTML = '';
-        
         if(items.length === 0) {
             container.innerHTML = '<div style="padding:15px; color:#999; text-align:center;">Không tìm thấy món</div>';
             return;
         }
-
         items.forEach(item => {
             const div = document.createElement('div');
             div.className = `menu-item ${selectedItem && selectedItem.id === item.id ? 'selected' : ''}`;
@@ -372,31 +325,22 @@
         document.getElementById('quantity-val').innerText = currentQuantity;
     }
 
-    // Ẩn/Hiện/Reset ô ghi chú tùy theo radio button được chọn
     function toggleCustomNote(show) {
         const customNoteInput = document.getElementById('custom-note');
-        if(show) {
-            customNoteInput.disabled = false;
-            customNoteInput.style.opacity = "1";
-        } else {
-            customNoteInput.value = "";
-            customNoteInput.disabled = true;
-            customNoteInput.style.opacity = "0.5";
-        }
+        customNoteInput.disabled = !show;
+        customNoteInput.style.opacity = show ? "1" : "0.5";
+        if(!show) customNoteInput.value = "";
     }
 
-    // Xử lý thêm món kèm biến động giá dựa trên option
     function addToCart() {
         if (!selectedItem) return;
 
-        // Lấy option đang check
         const optionRadio = document.querySelector('input[name="meal-option"]:checked').value;
         let finalPrice = selectedItem.price;
         let optionLabel = "Bình thường";
         let badgeClass = "badge-option";
         let textNote = "";
 
-        // CHỈ lấy textNote khi option là bình thường
         if (optionRadio === "normal") {
             textNote = document.getElementById('custom-note').value.trim();
         } else if (optionRadio === "food_only") {
@@ -409,33 +353,24 @@
             badgeClass += " badge-brownrice";
         }
 
-        // Tạo chuỗi định danh duy nhất (Món ID + Loại Option + Text ghi chú) để gộp dòng chính xác
         const cartItemId = `${selectedItem.id}_${optionRadio}_${textNote}`;
-
         const existingIndex = cart.findIndex(cartItem => cartItem.cartItemId === cartItemId);
 
         if (existingIndex > -1) {
             cart[existingIndex].quantity += currentQuantity;
         } else {
             cart.push({
-                cartItemId: cartItemId,
-                id: selectedItem.id,
-                name: selectedItem.name,
-                calculatedPrice: finalPrice,
-                quantity: currentQuantity,
-                optionLabel: optionLabel,
-                badgeClass: badgeClass,
-                textNote: textNote
+                cartItemId: cartItemId, id: selectedItem.id, name: selectedItem.name,
+                calculatedPrice: finalPrice, quantity: currentQuantity,
+                optionLabel: optionLabel, badgeClass: badgeClass, textNote: textNote
             });
         }
 
-        // Reset Section 1 về ban đầu
-        selectedItem = null;
-        currentQuantity = 1;
+        selectedItem = null; currentQuantity = 1;
         document.getElementById('quantity-val').innerText = '1';
         document.getElementById('custom-note').value = '';
         document.getElementById('search').value = '';
-        document.querySelectorAll('input[name="meal-option"]')[0].checked = true; // reset về Bình thường
+        document.querySelectorAll('input[name="meal-option"]')[0].checked = true;
         toggleCustomNote(true);
         document.getElementById('add-btn').disabled = true;
         
@@ -443,57 +378,125 @@
         renderCart();
     }
 
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        renderCart();
+    }
+
+    // Render đồng thời cả Section 2 và Section 3
     function renderCart() {
-        const placeholder = document.getElementById('cart-placeholder');
-        const table = document.getElementById('order-table');
-        const tbody = document.getElementById('cart-items');
-        const totalSpan = document.getElementById('cart-total');
+        // Section 2 elements
+        const placeholder2 = document.getElementById('cart-placeholder');
+        const table2 = document.getElementById('order-table');
+        const tbody2 = document.getElementById('cart-items');
+        const totalSpan2 = document.getElementById('cart-total');
+
+        // Section 3 elements
+        const placeholder3 = document.getElementById('checkout-placeholder');
+        const table3 = document.getElementById('checkout-table');
+        const tbody3 = document.getElementById('checkout-items');
+        const totalSpan3 = document.getElementById('checkout-total');
+        const totalQtyCount = document.getElementById('total-qty-count');
+        const totalGroup3 = document.getElementById('checkout-total-group');
+        const actionButtons = document.getElementById('action-buttons');
 
         if (cart.length === 0) {
-            placeholder.style.display = 'block';
-            table.style.display = 'none';
-            totalSpan.innerText = '0 đ';
+            placeholder2.style.display = 'block'; table2.style.display = 'none'; totalSpan2.innerText = '0 đ';
+            placeholder3.style.display = 'block'; table3.style.display = 'none'; totalGroup3.style.display = 'none'; actionButtons.style.display = 'none';
             return;
         }
 
-        placeholder.style.display = 'none';
-        table.style.display = 'table';
-        tbody.innerHTML = '';
+        // Hiện Tables công khai
+        placeholder2.style.display = 'none'; table2.style.display = 'table';
+        placeholder3.style.display = 'none'; table3.style.display = 'table'; totalGroup3.style.display = 'flex'; actionButtons.style.display = 'grid';
+
+        tbody2.innerHTML = '';
+        tbody3.innerHTML = '';
 
         let totalOrderPrice = 0;
+        let totalQuantity = 0;
 
         cart.forEach((item, index) => {
             const itemTotal = item.calculatedPrice * item.quantity;
             totalOrderPrice += itemTotal;
+            totalQuantity += item.quantity;
 
-            // Kiểm tra điều kiện hiển thị chuẩn xác
             const showBadge = item.optionLabel !== "Bình thường";
-            const showNote = item.textNote !== undefined && item.textNote !== null && item.textNote.length > 0;
+            const showNote = item.textNote && item.textNote.length > 0;
 
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>
-                    <strong>${item.name}</strong>
-                    
-                    ${showBadge || showNote ? `
-                        <div class="item-meta-text" style="margin-top: 4px;">
-                            ${showBadge ? `<span class="${item.badgeClass}">${item.optionLabel}</span>` : ''}
-                            ${showNote ? `<span style="font-style: italic; color:#718096; ${showBadge ? 'margin-left: 5px;' : ''}">- Ghi chú: ${item.textNote}</span>` : ''}
-                        </div>
-                    ` : ''}
-                </td>
-                <td style="text-align: center; font-weight: 600;">${item.quantity}</td>
-                <td style="text-align: right; font-weight: 600; color: var(--primary-color);">${itemTotal.toLocaleString('vi-VN')} đ</td>
-                <td style="text-align: center;">
-                    <button class="btn-delete" onclick="removeFromCart(${index})">✕</button>
-                </td>
+            const metaHTML = `
+                ${showBadge || showNote ? `
+                    <div class="item-meta-text">
+                        ${showBadge ? `<span class="${item.badgeClass}">${item.optionLabel}</span>` : ''}
+                        ${showNote ? `<span style="font-style: italic; color:#718096; ${showBadge ? 'margin-left: 5px;' : ''}">- GC: ${item.textNote}</span>` : ''}
+                    </div>
+                ` : ''}
             `;
-            tbody.appendChild(tr);
+
+            // Row cho Section 2 (Có cột xóa)
+            const tr2 = document.createElement('tr');
+            tr2.innerHTML = `
+                <td><strong>${item.name}</strong>${metaHTML}</td>
+                <td style="text-align: center; font-weight: 600;">${item.quantity}</td>
+                <td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+                <td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>
+            `;
+            tbody2.appendChild(tr2);
+
+            // Row cho Section 3 (Sạch sẽ hoàn toàn - KHÔNG CÓ CỘT XÓA)
+            const tr3 = document.createElement('tr');
+            tr3.innerHTML = `
+                <td><strong>${item.name}</strong>${metaHTML}</td>
+                <td style="text-align: center; font-weight: 600;">${item.quantity} phần</td>
+                <td style="text-align: right; font-weight: 600; color: var(--primary-color);">${itemTotal.toLocaleString('vi-VN')} đ</td>
+            `;
+            tbody3.appendChild(tr3);
         });
 
-        totalSpan.innerText = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
+        // Cập nhật giá tổng
+        totalSpan2.innerText = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
+        totalSpan3.innerText = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
+        totalQtyCount.innerText = totalQuantity;
     }
-    // Khởi tạo ban đầu
+
+    // HÀNH ĐỘNG 1: MỞ NATIVE SHARESHEET
+    function shareOrder() {
+        if (cart.length === 0) return;
+
+        const titleText = document.getElementById('checkout-title').innerText;
+        let shareContent = `*--- 📝 ${titleText} ---*\n`;
+        
+        cart.forEach((item, idx) => {
+            let opt = item.optionLabel !== "Bình thường" ? ` [${item.optionLabel}]` : "";
+            let nt = item.textNote ? ` (Ghi chú: ${item.textNote})` : "";
+            shareContent += `${idx + 1}. ${item.name}${opt}${nt} x${item.quantity}\n`;
+        });
+        
+        const totalQty = document.getElementById('total-qty-count').innerText;
+        const totalCash = document.getElementById('checkout-total').innerText;
+        shareContent += `-----------------------\n`;
+        shareContent += `👉 *Tổng cộng:* ${totalQty} phần\n`;
+        shareContent += `💰 *Tổng tiền:* ${totalCash}`;
+
+        if (navigator.share) {
+            navigator.share({
+                title: titleText,
+                text: shareContent,
+            }).catch(err => console.log('Lỗi Share:', err));
+        } else {
+            // Fallback nếu trình duyệt Desktop cũ không hỗ trợ Web Share API
+            navigator.clipboard.writeText(shareContent);
+            alert("Trình duyệt không hỗ trợ ShareSheet trực tiếp. Đã tự động COPY text đơn hàng vào bộ nhớ tạm để bạn Paste gửi đi!");
+        }
+    }
+
+    // HÀNH ĐỘNG 2: TẢI PHIẾU / IN (Tối ưu in riêng Section 3)
+    function downloadReceipt() {
+        window.print();
+    }
+
+    // Chạy khởi tạo
+    initTitleDate();
     renderMenu(menuData);
 </script>
 

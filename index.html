@@ -396,7 +396,10 @@
         let badgeClass = "badge-option";
         let textNote = "";
 
-        if (optionRadio === "food_only") {
+        // CHỈ lấy textNote khi option là bình thường
+        if (optionRadio === "normal") {
+            textNote = document.getElementById('custom-note').value.trim();
+        } else if (optionRadio === "food_only") {
             finalPrice = selectedItem.price - 15000;
             optionLabel = "Chỉ lấy đồ ăn";
             badgeClass += " badge-foodonly";
@@ -404,8 +407,6 @@
             finalPrice = selectedItem.price + 5000;
             optionLabel = "Gạo lức";
             badgeClass += " badge-brownrice";
-        } else {
-            textNote = document.getElementById('custom-note').value.trim();
         }
 
         // Tạo chuỗi định danh duy nhất (Món ID + Loại Option + Text ghi chú) để gộp dòng chính xác
@@ -442,11 +443,6 @@
         renderCart();
     }
 
-    function removeFromCart(index) {
-        cart.splice(index, 1);
-        renderCart();
-    }
-
     function renderCart() {
         const placeholder = document.getElementById('cart-placeholder');
         const table = document.getElementById('order-table');
@@ -470,12 +466,9 @@
             const itemTotal = item.calculatedPrice * item.quantity;
             totalOrderPrice += itemTotal;
 
-            // LOGIC ẨN/HIỆN THEO YÊU CẦU:
-            // 1 & 2. Chỉ hiện badge option khi KHÁC "Bình thường" (tức là chỉ hiện cho Chỉ lấy đồ ăn / Gạo lức)
+            // Kiểm tra điều kiện hiển thị chuẩn xác
             const showBadge = item.optionLabel !== "Bình thường";
-            
-            // 3. Chỉ hiện note text khi user THỰC SỰ nhập nội dung vào ô note
-            const showNote = item.textNote && item.textNote.length > 0;
+            const showNote = item.textNote !== undefined && item.textNote !== null && item.textNote.length > 0;
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -483,13 +476,11 @@
                     <strong>${item.name}</strong>
                     
                     ${showBadge || showNote ? `
-                        <div class="item-meta-text">
+                        <div class="item-meta-text" style="margin-top: 4px;">
                             ${showBadge ? `<span class="${item.badgeClass}">${item.optionLabel}</span>` : ''}
                             ${showNote ? `<span style="font-style: italic; color:#718096; ${showBadge ? 'margin-left: 5px;' : ''}">- Ghi chú: ${item.textNote}</span>` : ''}
                         </div>
                     ` : ''}
-                    
-                    ${showBadge ? `<span style="font-size: 0.8rem; color: #a0aec0; display: block; margin-top: 2px;">Đơn giá tính lại: ${item.calculatedPrice.toLocaleString('vi-VN')} đ</span>` : ''}
                 </td>
                 <td style="text-align: center; font-weight: 600;">${item.quantity}</td>
                 <td style="text-align: right; font-weight: 600; color: var(--primary-color);">${itemTotal.toLocaleString('vi-VN')} đ</td>
@@ -502,7 +493,6 @@
 
         totalSpan.innerText = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
     }
-
     // Khởi tạo ban đầu
     renderMenu(menuData);
 </script>

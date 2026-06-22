@@ -197,10 +197,12 @@
         </div>
     </div>
 
+    <!-- SECTION 3: CHECKOUT (Gói gọn vùng capture ảnh) -->
     <div class="section full-width" id="section-checkout">
         
+        <!-- Bao bọc vùng này để export ảnh nguyên vẹn không bao gồm cụm Button -->
         <div id="print-area" class="capture-area">
-            <h2 id="checkout-title" style="border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Menu Thứ ...</h2>
+            <h2 id="checkout-title" style="border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px;">Menu Thứ ...</h2>
             
             <div id="checkout-placeholder" class="cart-placeholder">Chưa có dữ liệu để chốt đơn.</div>
             
@@ -208,19 +210,15 @@
                 <thead>
                     <tr>
                         <th>Món ăn</th>
-                        <th style="text-align: center;">Số lượng</th>
-                        <th style="text-align: right;">Thành tiền</th>
+                        <th style="text-align: center; width: 100px;">Số lượng</th>
+                        <th style="text-align: right; width: 120px;">Thành tiền</th>
                     </tr>
                 </thead>
                 <tbody id="checkout-items"></tbody>
             </table>
-
-            <div class="total-section" id="checkout-total-group" style="display: none;">
-                <span>Tổng số phần: <span id="total-qty-count" style="color: var(--primary-color);">0</span> phần</span>
-                <span>Tổng tiền: <span class="total-price" id="checkout-total">0 đ</span></span>
-            </div>
         </div>
 
+        <!-- Nhóm nút hành động bên ngoài vùng capture -->
         <div class="action-group" id="action-buttons" style="display: none;">
             <button id="share-img-btn" class="btn-action btn-share" onclick="shareOrderAsImage()">
                 📸 Chia sẻ file ẢNH qua ShareSheet

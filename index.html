@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Gọi Món - iOS Style Pure Share</title>
+    <title>Menu Gọi Món - iOS Style</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -34,7 +34,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            padding-bottom: 80px; /* Tạo không gian trống tránh đè vào nút Share cố định */
+            padding-bottom: 80px; /* Tránh đè FAB */
         }
 
         .full-width {
@@ -89,7 +89,7 @@
         }
         .btn-add:disabled { background-color: #cbd5e1; cursor: not-allowed; }
 
-        /* Style Table cho Section 2 */
+        /* Style Table chuẩn của Section 2 */
         .order-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
         .order-table th, .order-table td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border-color); word-break: break-word; }
         .order-table th { background-color: #f1f5f9; color: var(--primary-color); font-weight: 600; }
@@ -109,52 +109,52 @@
         .badge-brownrice { background-color: #eafaf1; color: #27ae60; }
 
         /* ========================================================= */
-        /* OPTIMIZE SECTION 3: TĂNG FONT 20% TOÀN BỘ VÙNG CAPTURE   */
+        /* SECTION 3: CLONE 100% TỪ SECTION 2 & TĂNG SIZE FONT 20%  */
         /* ========================================================= */
         .capture-area {
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 8px;
-            width: 100%;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
             box-sizing: border-box;
-        }
-
-        #section-checkout h2 {
-            font-size: calc(1.2rem * 1.2); /* Tăng 20% */
-        }
-
-        #checkout-table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 5px;
-            table-layout: fixed;
         }
 
-        #checkout-table th, #checkout-table td {
-            font-size: calc(0.9rem * 1.2); /* Tăng 20% cho text trong table */
-            padding: 12px 8px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-            word-break: break-word;
-        }
-
-        #checkout-table th {
-            background-color: #f1f5f9;
+        /* Tăng toàn bộ font size vùng capture lên 20% */
+        .capture-area h2 {
+            margin-top: 0;
             color: var(--primary-color);
-            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            font-size: calc(1.2rem * 1.2); 
         }
 
-        /* Tỷ lệ cột cố định chống vỡ khung */
-        #checkout-table th:nth-child(1), #checkout-table td:nth-child(1) { width: 50%; }
-        #checkout-table th:nth-child(2), #checkout-table td:nth-child(2) { width: 20%; text-align: center; }
-        #checkout-table th:nth-child(3), #checkout-table td:nth-child(3) { width: 30%; text-align: right; }
+        .capture-area .order-table th, 
+        .capture-area .order-table td {
+            font-size: calc(1rem * 1.2); /* Base size từ body sang scale 1.2 */
+            padding: 12px 10px;
+        }
 
-        #checkout-placeholder {
-            font-size: calc(1rem * 1.2); /* Tăng 20% */
+        .capture-area .item-meta-text {
+            font-size: calc(0.8rem * 1.2);
+        }
+
+        .capture-area .badge-option {
+            font-size: calc(0.75rem * 1.2);
+        }
+
+        .capture-area .total-section {
+            font-size: calc(1.2rem * 1.2);
+            margin-top: 15px; 
+            padding-top: 15px; 
+            border-top: 2px dashed var(--border-color);
         }
 
         /* ========================================================= */
-        /* UI NÚT SHARE FLOATING STYLE IOS (MOVE OUTSIDE SECTION 3)  */
+        /* FLOATING ACTION BUTTON - IOS STYLE (OUTSIDE CARD)         */
         /* ========================================================= */
         .ios-share-fab {
             position: fixed;
@@ -182,15 +182,13 @@
         .ios-share-fab svg {
             width: 24px;
             height: 24px;
-            color: #007afb; /* Màu xanh đặc trưng hệ điều hành iOS */
+            color: #007afb;
         }
 
-        /* Responsive Mobile */
         @media (max-width: 900px) {
             .container { grid-template-columns: 1fr; gap: 15px; }
             .full-width { grid-column: span 1; }
             body { padding: 8px; }
-            .order-table th, .order-table td { padding: 8px 4px; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -252,22 +250,24 @@
         </div>
     </div>
 
-    <div class="section full-width" id="section-checkout">
+    <div class="full-width" id="section-checkout">
         <div id="print-area" class="capture-area">
-            <h2 id="checkout-title" style="border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px;">Menu Thứ ...</h2>
-            
+            <h2 id="checkout-title">Menu Thứ ...</h2>
             <div id="checkout-placeholder" class="cart-placeholder">Chưa có dữ liệu để chốt đơn.</div>
-            
             <table id="checkout-table" class="order-table">
                 <thead>
                     <tr>
-                        <th>Món ăn</th>
-                        <th>Số lượng</th>
-                        <th>Thành tiền</th>
+                        <th style="width: 55%;">Món ăn</th>
+                        <th style="text-align: center; width: 15%;">SL</th>
+                        <th style="text-align: right; width: 30%;">Thành tiền</th>
                     </tr>
                 </thead>
                 <tbody id="checkout-items"></tbody>
             </table>
+            <div class="total-section" id="checkout-total-container" style="display: none;">
+                <span>Tổng cộng:</span>
+                <span class="total-price" id="checkout-total">0 đ</span>
+            </div>
         </div>
     </div>
 </div>
@@ -350,23 +350,24 @@
     function renderCart() {
         const placeholder2 = document.getElementById('cart-placeholder'); const table2 = document.getElementById('order-table'); const tbody2 = document.getElementById('cart-items'); const totalSpan2 = document.getElementById('cart-total');
         const placeholder3 = document.getElementById('checkout-placeholder'); const table3 = document.getElementById('checkout-table'); const tbody3 = document.getElementById('checkout-items'); 
+        const totalContainer3 = document.getElementById('checkout-total-container'); const totalSpan3 = document.getElementById('checkout-total');
         const iosShareBtn = document.getElementById('ios-share-btn');
 
         if (cart.length === 0) {
             placeholder2.style.display = 'block'; table2.style.display = 'none'; totalSpan2.innerText = '0 đ';
-            placeholder3.style.display = 'block'; table3.style.display = 'none'; iosShareBtn.style.display = 'none';
+            placeholder3.style.display = 'block'; table3.style.display = 'none'; totalContainer3.style.display = 'none'; iosShareBtn.style.display = 'none';
             return;
         }
 
         placeholder2.style.display = 'none'; table2.style.display = 'table';
-        placeholder3.style.display = 'none'; table3.style.display = 'table'; iosShareBtn.style.display = 'flex';
+        placeholder3.style.display = 'none'; table3.style.display = 'table'; totalContainer3.style.display = 'flex'; iosShareBtn.style.display = 'flex';
 
         tbody2.innerHTML = ''; tbody3.innerHTML = '';
-        let totalOrderPrice = 0; let totalQuantity = 0;
+        let totalOrderPrice = 0;
 
         cart.forEach((item, index) => {
             const itemTotal = item.calculatedPrice * item.quantity;
-            totalOrderPrice += itemTotal; totalQuantity += item.quantity;
+            totalOrderPrice += itemTotal;
 
             const showBadge = item.optionLabel !== "Bình thường";
             const showNote = item.textNote && item.textNote.length > 0;
@@ -385,36 +386,26 @@
             tr2.innerHTML = `<td><strong>${item.name}</strong>${metaHTML}</td><td style="text-align: center; font-weight: 600;">${item.quantity}</td><td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td><td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>`;
             tbody2.appendChild(tr2);
 
-            // Section 3 Table Rows
+            // Section 3 Table Rows (Clone UI 100% không lệch cột)
             const tr3 = document.createElement('tr');
             tr3.innerHTML = `
                 <td><strong>${item.name}</strong>${metaHTML}</td>
-                <td style="text-align: center; font-weight: 600; color: #2c3e50;">${item.quantity}</td>
-                <td style="text-align: right; font-weight: 600; color: #2c3e50;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+                <td style="text-align: center; font-weight: 600;">${item.quantity}</td>
+                <td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td>
             `;
             tbody3.appendChild(tr3);
         });
 
-        totalSpan2.innerText = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
-
-        // Dòng Tổng Cộng cuối bảng Section 3
-        const totalRow3 = document.createElement('tr');
-        totalRow3.style.backgroundColor = '#f8fafc'; 
-        totalRow3.style.borderTop = '2px dashed var(--border-color)';
-        totalRow3.innerHTML = `
-            <td style="text-align: left; font-weight: bold; color: var(--primary-color);">Tổng cộng</td>
-            <td style="text-align: center; font-weight: bold; color: var(--primary-color);">${totalQuantity}</td>
-            <td style="text-align: right; font-weight: bold; font-size: 1.2rem; color: var(--accent-color);">${totalOrderPrice.toLocaleString('vi-VN')} đ</td>
-        `;
-        tbody3.appendChild(totalRow3);
+        // Đồng bộ hoàn toàn font size, weight và color của Tổng cộng và Tạm tính
+        const formattedTotal = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
+        totalSpan2.innerText = formattedTotal;
+        totalSpan3.innerText = formattedTotal;
     }
 
     async function shareOrderAsImage() {
         if (cart.length === 0) return;
-
         const iosBtn = document.getElementById('ios-share-btn');
-        iosBtn.style.pointerEvents = 'none';
-        iosBtn.style.opacity = '0.5';
+        iosBtn.style.pointerEvents = 'none'; iosBtn.style.opacity = '0.5';
 
         try {
             const printArea = document.getElementById('print-area');
@@ -430,11 +421,8 @@
                 if (!blob) { alert("Không thể tạo file ảnh."); iosBtn.style.pointerEvents = 'auto'; iosBtn.style.opacity = '1'; return; }
                 const file = new File([blob], `Menu_${titleText.replace(/[\s()\/]/g, '_')}.png`, { type: 'image/png' });
 
-                // CHỈ SHARE DUY NHẤT FILE ẢNH, KHÔNG ĐÍNH KÈM TEXT HOẶC TITLE
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({
-                        files: [file]
-                    });
+                    await navigator.share({ files: [file] });
                 } else {
                     const a = document.createElement('a');
                     a.href = URL.createObjectURL(blob);

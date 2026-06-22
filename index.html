@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Gọi Món - iOS Style</title>
-    <!-- Nhúng thư viện html2canvas từ CDN để hỗ trợ chụp giao diện thành ảnh -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -98,14 +97,29 @@
 
         .cart-placeholder { color: #a0aec0; text-align: center; padding: 30px 0; font-style: italic; font-size: 1rem; }
         
-        /* Cập nhật total-section thành cấu trúc grid/flex phân bổ đều theo cột */
-        .total-section {
-            margin-top: 15px; padding-top: 15px; border-top: 2px dashed var(--border-color);
-            display: flex; justify-content: space-between; align-items: center; font-size: 1.2rem; font-weight: bold;
+        /* Cấu trúc Footer 2 hàng mới */
+        .footer-summary {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px dashed var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
-        .total-left { display: flex; justify-content: space-between; width: 65%; padding-right: 8px; box-sizing: border-box; }
-        .total-qty-box { text-align: center; min-width: 30px; color: var(--primary-color); }
-        .total-price { color: var(--accent-color); text-align: right; width: 35%; }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.05rem;
+        }
+        .summary-row.total-price-row {
+            font-size: 1.25rem;
+            font-weight: dashed;
+            margin-top: 4px;
+        }
+        .text-label { font-weight: 600; color: #4a5568; }
+        .text-value { font-weight: 700; color: #1a202c; }
+        .text-value.highlight { color: var(--accent-color); }
         
         .item-meta-text { display: block; font-size: 0.8rem; color: #4a5568; margin-top: 4px; }
         
@@ -142,24 +156,18 @@
             padding: 12px 10px;
         }
 
-        .capture-area .item-meta-text {
-            font-size: calc(0.8rem * 1.2);
-        }
+        .capture-area .item-meta-text { font-size: calc(0.8rem * 1.2); }
+        .capture-area .badge-option { font-size: calc(0.75rem * 1.2); }
 
-        .capture-area .badge-option {
-            font-size: calc(0.75rem * 1.2);
-        }
-
-        .capture-area .total-section {
-            font-size: calc(1.2rem * 1.2);
-            margin-top: 15px; 
-            padding-top: 15px; 
+        /* Khối tổng hợp vùng Capture tự động kế thừa tăng font size */
+        .capture-area .footer-summary {
+            margin-top: 15px;
+            padding-top: 12px;
             border-top: 2px dashed var(--border-color);
+            gap: 10px;
         }
-
-        /* Đồng bộ tỷ lệ layout cột hàng tổng cộng vùng capture */
-        .capture-area .total-left { width: 70%; }
-        .capture-area .total-price { width: 30%; }
+        .capture-area .summary-row { font-size: calc(1.05rem * 1.2); }
+        .capture-area .summary-row.total-price-row { font-size: calc(1.25rem * 1.2); }
 
         /* ========================================================= */
         /* FLOATING ACTION BUTTON - IOS STYLE (OUTSIDE CARD)         */
@@ -197,16 +205,12 @@
             .container { grid-template-columns: 1fr; gap: 15px; }
             .full-width { grid-column: span 1; }
             body { padding: 8px; }
-            /* Khớp cột Table di động cho Section 2 */
-            .total-left { width: 65%; }
-            .total-price { width: 35%; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- SECTION 1: CHỌN MÓN -->
     <div class="section">
         <h2>1. Chọn Món & Tùy Chọn</h2>
         <input type="text" id="search" class="search-box" placeholder="Nhập tên món ăn cần tìm..." oninput="filterMenu()">
@@ -242,7 +246,6 @@
         <button id="add-btn" class="btn-add" onclick="addToCart()" disabled>Thêm vào đơn hàng</button>
     </div>
 
-    <!-- SECTION 2: SỬA ĐỔI ĐƠN HÀNG -->
     <div class="section">
         <h2>2. Sửa Đổi Đơn Hàng</h2>
         <div id="cart-placeholder" class="cart-placeholder">Đơn hàng trống.</div>
@@ -257,16 +260,19 @@
             </thead>
             <tbody id="cart-items"></tbody>
         </table>
-        <div class="total-section" id="cart-total-container" style="display: none;">
-            <div class="total-left">
-                <span>Tạm tính:</span>
-                <span class="total-qty-box" id="cart-total-qty">0</span>
+        
+        <div class="footer-summary" id="cart-summary-container" style="display: none;">
+            <div class="summary-row">
+                <span class="text-label">Tổng số phần:</span>
+                <span class="text-value" id="cart-total-qty">0 phần</span>
             </div>
-            <span class="total-price" id="cart-total-price">0 đ</span>
+            <div class="summary-row total-price-row">
+                <span class="text-label">Tổng tiền:</span>
+                <span class="text-value highlight" id="cart-total-price">0 đ</span>
+            </div>
         </div>
     </div>
 
-    <!-- SECTION 3: CLONE HOÀN TOÀN TỪ SECTION 2 (CHỈ ĐỂ CAPTURE ẢNH) -->
     <div class="full-width" id="section-checkout">
         <div id="print-area" class="capture-area">
             <h2 id="checkout-title">Menu Thứ ...</h2>
@@ -281,18 +287,21 @@
                 </thead>
                 <tbody id="checkout-items"></tbody>
             </table>
-            <div class="total-section" id="checkout-total-container" style="display: none;">
-                <div class="total-left">
-                    <span>Tổng cộng:</span>
-                    <span class="total-qty-box" id="checkout-total-qty">0</span>
+            
+            <div class="footer-summary" id="checkout-summary-container" style="display: none;">
+                <div class="summary-row">
+                    <span class="text-label">Tổng số phần:</span>
+                    <span class="text-value" id="checkout-total-qty">0 phần</span>
                 </div>
-                <span class="total-price" id="checkout-total-price">0 đ</span>
+                <div class="summary-row total-price-row">
+                    <span class="text-label">Tổng tiền:</span>
+                    <span class="text-value highlight" id="checkout-total-price">0 đ</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ICON SHARE FLOATING CHUẨN IOS -->
 <div id="ios-share-btn" class="ios-share-fab" onclick="shareOrderAsImage()" style="display: none;" title="Chia sẻ ảnh đơn hàng">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
@@ -370,10 +379,10 @@
 
     function renderCart() {
         const placeholder2 = document.getElementById('cart-placeholder'); const table2 = document.getElementById('order-table'); const tbody2 = document.getElementById('cart-items'); 
-        const container2 = document.getElementById('cart-total-container'); const totalQty2 = document.getElementById('cart-total-qty'); const totalPrice2 = document.getElementById('cart-total-price');
+        const container2 = document.getElementById('cart-summary-container'); const totalQty2 = document.getElementById('cart-total-qty'); const totalPrice2 = document.getElementById('cart-total-price');
         
         const placeholder3 = document.getElementById('checkout-placeholder'); const table3 = document.getElementById('checkout-table'); const tbody3 = document.getElementById('checkout-items'); 
-        const container3 = document.getElementById('checkout-total-container'); const totalQty3 = document.getElementById('checkout-total-qty'); const totalPrice3 = document.getElementById('checkout-total-price');
+        const container3 = document.getElementById('checkout-summary-container'); const totalQty3 = document.getElementById('checkout-total-qty'); const totalPrice3 = document.getElementById('checkout-total-price');
         
         const iosShareBtn = document.getElementById('ios-share-btn');
 
@@ -406,12 +415,12 @@
                 ` : ''}
             `;
 
-            // Section 2 Table Rows
+            // Section 2 Rows
             const tr2 = document.createElement('tr');
             tr2.innerHTML = `<td><strong>${item.name}</strong>${metaHTML}</td><td style="text-align: center; font-weight: 600;">${item.quantity}</td><td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td><td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>`;
             tbody2.appendChild(tr2);
 
-            // Section 3 Table Rows
+            // Section 3 Rows
             const tr3 = document.createElement('tr');
             tr3.innerHTML = `
                 <td><strong>${item.name}</strong>${metaHTML}</td>
@@ -421,13 +430,14 @@
             tbody3.appendChild(tr3);
         });
 
-        // Cập nhật giá trị số lượng phần ăn và tổng tiền đồng bộ cả 2 khối
+        // Cập nhật text 2 hàng rõ ràng
         const formattedPrice = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
+        const formattedQty = `${totalQuantity} phần`;
         
-        totalQty2.innerText = totalQuantity;
+        totalQty2.innerText = formattedQty;
         totalPrice2.innerText = formattedPrice;
 
-        totalQty3.innerText = totalQuantity;
+        totalQty3.innerText = formattedQty;
         totalPrice3.innerText = formattedPrice;
     }
 

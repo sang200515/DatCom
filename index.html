@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Gọi Món - Fix Layout Mobile</title>
+    <title>Menu Gọi Món - iOS Style Pure Share</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -24,6 +24,8 @@
             padding: 10px;
             display: flex;
             justify-content: center;
+            position: relative;
+            min-height: 100vh;
         }
 
         .container {
@@ -32,6 +34,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            padding-bottom: 80px; /* Tạo không gian trống tránh đè vào nút Share cố định */
         }
 
         .full-width {
@@ -86,13 +89,13 @@
         }
         .btn-add:disabled { background-color: #cbd5e1; cursor: not-allowed; }
 
-        /* Kiểu dáng Table chung */
+        /* Style Table cho Section 2 */
         .order-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
         .order-table th, .order-table td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border-color); word-break: break-word; }
         .order-table th { background-color: #f1f5f9; color: var(--primary-color); font-weight: 600; }
         .btn-delete { background: none; border: none; color: var(--accent-color); cursor: pointer; font-weight: bold; }
 
-        .cart-placeholder { color: #a0aec0; text-align: center; padding: 30px 0; font-style: italic; }
+        .cart-placeholder { color: #a0aec0; text-align: center; padding: 30px 0; font-style: italic; font-size: 1rem; }
         
         .total-section {
             margin-top: 15px; padding-top: 15px; border-top: 2px dashed var(--border-color);
@@ -105,7 +108,9 @@
         .badge-foodonly { background-color: #ffeede; color: #d35400; }
         .badge-brownrice { background-color: #eafaf1; color: #27ae60; }
 
-        /* Vùng Capture Ảnh xuất Phiếu */
+        /* ========================================================= */
+        /* OPTIMIZE SECTION 3: TĂNG FONT 20% TOÀN BỘ VÙNG CAPTURE   */
+        /* ========================================================= */
         .capture-area {
             background: #ffffff;
             padding: 15px;
@@ -114,40 +119,78 @@
             box-sizing: border-box;
         }
 
-        /* Định tỷ lệ cột cố định cho mục Chốt Đơn để không bao giờ bị méo khi thu nhỏ */
+        #section-checkout h2 {
+            font-size: calc(1.2rem * 1.2); /* Tăng 20% */
+        }
+
+        #checkout-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            table-layout: fixed;
+        }
+
+        #checkout-table th, #checkout-table td {
+            font-size: calc(0.9rem * 1.2); /* Tăng 20% cho text trong table */
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            word-break: break-word;
+        }
+
+        #checkout-table th {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Tỷ lệ cột cố định chống vỡ khung */
         #checkout-table th:nth-child(1), #checkout-table td:nth-child(1) { width: 50%; }
         #checkout-table th:nth-child(2), #checkout-table td:nth-child(2) { width: 20%; text-align: center; }
         #checkout-table th:nth-child(3), #checkout-table td:nth-child(3) { width: 30%; text-align: right; }
 
-        .action-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 15px;
+        #checkout-placeholder {
+            font-size: calc(1rem * 1.2); /* Tăng 20% */
         }
 
-        .btn-action {
-            padding: 12px; border: none; border-radius: 8px; font-size: 0.95rem;
-            font-weight: bold; cursor: pointer; color: white; display: flex;
-            align-items: center; justify-content: center; gap: 6px;
+        /* ========================================================= */
+        /* UI NÚT SHARE FLOATING STYLE IOS (MOVE OUTSIDE SECTION 3)  */
+        /* ========================================================= */
+        .ios-share-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 56px;
+            height: 56px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            transition: transform 0.2s ease, background-color 0.2s ease;
         }
 
-        .btn-share { background-color: var(--share-color); }
-        .btn-download { background-color: var(--primary-color); }
+        .ios-share-fab:active {
+            transform: scale(0.9);
+            background-color: #f1f5f9;
+        }
 
-        /* Cấu hình responsive cho Mobile */
+        .ios-share-fab svg {
+            width: 24px;
+            height: 24px;
+            color: #007afb; /* Màu xanh đặc trưng hệ điều hành iOS */
+        }
+
+        /* Responsive Mobile */
         @media (max-width: 900px) {
             .container { grid-template-columns: 1fr; gap: 15px; }
             .full-width { grid-column: span 1; }
             body { padding: 8px; }
             .order-table th, .order-table td { padding: 8px 4px; font-size: 0.9rem; }
-        }
-
-        @media print {
-            body * { visibility: hidden; background: transparent !important; box-shadow: none !important; }
-            #section-checkout, #section-checkout * { visibility: visible; }
-            #section-checkout { position: absolute; left: 0; top: 0; width: 100%; border: none; padding: 0; }
-            .action-group { display: none; }
         }
     </style>
 </head>
@@ -210,7 +253,6 @@
     </div>
 
     <div class="section full-width" id="section-checkout">
-        
         <div id="print-area" class="capture-area">
             <h2 id="checkout-title" style="border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px;">Menu Thứ ...</h2>
             
@@ -227,16 +269,15 @@
                 <tbody id="checkout-items"></tbody>
             </table>
         </div>
-
-        <div class="action-group" id="action-buttons" style="display: none;">
-            <button id="share-img-btn" class="btn-action btn-share" onclick="shareOrderAsImage()">
-                📸 Chia sẻ file ẢNH qua ShareSheet
-            </button>
-            <button class="btn-action btn-download" onclick="downloadReceipt()">
-                🖨️ Tải phiếu / In PDF
-            </button>
-        </div>
     </div>
+</div>
+
+<div id="ios-share-btn" class="ios-share-fab" onclick="shareOrderAsImage()" style="display: none;" title="Chia sẻ ảnh đơn hàng">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+        <polyline points="16 6 12 2 8 6" />
+        <line x1="12" y1="2" x2="12" y2="15" />
+    </svg>
 </div>
 
 <script>
@@ -308,16 +349,17 @@
 
     function renderCart() {
         const placeholder2 = document.getElementById('cart-placeholder'); const table2 = document.getElementById('order-table'); const tbody2 = document.getElementById('cart-items'); const totalSpan2 = document.getElementById('cart-total');
-        const placeholder3 = document.getElementById('checkout-placeholder'); const table3 = document.getElementById('checkout-table'); const tbody3 = document.getElementById('checkout-items'); const actionButtons = document.getElementById('action-buttons');
+        const placeholder3 = document.getElementById('checkout-placeholder'); const table3 = document.getElementById('checkout-table'); const tbody3 = document.getElementById('checkout-items'); 
+        const iosShareBtn = document.getElementById('ios-share-btn');
 
         if (cart.length === 0) {
             placeholder2.style.display = 'block'; table2.style.display = 'none'; totalSpan2.innerText = '0 đ';
-            placeholder3.style.display = 'block'; table3.style.display = 'none'; actionButtons.style.display = 'none';
+            placeholder3.style.display = 'block'; table3.style.display = 'none'; iosShareBtn.style.display = 'none';
             return;
         }
 
         placeholder2.style.display = 'none'; table2.style.display = 'table';
-        placeholder3.style.display = 'none'; table3.style.display = 'table'; actionButtons.style.display = 'grid';
+        placeholder3.style.display = 'none'; table3.style.display = 'table'; iosShareBtn.style.display = 'flex';
 
         tbody2.innerHTML = ''; tbody3.innerHTML = '';
         let totalOrderPrice = 0; let totalQuantity = 0;
@@ -343,7 +385,7 @@
             tr2.innerHTML = `<td><strong>${item.name}</strong>${metaHTML}</td><td style="text-align: center; font-weight: 600;">${item.quantity}</td><td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td><td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>`;
             tbody2.appendChild(tr2);
 
-            // Section 3 Table Rows (ĐÃ BỎ chữ " phần")
+            // Section 3 Table Rows
             const tr3 = document.createElement('tr');
             tr3.innerHTML = `
                 <td><strong>${item.name}</strong>${metaHTML}</td>
@@ -360,9 +402,9 @@
         totalRow3.style.backgroundColor = '#f8fafc'; 
         totalRow3.style.borderTop = '2px dashed var(--border-color)';
         totalRow3.innerHTML = `
-            <td style="text-align: left; font-weight: bold; padding: 12px 8px; color: var(--primary-color);">Tổng cộng</td>
-            <td style="text-align: center; font-weight: bold; font-size: 1.05rem; color: var(--primary-color);">${totalQuantity}</td>
-            <td style="text-align: right; font-weight: bold; font-size: 1.05rem; color: var(--accent-color);">${totalOrderPrice.toLocaleString('vi-VN')} đ</td>
+            <td style="text-align: left; font-weight: bold; color: var(--primary-color);">Tổng cộng</td>
+            <td style="text-align: center; font-weight: bold; color: var(--primary-color);">${totalQuantity}</td>
+            <td style="text-align: right; font-weight: bold; font-size: 1.2rem; color: var(--accent-color);">${totalOrderPrice.toLocaleString('vi-VN')} đ</td>
         `;
         tbody3.appendChild(totalRow3);
     }
@@ -370,10 +412,9 @@
     async function shareOrderAsImage() {
         if (cart.length === 0) return;
 
-        const shareBtn = document.getElementById('share-img-btn');
-        const originalText = shareBtn.innerText;
-        shareBtn.innerText = "⏳ Đang tạo ảnh...";
-        shareBtn.disabled = true;
+        const iosBtn = document.getElementById('ios-share-btn');
+        iosBtn.style.pointerEvents = 'none';
+        iosBtn.style.opacity = '0.5';
 
         try {
             const printArea = document.getElementById('print-area');
@@ -386,14 +427,13 @@
             });
 
             canvas.toBlob(async (blob) => {
-                if (!blob) { alert("Không thể tạo file ảnh."); return; }
+                if (!blob) { alert("Không thể tạo file ảnh."); iosBtn.style.pointerEvents = 'auto'; iosBtn.style.opacity = '1'; return; }
                 const file = new File([blob], `Menu_${titleText.replace(/[\s()\/]/g, '_')}.png`, { type: 'image/png' });
 
+                // CHỈ SHARE DUY NHẤT FILE ẢNH, KHÔNG ĐÍNH KÈM TEXT HOẶC TITLE
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({
-                        files: [file],
-                        title: titleText,
-                        text: `Gửi danh sách đơn hàng ${titleText}`
+                        files: [file]
                     });
                 } else {
                     const a = document.createElement('a');
@@ -402,20 +442,20 @@
                     a.click();
                     alert("Hệ thống đã tự động TẢI FILE ẢNH về thiết bị do trình duyệt chưa hỗ trợ Share file ảnh trực tiếp!");
                 }
-                shareBtn.innerText = originalText; shareBtn.disabled = false;
+                iosBtn.style.pointerEvents = 'auto'; iosBtn.style.opacity = '1';
             }, 'image/png');
 
         } catch (error) {
             console.error("Lỗi khi tạo và share ảnh:", error);
             alert("Có lỗi xảy ra khi xuất ảnh.");
-            shareBtn.innerText = originalText; shareBtn.disabled = false;
+            iosBtn.style.pointerEvents = 'auto'; iosBtn.style.opacity = '1';
         }
     }
 
-    function downloadReceipt() { window.print(); }
-
-    // Khởi động render ban đầu
-    initTitleDate(); table2 = document.getElementById('order-table'); table2.style.display = 'none'; document.getElementById('checkout-table').style.display = 'none'; renderMenu(menuData);
+    initTitleDate(); 
+    document.getElementById('order-table').style.display = 'none'; 
+    document.getElementById('checkout-table').style.display = 'none'; 
+    renderMenu(menuData);
 </script>
 </body>
 </html>

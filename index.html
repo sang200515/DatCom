@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>Menu Gọi Món - iOS Style</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -14,6 +14,16 @@
             --border-color: #e2e8f0;
             --success-color: #2ecc71;
             --share-color: #3498db;
+        }
+
+        /* Chặn double-tap zoom bằng CSS trên iOS */
+        body, 
+        button, 
+        .btn-qty, 
+        .btn-step, 
+        .menu-item, 
+        .order-table tbody tr {
+            touch-action: manipulation;
         }
 
         body {
@@ -74,9 +84,9 @@
         .menu-item.selected { background-color: #e2e8f0; font-weight: bold; }
 
         .options-group { margin-bottom: 15px; }
-        .options-group label.group-title { display: block; margin-bottom: 8px; font-weight: 500; color: #4a5568; }
+        .options-group label.group-title { display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568; }
 
-        /* Stepper Chung & Stepper cho Section 2 */
+        /* Stepper Component */
         .inline-stepper {
             display: inline-flex;
             align-items: center;
@@ -110,7 +120,7 @@
             display: inline-block;
         }
 
-        /* Tùy chỉnh Stepper riêng ở Section 1 to hơn một chút */
+        /* Tùy chỉnh Stepper riêng ở Section 1 lớn hơn */
         .inline-stepper.large-stepper {
             border-radius: 8px;
             padding: 4px;
@@ -143,21 +153,32 @@
             border-bottom: none; 
         }
 
-        /* Highlight border đỏ cho hàng khi được chọn */
         .order-table tbody tr {
             cursor: pointer;
-            transition: background-color 0.2s, outline 0.1s;
+            transition: background-color 0.2s;
         }
-        .order-table tbody tr.highlighted {
-            outline: 2px solid var(--accent-color);
+
+        /* ĐOẠN KHẮC PHỤC: Bo viền đỏ cho từng ô TD để hiển thị được trên Ảnh Share */
+        .order-table tbody tr.highlighted td {
             background-color: #fff5f5 !important;
+            border-top: 2px solid var(--accent-color) !important;
+            border-bottom: 2px solid var(--accent-color) !important;
+        }
+        .order-table tbody tr.highlighted td:first-child {
+            border-left: 2px solid var(--accent-color) !important;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+        .order-table tbody tr.highlighted td:last-child {
+            border-right: 2px solid var(--accent-color) !important;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
         }
 
         .btn-delete { background: none; border: none; color: var(--accent-color); cursor: pointer; font-weight: bold; font-size: 1.1rem; padding: 4px 8px; }
 
         .cart-placeholder { color: #a0aec0; text-align: center; padding: 30px 0; font-style: italic; font-size: 1rem; }
         
-        /* Cấu trúc Footer 2 hàng */
         .footer-summary {
             margin-top: 15px;
             padding-top: 10px;
@@ -189,9 +210,7 @@
             color: #6b21a8; 
         }
 
-        /* ========================================================= */
-        /* SECTION 3: CLONE 100% TỪ SECTION 2 & TĂNG SIZE FONT 20%   */
-        /* ========================================================= */
+        /* SECTION 3: TĂNG SIZE FONT 20% ĐỂ XUẤT ẢNH CHỐT ĐƠN */
         .capture-area {
             background: var(--card-bg);
             border-radius: 12px;
@@ -230,9 +249,7 @@
         .capture-area .summary-row { font-size: calc(1.05rem * 1.2); }
         .capture-area .summary-row.total-price-row { font-size: calc(1.25rem * 1.2); }
 
-        /* ========================================================= */
-        /* FLOATING ACTION BUTTON - IOS STYLE                        */
-        /* ========================================================= */
+        /* FLOATING ACTION BUTTON - IOS STYLE */
         .ios-share-fab {
             position: fixed;
             bottom: 25px;
@@ -372,25 +389,21 @@
 </div>
 
 <script>
-
-    // Chặn double-tap zoom trên các thiết bị iOS
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function (event) {
-    const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault(); // Chặn hành vi zoom mặc định của trình duyệt
-        
-        // Giả lập một sự kiện click thông thường để phần tử vẫn nhận lệnh tap
-        if (event.target) {
-            event.target.click();
+    // Chặn double-tap zoom bằng JS bổ sung cho iPhone
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+            if (event.target) {
+                event.target.click();
+            }
         }
-    }
-    lastTouchEnd = now;
-}, false);
+        lastTouchEnd = now;
+    }, false);
 
-    
     const menuData = [
-        	{ id: 1, name: "Ba rọi chiên", price: 45000 },
+         	{ id: 1, name: "Ba rọi chiên", price: 45000 },
         { id: 2, name: "Cá diêu hồng chiên", price: 45000 },
         { id: 3, name: "Cá diêu hồng nấu ngót", price: 50000 },
         { id: 4, name: "Cá hú kho tiêu", price: 45000 },
@@ -619,7 +632,6 @@ document.addEventListener('touchend', function (event) {
 
     function selectItem(item) { selectedItem = item; document.getElementById('add-btn').disabled = false; filterMenu(); }
     
-    // Cập nhật số lượng của Section 1 dựa theo thiết kế Stepper mới
     function updateQuantity(amount) { 
         currentQuantity += amount; 
         if (currentQuantity < 1) currentQuantity = 1; 
@@ -653,14 +665,12 @@ document.addEventListener('touchend', function (event) {
         filterMenu(); renderCart();
     }
 
-    // Cập nhật số lượng qua Stepper trực tiếp ở Section 2
     function updateCartItemQty(index, delta) {
         cart[index].quantity += delta;
         if (cart[index].quantity < 1) cart[index].quantity = 1;
         renderCart();
     }
 
-    // Hàm Toggle Highlight (Bật/tắt viền đỏ) khi tap vào Cell/Row
     function toggleHighlightItem(index, event) {
         if (event.target.closest('.inline-stepper') || event.target.closest('.btn-delete')) return;
         cart[index].highlighted = !cart[index].highlighted;
@@ -707,7 +717,7 @@ document.addEventListener('touchend', function (event) {
                 ` : ''}
             `;
 
-            // RENDERING SECTION 2 (Có Stepper & Tap to Highlight)
+            // RENDERING SECTION 2
             const tr2 = document.createElement('tr');
             if (item.highlighted) tr2.classList.add('highlighted');
             tr2.onclick = (e) => toggleHighlightItem(index, e);
@@ -725,7 +735,7 @@ document.addEventListener('touchend', function (event) {
             `;
             tbody2.appendChild(tr2);
 
-            // RENDERING SECTION 3 (Tự động kế thừa và Highlight viền đỏ để chụp ảnh)
+            // RENDERING SECTION 3
             const tr3 = document.createElement('tr');
             if (item.highlighted) tr3.classList.add('highlighted');
             tr3.innerHTML = `

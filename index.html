@@ -1,689 +1,1153 @@
 <!DOCTYPE html>
+
 <html lang="vi">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Menu Gọi Món - iOS Style</title>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
+
         :root {
+
             --primary-color: #2c3e50;
+
             --accent-color: #e74c3c;
+
             --bg-color: #f8f9fa;
+
             --card-bg: #ffffff;
+
             --border-color: #e2e8f0;
+
             --success-color: #2ecc71;
+
             --share-color: #3498db;
+
         }
+
+
 
         body {
+
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
             background-color: var(--bg-color);
+
             color: #333;
+
             margin: 0;
+
             padding: 10px;
+
             display: flex;
+
             justify-content: center;
+
             position: relative;
+
             min-height: 100vh;
+
         }
+
+
 
         .container {
+
             width: 100%;
+
             max-width: 1200px;
+
             display: grid;
+
             grid-template-columns: 1fr 1fr;
+
             gap: 15px;
+
             padding-bottom: 80px; 
+
         }
+
+
 
         .full-width {
+
             grid-column: span 2;
+
         }
+
+
 
         .section {
+
             background: var(--card-bg);
+
             border-radius: 12px;
+
             padding: 16px;
+
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+
             border: 1px solid var(--border-color);
+
             display: flex;
+
             flex-direction: column;
+
             box-sizing: border-box;
+
         }
+
+
 
         h2 {
+
             margin-top: 0;
+
             color: var(--primary-color);
+
             border-bottom: 2px solid var(--border-color);
+
             padding-bottom: 10px;
+
             font-size: 1.2rem;
+
         }
+
+
 
         .search-box {
+
             width: 100%; padding: 12px; border: 1px solid var(--border-color);
+
             border-radius: 8px; font-size: 1rem; box-sizing: border-box; margin-bottom: 15px;
+
         }
+
+
 
         .menu-list {
+
             max-height: 250px; overflow-y: auto; border: 1px solid var(--border-color);
+
             border-radius: 8px; margin-bottom: 15px;
+
         }
+
+
 
         .menu-item { padding: 12px; cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; }
+
         .menu-item.selected { background-color: #e2e8f0; font-weight: bold; }
 
+
+
         .options-group { margin-bottom: 15px; }
+
         .options-group label.group-title { display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568; }
 
+
+
         .quantity-control { display: flex; align-items: center; gap: 10px; }
+
         .btn-qty { background: #cbd5e1; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1rem; }
+
         #quantity-val { font-size: 1.2rem; font-weight: bold; min-width: 30px; text-align: center; }
+
         
+
         .radio-option { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; cursor: pointer; }
+
         .note-box { width: 100%; padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 6px; box-sizing: border-box; }
 
+
+
         .btn-add {
+
             background-color: var(--success-color); color: white; border: none; padding: 14px;
+
             border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px;
+
         }
+
         .btn-add:disabled { background-color: #cbd5e1; cursor: not-allowed; }
 
-        /* Style Table của Section 2 */
-        .order-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
-        .order-table th, .order-table td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border-color); word-break: break-word; }
-        .order-table th { background-color: #f1f5f9; color: var(--primary-color); font-weight: 600; }
-.order-table tbody tr:last-child td { 
-    border-bottom: none; 
-}
 
-        .btn-delete { background: none; border: none; color: var(--accent-color); cursor: pointer; font-weight: bold; }
+
+        /* Style Table của Section 2 & 3 */
+
+        .order-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
+
+        .order-table th, .order-table td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border-color); word-break: break-word; vertical-align: middle; }
+
+        .order-table th { background-color: #f1f5f9; color: var(--primary-color); font-weight: 600; }
+
+        .order-table tbody tr:last-child td { 
+
+            border-bottom: none; 
+
+        }
+
+
+
+        /* Highlight border đỏ cho hàng khi được chọn */
+
+        .order-table tbody tr {
+
+            cursor: pointer;
+
+            transition: background-color 0.2s, outline 0.1s;
+
+        }
+
+        .order-table tbody tr.highlighted {
+
+            outline: 2px solid var(--accent-color);
+
+            background-color: #fff5f5 !important;
+
+        }
+
+
+
+        .btn-delete { background: none; border: none; color: var(--accent-color); cursor: pointer; font-weight: bold; font-size: 1.1rem; padding: 4px 8px; }
+
+
+
+        /* Inline Stepper Component cho Section 2 */
+
+        .inline-stepper {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            background: #f1f5f9;
+
+            border-radius: 6px;
+
+            padding: 2px;
+
+        }
+
+        .btn-step {
+
+            background: #ffffff;
+
+            border: 1px solid var(--border-color);
+
+            width: 26px;
+
+            height: 26px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: bold;
+
+            font-size: 1rem;
+
+            border-radius: 4px;
+
+            cursor: pointer;
+
+            color: var(--primary-color);
+
+            user-select: none;
+
+        }
+
+        .btn-step:active {
+
+            background: #e2e8f0;
+
+        }
+
+        .step-value {
+
+            font-size: 0.95rem;
+
+            font-weight: 600;
+
+            min-width: 24px;
+
+            text-align: center;
+
+            display: inline-block;
+
+        }
+
+
 
         .cart-placeholder { color: #a0aec0; text-align: center; padding: 30px 0; font-style: italic; font-size: 1rem; }
+
         
+
         /* Cấu trúc Footer 2 hàng */
+
         .footer-summary {
+
             margin-top: 15px;
+
             padding-top: 10px;
+
             border-top: 2px dashed var(--border-color);
+
             display: flex;
+
             flex-direction: column;
+
             gap: 8px;
+
         }
+
         .summary-row {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             font-size: 1.05rem;
+
         }
+
         .summary-row.total-price-row {
+
             font-size: 1.25rem;
+
             margin-top: 4px;
+
         }
+
         .text-label { font-weight: 600; color: #4a5568; }
+
         .text-value { font-weight: 700; color: #1a202c; }
+
         .text-value.highlight { color: var(--accent-color); }
+
         
+
         .item-meta-text { display: block; font-size: 0.8rem; color: #4a5568; margin-top: 4px; }
+
         
+
         .badge-option { display: inline-block; padding: 1px 6px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; background-color: #e2e8f0; }
+
         .badge-foodonly { background-color: #ffeede; color: #d35400; }
-.badge-brownrice { 
-    background-color: #f3e8ff; /* Màu nền tím nhạt nhẹ nhàng */
-    color: #6b21a8;            /* Màu chữ tím đậm để dễ đọc */
-}
+
+        .badge-brownrice { 
+
+            background-color: #f3e8ff; 
+
+            color: #6b21a8; 
+
+        }
+
+
 
         /* ========================================================= */
-        /* SECTION 3: CLONE 100% TỪ SECTION 2 & TĂNG SIZE FONT 20%  */
+
+        /* SECTION 3: CLONE 100% TỪ SECTION 2 & TĂNG SIZE FONT 20%   */
+
         /* ========================================================= */
+
         .capture-area {
+
             background: var(--card-bg);
+
             border-radius: 12px;
+
             padding: 16px;
+
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+
             border: 1px solid var(--border-color);
+
             display: flex;
+
             flex-direction: column;
+
             box-sizing: border-box;
+
             width: 100%;
+
         }
+
+
 
         .capture-area h2 {
+
             margin-top: 0;
+
             color: var(--primary-color);
+
             border-bottom: 2px solid var(--border-color);
+
             padding-bottom: 10px;
+
             font-size: calc(1.2rem * 1.2); 
+
         }
+
+
 
         .capture-area .order-table th, 
+
         .capture-area .order-table td {
+
             font-size: calc(1rem * 1.2);
+
             padding: 12px 10px;
+
         }
+
+
 
         .capture-area .item-meta-text { font-size: calc(0.8rem * 1.2); }
+
         .capture-area .badge-option { font-size: calc(0.75rem * 1.2); }
 
+
+
         .capture-area .footer-summary {
+
             margin-top: 15px;
+
             padding-top: 12px;
+
             border-top: 2px dashed var(--border-color);
+
             gap: 10px;
+
         }
+
         .capture-area .summary-row { font-size: calc(1.05rem * 1.2); }
+
         .capture-area .summary-row.total-price-row { font-size: calc(1.25rem * 1.2); }
 
+
+
         /* ========================================================= */
+
         /* FLOATING ACTION BUTTON - IOS STYLE                        */
+
         /* ========================================================= */
+
         .ios-share-fab {
+
             position: fixed;
+
             bottom: 25px;
+
             right: 25px;
+
             width: 56px;
+
             height: 56px;
+
             background-color: #ffffff;
+
             border-radius: 50%;
+
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
             border: 1px solid var(--border-color);
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             cursor: pointer;
+
             z-index: 999;
+
             transition: transform 0.2s ease, background-color 0.2s ease;
+
         }
+
+
 
         .ios-share-fab:active {
+
             transform: scale(0.9);
+
             background-color: #f1f5f9;
+
         }
+
+
 
         .ios-share-fab svg {
+
             width: 24px;
+
             height: 24px;
+
             color: #007afb;
+
         }
+
+
 
         @media (max-width: 900px) {
+
             .container { grid-template-columns: 1fr; gap: 15px; }
+
             .full-width { grid-column: span 1; }
+
             body { padding: 8px; }
+
         }
+
     </style>
+
 </head>
+
 <body>
 
+
+
 <div class="container">
+
     <div class="section">
+
         <h2>1. Chọn Món & Tùy Chọn</h2>
+
         <input type="text" id="search" class="search-box" placeholder="Nhập tên món ăn cần tìm..." oninput="filterMenu()">
+
         <div class="menu-list" id="menu-container"></div>
 
-        <div class="options-group">
-            <label class="group-title">Số lượng:</label>
-            <div class="quantity-control">
-                <button class="btn-qty" onclick="updateQuantity(-1)">-</button>
-                <span id="quantity-val">1</span>
-                <button class="btn-qty" onclick="updateQuantity(1)">+</button>
-            </div>
-        </div>
+
 
         <div class="options-group">
-            <label class="group-title">Tùy chọn món ăn:</label>
-            <label class="radio-option">
-                <input type="radio" name="meal-option" value="normal" checked onchange="toggleCustomNote(true)">
-                <span>Bình thường (Cơm trắng)</span>
-            </label>
-            <label class="radio-option">
-                <input type="radio" name="meal-option" value="food_only" onchange="toggleCustomNote(false)">
-                <span>Chỉ lấy đồ ăn <span style="color: #fc0505; font-weight:500;">(-15.000 đ)</span></span>
-            </label>
-            <label class="radio-option">
-                <input type="radio" name="meal-option" value="brown_rice" onchange="toggleCustomNote(false)">
-                <span>Lấy gạo lức <span style="color: #a216de; font-weight:500;">(+5.000 đ)</span></span>
-            </label>
-            <div id="custom-note-container">
-                <input type="text" id="custom-note" class="note-box" placeholder="Ghi chú thêm (ví dụ: ít cơm, nhiều sốt...)">
+
+            <label class="group-title">Số lượng:</label>
+
+            <div class="quantity-control">
+
+                <button class="btn-qty" onclick="updateQuantity(-1)">-</button>
+
+                <span id="quantity-val">1</span>
+
+                <button class="btn-qty" onclick="updateQuantity(1)">+</button>
+
             </div>
+
         </div>
+
+
+
+        <div class="options-group">
+
+            <label class="group-title">Tùy chọn món ăn:</label>
+
+            <label class="radio-option">
+
+                <input type="radio" name="meal-option" value="normal" checked onchange="toggleCustomNote(true)">
+
+                <span>Bình thường (Cơm trắng)</span>
+
+            </label>
+
+            <label class="radio-option">
+
+                <input type="radio" name="meal-option" value="food_only" onchange="toggleCustomNote(false)">
+
+                <span>Chỉ lấy đồ ăn <span style="color: #fc0505; font-weight:500;">(-15.000 đ)</span></span>
+
+            </label>
+
+            <label class="radio-option">
+
+                <input type="radio" name="meal-option" value="brown_rice" onchange="toggleCustomNote(false)">
+
+                <span>Lấy gạo lức <span style="color: #a216de; font-weight:500;">(+5.000 đ)</span></span>
+
+            </label>
+
+            <div id="custom-note-container">
+
+                <input type="text" id="custom-note" class="note-box" placeholder="Ghi chú thêm (ví dụ: ít cơm, nhiều sốt...)">
+
+            </div>
+
+        </div>
+
         <button id="add-btn" class="btn-add" onclick="addToCart()" disabled>Thêm vào đơn hàng</button>
+
     </div>
+
+
 
     <div class="section">
+
         <h2>2. Sửa Đổi Đơn Hàng</h2>
+
         <div id="cart-placeholder" class="cart-placeholder">Đơn hàng trống.</div>
+
         <table id="order-table" class="order-table">
+
             <thead>
+
                 <tr>
-                    <th style="width: 50%;">Món ăn</th>
-                    <th style="text-align: center; width: 15%;">SL</th>
-                    <th style="text-align: right; width: 23%;">Thành tiền</th>
-                    <th style="text-align: center; width: 12%;">Xóa</th>
+
+                    <th style="width: 45%;">Món ăn</th>
+
+                    <th style="text-align: center; width: 25%;">SL</th>
+
+                    <th style="text-align: right; width: 22%;">Thành tiền</th>
+
+                    <th style="text-align: center; width: 8%;">Xóa</th>
+
                 </tr>
+
             </thead>
+
             <tbody id="cart-items"></tbody>
+
         </table>
+
         
+
         <div class="footer-summary" id="cart-summary-container" style="display: none;">
+
             <div class="summary-row">
+
                 <span class="text-label">Tổng số phần:</span>
+
                 <span class="text-value" id="cart-total-qty">0 phần</span>
+
             </div>
+
             <div class="summary-row total-price-row">
+
                 <span class="text-label">Tổng tiền:</span>
+
                 <span class="text-value highlight" id="cart-total-price">0 đ</span>
+
             </div>
+
         </div>
+
     </div>
+
+
 
     <div class="full-width" id="section-checkout">
+
         <div id="print-area" class="capture-area">
+
             <h2 id="checkout-title">Menu Thứ ...</h2>
+
             <div id="checkout-placeholder" class="cart-placeholder">Chưa có dữ liệu để chốt đơn.</div>
+
             <table id="checkout-table" class="order-table">
+
                 <thead>
+
                     <tr>
+
                         <th style="width: 55%;">Món ăn</th>
+
                         <th style="text-align: center; width: 15%;">SL</th>
+
                         <th style="text-align: right; width: 30%;">Thành tiền</th>
+
                     </tr>
+
                 </thead>
+
                 <tbody id="checkout-items"></tbody>
+
             </table>
+
             
+
             <div class="footer-summary" id="checkout-summary-container" style="display: none;">
+
                 <div class="summary-row">
+
                     <span class="text-label">Tổng số phần:</span>
+
                     <span class="text-value" id="checkout-total-qty">0 phần</span>
+
                 </div>
+
                 <div class="summary-row total-price-row">
+
                     <span class="text-label">Tổng tiền:</span>
+
                     <span class="text-value highlight" id="checkout-total-price">0 đ</span>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 </div>
+
+
 
 <div id="ios-share-btn" class="ios-share-fab" onclick="shareOrderAsImage()" style="display: none;" title="Chia sẻ ảnh đơn hàng">
+
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
         <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+
         <polyline points="16 6 12 2 8 6" />
+
         <line x1="12" y1="2" x2="12" y2="15" />
+
     </svg>
+
 </div>
 
+
+
 <script>
+
     const menuData = [
+
         { id: 1, name: "Ba rọi chiên", price: 45000 },
+
         { id: 2, name: "Cá diêu hồng chiên", price: 45000 },
+
         { id: 3, name: "Cá diêu hồng nấu ngót", price: 50000 },
+
         { id: 4, name: "Cá hú kho tiêu", price: 45000 },
+
         { id: 5, name: "Cá lóc kho tiêu", price: 45000 },
+
         { id: 6, name: "Cá ngừ kho thơm", price: 45000 },
-        { id: 7, name: "Cá nục kho cà", price: 45000 },
-        { id: 8, name: "Cá nục kho măng", price: 45000 },
-        { id: 9, name: "Cá rô chiên mắm xoài", price: 45000 },
-        { id: 10, name: "Cá rô kho tiêu", price: 45000 },
-        { id: 11, name: "Canh chua cá hú", price: 50000 },
-        { id: 12, name: "Chả chưng", price: 45000 },
-        { id: 13, name: "Đậu hủ dồn thịt", price: 45000 },
-        { id: 14, name: "Khổ qua chiên trứng", price: 45000 },
-        { id: 15, name: "Gà chiên nước mắm", price: 45000 },
-        { id: 16, name: "Gà hấp", price: 45000 },
-        { id: 17, name: "Gà kho xả", price: 45000 },
-        { id: 18, name: "Gà nấu nấm đông cô", price: 45000 },
-        { id: 19, name: "Gà rô ti", price: 45000 },
-        { id: 20, name: "Heo quay kho cải chua", price: 45000 },
-        { id: 21, name: "Kho basa chiên", price: 45000 },
-        { id: 22, name: "Lạp xưởng chiên", price: 45000 },
-        { id: 23, name: "Mắm ruốc xào thịt", price: 45000 },
-        { id: 24, name: "Mực xào sate", price: 45000 },
-        { id: 25, name: "Nấm bào ngư chiên trứng", price: 45000 },
-        { id: 26, name: "Phá lấu", price: 45000 },
-        { id: 27, name: "Sườn muối chiên", price: 50000 },
-        { id: 28, name: "Sườn nướng", price: 45000 },
-        { id: 29, name: "Thịt kho măng", price: 45000 },
-        { id: 30, name: "Thịt kho tiêu", price: 45000 },
-        { id: 31, name: "Thịt kho tiêu (thêm mẫu)", price: 45000 },
-        { id: 32, name: "Thịt kho trứng", price: 45000 },
-        { id: 33, name: "Thịt luộc mắm rơm", price: 45000 },
-        { id: 34, name: "Tôm rim", price: 45000 },
-        { id: 35, name: "Trứng chiên cà", price: 45000 },
-        { id: 36, name: "Vịt kho gừng", price: 45000 },
-        { id: 37, name: "Xíu mại", price: 45000 },
-        { id: 38, name: "Cá bống dừa kho", price: 45000 },
-        { id: 39, name: "Đậu hủ chiên xả (chay)", price: 45000 },
-        { id: 40, name: "Đậu ve xào thịt + viên", price: 45000 },
-        { id: 41, name: "Ốc xào xả ớt", price: 45000 },
-        { id: 42, name: "Cá mỏ chiên", price: 45000 },
-        { id: 43, name: "Khổ qua cà ớt", price: 45000 },
-        { id: 44, name: "Canh khổ qua dồn thịt", price: 45000 },
-        { id: 45, name: "Mực xào dưa cà", price: 45000 },
-        { id: 46, name: "Tép ram", price: 45000 },
-        { id: 47, name: "Ếch xào lăn", price: 45000 },
-        { id: 48, name: "Sườn xào chua ngọt", price: 50000 },
-        { id: 49, name: "Nấm bào ngư xào thịt", price: 45000 },
-        { id: 50, name: "Thịt kho khổ qua", price: 45000 },
-        { id: 51, name: "Sườn kho thơm", price: 45000 },
-        { id: 52, name: "Mướp xào lòng gà", price: 45000 },
-        { id: 53, name: "Thịt kho tiêu trứng cút", price: 45000 },
-        { id: 54, name: "Đậu hủ non sốt thịt", price: 45000 },
-        { id: 55, name: "Mực dồn thịt", price: 45000 },
-        { id: 56, name: "Trứng chiên nấm rơm", price: 45000 },
-        { id: 57, name: "Cá kèo kho", price: 45000 },
-        { id: 58, name: "Cá diêu hồng sốt cà", price: 45000 },
-        { id: 59, name: "Thịt kho đậu hủ", price: 45000 },
-        { id: 60, name: "Xá xíu", price: 45000 },
-        { id: 61, name: "Đậu ve xào lòng gà", price: 45000 },
-        { id: 62, name: "Cá trê chiên mắm gừng", price: 45000 },
-        { id: 63, name: "Cá hương chiên", price: 45000 },
-        { id: 64, name: "Cá thu chiên sốt cà", price: 50000 },
-        { id: 65, name: "Khổ lủ dù chiên", price: 45000 },
-        { id: 66, name: "Cá nục chiên", price: 45000 },
-        { id: 67, name: "Chả cá sốt thịt", price: 45000 },
-        { id: 68, name: "Bông cải xào tôm thịt", price: 45000 },
-        { id: 69, name: "Sườn non kho tiêu", price: 45000 },
-        { id: 70, name: "Chả cá chiên", price: 45000 },
-        { id: 71, name: "Cá chim chiên", price: 45000 },
-        { id: 72, name: "Trứng cút sốt dầu hào", price: 45000 },
-        { id: 73, name: "Bì chả", price: 45000 },
-        { id: 74, name: "Đầu cá lóc kho", price: 50000 },
-        { id: 75, name: "Mướp xào thịt", price: 45000 },
-        { id: 76, name: "Hến xào xả ớt", price: 45000 },
-        { id: 77, name: "Củ cải mặn xào thịt", price: 45000 },
-        { id: 78, name: "Bì", price: 45000 },
-        { id: 79, name: "Cá thu sốt cà", price: 50000 },
-        { id: 80, name: "Cá chẽm chiên", price: 45000 },
-        { id: 81, name: "Cá đối kho", price: 45000 },
-        { id: 82, name: "Ngó sen xào tôm thịt", price: 45000 },
-        { id: 83, name: "Cá lưỡi trâu chiên", price: 45000 },
-        { id: 84, name: "Heo quay", price: 45000 },
-        { id: 85, name: "Cá rô chiên", price: 45000 },
-        { id: 86, name: "Cá bống trứng kho (nhỏ)", price: 45000 },
-        { id: 87, name: "Cá bạc má kho măng", price: 45000 },
-        { id: 88, name: "Cá bạc má chiên", price: 45000 },
-        { id: 89, name: "Cá bống cát kho (lớn)", price: 45000 },
-        { id: 90, name: "Cá cơm kho tiêu", price: 45000 },
-        { id: 91, name: "Mắm chưng", price: 45000 },
-        { id: 92, name: "Cá trê kho", price: 45000 },
-        { id: 93, name: "Cá lòng tong kho tiêu", price: 45000 },
-        { id: 94, name: "Cút rô ti", price: 45000 },
-        { id: 95, name: "Phi lê cá basa chiên", price: 45000 },
-        { id: 96, name: "Ngó sen xào thịt bò", price: 45000 },
-        { id: 97, name: "Mầm rau rau ghém", price: 50000 },
-        { id: 98, name: "Lỗ tai heo phá lấu", price: 45000 },
-        { id: 99, name: "Giò heo nấu nấm đông cô", price: 50000 },
-        { id: 100, name: "Nấm rơm kho tiêu (chay)", price: 45000 },
-        { id: 101, name: "Bông cải xào (chay)", price: 45000 },
-        { id: 102, name: "Sườn kho tiêu", price: 45000 },
-        { id: 103, name: "Ba rọi kho", price: 45000 },
-        { id: 104, name: "Mì căn xào xả ớt (chay)", price: 45000 },
-        { id: 105, name: "Cà tím xào dầu hào (chay)", price: 45000 },
-        { id: 106, name: "Rau muống xào dầu hào (chay)", price: 45000 },
-        { id: 107, name: "Ruột heo xào cải chua (chay)", price: 45000 },
-        { id: 108, name: "Khổ qua + nấm rơm kho tiêu (chay)", price: 45000 },
-        { id: 109, name: "Ngó sen xào (chay)", price: 45000 },
-        { id: 110, name: "Đồ khô thập cẩm (chay)", price: 45000 },
-        { id: 111, name: "Khổ qua kho chay (chay)", price: 45000 },
-        { id: 112, name: "Đồ xào (chay)", price: 45000 },
-        { id: 113, name: "Rau mực xào sa tế", price: 45000 },
-        { id: 114, name: "Đậu ve xào chay (chay)", price: 45000 },
-        { id: 115, name: "Cá thu chiên", price: 50000 },
-        { id: 116, name: "Gà kho gừng", price: 45000 },
-        { id: 117, name: "Đuôi cá ba sa chiên", price: 45000 },
-        { id: 118, name: "Ruột heo phá lấu", price: 45000 },
-        { id: 119, name: "Đồ xào thập cẩm (chay)", price: 45000 },
-        { id: 120, name: "Cá thu nhật kho cà", price: 50000 },
-        { id: 121, name: "Cá lóc muối xả chiên", price: 45000 },
-        { id: 122, name: "Cá thu chiên mắm xoài", price: 50000 },
-        { id: 123, name: "Bạch tuộc xào dưa cà", price: 45000 },
-        { id: 124, name: "Khô cá sặc chiên", price: 45000 },
-        { id: 125, name: "Cá bạc má chiên (thêm mẫu)", price: 45000 },
-        { id: 126, name: "Cá bạc má kho cà", price: 45000 },
-        { id: 127, name: "Cá lóc chiên mắm xoài", price: 45000 },
-        { id: 128, name: "Khâu dục", price: 45000 },
-        { id: 129, name: "Cá trê chiên mắm xoài", price: 45000 },
-        { id: 130, name: "Cua rang me", price: 45000 },
-        { id: 131, name: "Cá sặc chiên mắm xoài", price: 45000 },
-        { id: 132, name: "Bao tử + lưỡi + lỗ tai heo phá lấu", price: 45000 },
-        { id: 133, name: "Cá ngân chiên mắm xoài", price: 45000 },
-        { id: 134, name: "Cá cơm kho thơm", price: 45000 },
-        { id: 135, name: "Lưỡi heo phá lấu", price: 45000 },
-        { id: 136, name: "Cá ngân chiên mắm xoài (thêm mẫu)", price: 45000 },
-        { id: 137, name: "Cá ngừ kho cà", price: 45000 },
-        { id: 138, name: "Nấm bào ngư xào (chay)", price: 45000 },
-        { id: 139, name: "Ngó sen xào (chay) (thêm mẫu)", price: 45000 },
-        { id: 140, name: "Sườn chay chiên giòn (chay)", price: 45000 },
-        { id: 141, name: "Đậu bắp xào (chay)", price: 45000 },
-        { id: 142, name: "Nấm rơm + khổ qua rừng kho (chay)", price: 45000 },
-        { id: 143, name: "Mướp xào (chay)", price: 45000 },
-        { id: 144, name: "Rau muống xào chao (chay)", price: 45000 },
-        { id: 145, name: "Trứng cút sốt thịt bằm", price: 45000 },
-        { id: 146, name: "Cá hấp chiên", price: 45000 },
-        { id: 147, name: "Cà tím xào thịt bằm", price: 45000 },
-        { id: 148, name: "Sườn non kho tiêu", price: 50000 },
-        { id: 149, name: "Sườn xào lăn", price: 45000 },
-        { id: 150, name: "Ruột heo xào cải chua (mặn)", price: 45000 },
-        { id: 151, name: "Măng tây xào thịt bò", price: 45000 },
-        { id: 152, name: "Chả cá sốt cà", price: 45000 },
-        { id: 153, name: "Cá chốt kho", price: 45000 },
-        { id: 154, name: "Cà tím xào cà mặn", price: 45000 },
-        { id: 155, name: "Bông cải xào thịt", price: 45000 },
-        { id: 156, name: "Tép ram (thêm mẫu)", price: 45000 },
-        { id: 157, name: "Rau muống xào chao", price: 45000 },
-        { id: 158, name: "Cánh gà chiên nước mắm", price: 45000 },
-        { id: 159, name: "Canh chua đầu cá hú", price: 50000 },
-        { id: 160, name: "Cá lóc chiên", price: 45000 },
-        { id: 161, name: "Đậu hủ chiên xả + rau củ luộc", price: 45000 },
-        { id: 162, name: "Cơm trắng 20", price: 45000 },
-        { id: 163, name: "Hến chiên trứng", price: 45000 },
-        { id: 164, name: "Sườn chay ram sả ớt (chay)", price: 45000 },
-        { id: 165, name: "Xoài bào", price: 45000 },
-        { id: 166, name: "Gà chiên xả", price: 45000 },
-        { id: 167, name: "Cơm gạo lức", price: 45000 },
-        { id: 168, name: "Sườn non ram muối", price: 50000 },
-        { id: 169, name: "Tép nhỏ ram", price: 45000 },
-        { id: 170, name: "Xúc xích + bắp luộc", price: 45000 },
-        { id: 171, name: "Cá chim chiên mắm xoài", price: 45000 },
-        { id: 172, name: "Cơm trắng (không đồ ăn)", price: 45000 },
-        { id: 173, name: "Thịt kho khổ qua (thêm mẫu)", price: 45000 },
-        { id: 174, name: "Đậu que xào thịt", price: 45000 },
-        { id: 175, name: "Sườn xào chua ngọt (chay)", price: 45000 },
-        { id: 176, name: "Sa kê hầm chay (chay)", price: 45000 },
-        { id: 177, name: "Rau củ luộc + kho quẹt", price: 45000 },
-        { id: 178, name: "Trứng cá lóc kho tiêu", price: 45000 },
-        { id: 179, name: "Cá nục kho thơm", price: 45000 },
-        { id: 180, name: "Bông cải xào thịt bò", price: 45000 },
-        { id: 181, name: "Cá lăng kho hành", price: 45000 },
-        { id: 182, name: "Cá hấp kho măng", price: 45000 },
-        { id: 183, name: "Cá chim chiên sốt cà", price: 45000 },
-        { id: 184, name: "Canh chua đầu cá lóc", price: 45000 },
-        { id: 185, name: "Sườn cốt lết chiên", price: 45000 },
-        { id: 186, name: "Sa kê sốt thịt bằm", price: 45000 },
-        { id: 187, name: "Sa kê hầm chao đỏ", price: 45000 },
-        { id: 188, name: "Gà xào gừng mật ong", price: 45000 },
-        { id: 189, name: "Đùi gà muối xả chiên giòn", price: 45000 },
-        { id: 190, name: "Cá chim chiên sốt cà (thêm mẫu)", price: 45000 },
-        { id: 191, name: "Cà tím xào dầu hào", price: 45000 },
-        { id: 192, name: "Trứng chiên củ cải mặn", price: 45000 },
-        { id: 193, name: "Vịt kho xả", price: 45000 },
-        { id: 194, name: "Bó xôi xào dầu hào", price: 45000 },
-        { id: 195, name: "Canh chua tép", price: 45000 },
-        { id: 200, name: "Gà nấu lagu", price: 45000 }
+
+        { id: 7, name: "Cá nục kho cà", price: 45000 }
+
     ];
+
+
 
     let selectedItem = null; let currentQuantity = 1; let cart = [];
 
+
+
     function initTitleDate() {
+
         const days = ["Chủ Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+
         const today = new Date();
+
         const dayName = days[today.getDay()];
+
         const dd = String(today.getDate()).padStart(2, '0');
+
         const mm = String(today.getMonth() + 1).padStart(2, '0');
+
         document.getElementById('checkout-title').innerText = `Menu ${dayName} (${dd}/${mm})`;
+
     }
+
+
 
     function renderMenu(items) {
+
         const container = document.getElementById('menu-container'); container.innerHTML = '';
+
         if(items.length === 0) { container.innerHTML = '<div style="padding:15px; color:#999; text-align:center;">Không tìm thấy món</div>'; return; }
+
         items.forEach(item => {
+
             const div = document.createElement('div');
+
             div.className = `menu-item ${selectedItem && selectedItem.id === item.id ? 'selected' : ''}`;
+
             div.innerHTML = `<span>${item.name}</span> <span>${item.price.toLocaleString('vi-VN')} đ</span>`;
+
             div.onclick = () => selectItem(item);
+
             container.appendChild(div);
+
         });
+
     }
+
+
 
     function filterMenu() {
+
         const keyword = document.getElementById('search').value.toLowerCase().trim();
+
         const filtered = menuData.filter(item => item.name.toLowerCase().includes(keyword));
+
         renderMenu(filtered);
+
     }
+
+
 
     function selectItem(item) { selectedItem = item; document.getElementById('add-btn').disabled = false; filterMenu(); }
+
     function updateQuantity(amount) { currentQuantity += amount; if (currentQuantity < 1) currentQuantity = 1; document.getElementById('quantity-val').innerText = currentQuantity; }
+
     function toggleCustomNote(show) { const customNoteInput = document.getElementById('custom-note'); customNoteInput.disabled = !show; customNoteInput.style.opacity = show ? "1" : "0.5"; if(!show) customNoteInput.value = ""; }
 
+
+
     function addToCart() {
+
         if (!selectedItem) return;
+
         const optionRadio = document.querySelector('input[name="meal-option"]:checked').value;
+
         let finalPrice = selectedItem.price; let optionLabel = "Bình thường"; let badgeClass = "badge-option"; let textNote = "";
 
+
+
         if (optionRadio === "normal") { textNote = document.getElementById('custom-note').value.trim(); } 
+
         else if (optionRadio === "food_only") { finalPrice = selectedItem.price - 15000; optionLabel = "Chỉ lấy đồ ăn"; badgeClass += " badge-foodonly"; } 
+
         else if (optionRadio === "brown_rice") { finalPrice = selectedItem.price + 5000; optionLabel = "Gạo lức"; badgeClass += " badge-brownrice"; }
 
+
+
         const cartItemId = `${selectedItem.id}_${optionRadio}_${textNote}`;
+
         const existingIndex = cart.findIndex(cartItem => cartItem.cartItemId === cartItemId);
 
-        if (existingIndex > -1) { cart[existingIndex].quantity += currentQuantity; } 
-        else { cart.push({ cartItemId: cartItemId, id: selectedItem.id, name: selectedItem.name, calculatedPrice: finalPrice, quantity: currentQuantity, optionLabel: optionLabel, badgeClass: badgeClass, textNote: textNote }); }
+
+
+        if (existingIndex > -1) { 
+
+            cart[existingIndex].quantity += currentQuantity; 
+
+        } 
+
+        else { 
+
+            cart.push({ cartItemId: cartItemId, id: selectedItem.id, name: selectedItem.name, calculatedPrice: finalPrice, quantity: currentQuantity, optionLabel: optionLabel, badgeClass: badgeClass, textNote: textNote, highlighted: false }); 
+
+        }
+
+
 
         selectedItem = null; currentQuantity = 1;
+
         document.getElementById('quantity-val').innerText = '1'; document.getElementById('custom-note').value = ''; document.getElementById('search').value = '';
+
         document.querySelectorAll('input[name="meal-option"]')[0].checked = true; toggleCustomNote(true); document.getElementById('add-btn').disabled = true;
+
         filterMenu(); renderCart();
+
     }
+
+
+
+    // Hàm cập nhật số lượng qua Stepper trực tiếp ở Section 2
+
+    function updateCartItemQty(index, delta) {
+
+        cart[index].quantity += delta;
+
+        if (cart[index].quantity < 1) cart[index].quantity = 1;
+
+        renderCart();
+
+    }
+
+
+
+    // Hàm Toggle Highlight (Bật/tắt viền đỏ) khi tap vào Cell/Row
+
+    function toggleHighlightItem(index, event) {
+
+        // Tránh kích hoạt highlight nhầm khi user tap vào nút Stepper hoặc nút Xóa
+
+        if (event.target.closest('.inline-stepper') || event.target.closest('.btn-delete')) return;
+
+        cart[index].highlighted = !cart[index].highlighted;
+
+        renderCart();
+
+    }
+
+
 
     function removeFromCart(index) { cart.splice(index, 1); renderCart(); }
 
+
+
     function renderCart() {
+
         const placeholder2 = document.getElementById('cart-placeholder'); const table2 = document.getElementById('order-table'); const tbody2 = document.getElementById('cart-items'); 
+
         const container2 = document.getElementById('cart-summary-container'); const totalQty2 = document.getElementById('cart-total-qty'); const totalPrice2 = document.getElementById('cart-total-price');
+
         
+
         const placeholder3 = document.getElementById('checkout-placeholder'); const table3 = document.getElementById('checkout-table'); const tbody3 = document.getElementById('checkout-items'); 
+
         const container3 = document.getElementById('checkout-summary-container'); const totalQty3 = document.getElementById('checkout-total-qty'); const totalPrice3 = document.getElementById('checkout-total-price');
+
         
+
         const iosShareBtn = document.getElementById('ios-share-btn');
 
+
+
         if (cart.length === 0) {
+
             placeholder2.style.display = 'block'; table2.style.display = 'none'; container2.style.display = 'none';
+
             placeholder3.style.display = 'block'; table3.style.display = 'none'; container3.style.display = 'none'; iosShareBtn.style.display = 'none';
+
             return;
+
         }
+
+
 
         placeholder2.style.display = 'none'; table2.style.display = 'table'; container2.style.display = 'flex';
+
         placeholder3.style.display = 'none'; table3.style.display = 'table'; container3.style.display = 'flex'; iosShareBtn.style.display = 'flex';
 
+
+
         tbody2.innerHTML = ''; tbody3.innerHTML = '';
+
         let totalOrderPrice = 0; let totalQuantity = 0;
 
+
+
         cart.forEach((item, index) => {
+
             const itemTotal = item.calculatedPrice * item.quantity;
+
             totalOrderPrice += itemTotal;
+
             totalQuantity += item.quantity;
 
+
+
             const showBadge = item.optionLabel !== "Bình thường";
+
             const showNote = item.textNote && item.textNote.length > 0;
 
+
+
             const metaHTML = `
+
                 ${showBadge || showNote ? `
+
                     <div class="item-meta-text">
+
                         ${showBadge ? `<span class="${item.badgeClass}">${item.optionLabel}</span>` : ''}
+
                         ${showNote ? `<span style="font-style: italic; color:#718096; ${showBadge ? 'margin-left: 5px;' : ''}">- GC: ${item.textNote}</span>` : ''}
+
                     </div>
+
                 ` : ''}
+
             `;
 
-            // Section 2 Rows
+
+
+            // RENDERING SECTION 2 (Có Stepper & Tap to Highlight)
+
             const tr2 = document.createElement('tr');
-            tr2.innerHTML = `<td><strong>${item.name}</strong>${metaHTML}</td><td style="text-align: center; font-weight: 600;">${item.quantity}</td><td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td><td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>`;
+
+            if (item.highlighted) tr2.classList.add('highlighted');
+
+            tr2.onclick = (e) => toggleHighlightItem(index, e);
+
+            tr2.innerHTML = `
+
+                <td><strong>${item.name}</strong>${metaHTML}</td>
+
+                <td style="text-align: center;">
+
+                    <div class="inline-stepper">
+
+                        <div class="btn-step" onclick="updateCartItemQty(${index}, -1)">-</div>
+
+                        <span class="step-value">${item.quantity}</span>
+
+                        <div class="btn-step" onclick="updateCartItemQty(${index}, 1)">+</div>
+
+                    </div>
+
+                </td>
+
+                <td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+
+                <td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>
+
+            `;
+
             tbody2.appendChild(tr2);
 
-            // Section 3 Rows
+
+
+            // RENDERING SECTION 3 (Tự động kế thừa và Highlight viền đỏ để chụp ảnh)
+
             const tr3 = document.createElement('tr');
+
+            if (item.highlighted) tr3.classList.add('highlighted');
+
             tr3.innerHTML = `
+
                 <td><strong>${item.name}</strong>${metaHTML}</td>
+
                 <td style="text-align: center; font-weight: 600;">${item.quantity}</td>
+
                 <td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+
             `;
+
             tbody3.appendChild(tr3);
+
         });
 
+
+
         const formattedPrice = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
+
         const formattedQty = `${totalQuantity} phần`;
+
         
+
         totalQty2.innerText = formattedQty;
+
         totalPrice2.innerText = formattedPrice;
 
+
+
         totalQty3.innerText = formattedQty;
+
         totalPrice3.innerText = formattedPrice;
+
     }
+
+
 
     async function shareOrderAsImage() {
+
         if (cart.length === 0) return;
+
         const iosBtn = document.getElementById('ios-share-btn');
+
         iosBtn.style.pointerEvents = 'none'; iosBtn.style.opacity = '0.5';
 
+
+
         try {
+
             const printArea = document.getElementById('print-area');
+
             const titleText = document.getElementById('checkout-title').innerText;
 
+
+
             const canvas = await html2canvas(printArea, {
+
                 scale: 2, 
+
                 backgroundColor: '#ffffff',
+
                 useCORS: true
+
             });
 
+
+
             canvas.toBlob(async (blob) => {
+
                 if (!blob) { alert("Không thể tạo file ảnh."); iosBtn.style.pointerEvents = 'auto'; iosBtn.style.opacity = '1'; return; }
+
                 const file = new File([blob], `Menu_${titleText.replace(/[\s()\/]/g, '_')}.png`, { type: 'image/png' });
 
+
+
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
+
                     try {
+
                         await navigator.share({ files: [file] });
+
                     } catch (shareError) {
+
                         console.log("User cancelled share or error occur:", shareError);
+
                     }
+
                 } else {
+
                     const a = document.createElement('a');
+
                     a.href = URL.createObjectURL(blob);
+
                     a.download = `Menu_${titleText}.png`;
+
                     a.click();
+
                     alert("Hệ thống đã tự động TẢI FILE ẢNH về thiết bị do trình duyệt chưa hỗ trợ Share file ảnh trực tiếp!");
+
                 }
+
                 
+
                 setTimeout(() => {
+
                     iosBtn.style.pointerEvents = 'auto'; 
+
                     iosBtn.style.opacity = '1';
+
                 }, 300);
+
             }, 'image/png');
 
+
+
         } catch (error) {
+
             console.error("Lỗi khi tạo và share ảnh:", error);
+
             alert("Có lỗi xảy ra khi xuất ảnh.");
+
             iosBtn.style.pointerEvents = 'auto'; iosBtn.style.opacity = '1';
+
         }
+
     }
 
+
+
     initTitleDate(); 
+
     document.getElementById('order-table').style.display = 'none'; 
+
     document.getElementById('checkout-table').style.display = 'none'; 
+
     renderMenu(menuData);
+
 </script>
+
 </body>
+
 </html>

@@ -645,7 +645,7 @@
         let finalPrice = selectedItem.price; let optionLabel = "Bình thường"; let badgeClass = "badge-option"; let textNote = "";
 
         if (optionRadio === "normal") { textNote = document.getElementById('custom-note').value.trim(); } 
-        else if (optionRadio === "food_only") { finalPrice = selectedItem.price - 15000; optionLabel = "Chỉ lấy đồ ăn"; badgeClass += " badge-foodonly"; } 
+        else if (optionRadio === "food_only") { finalPrice = selectedItem.price - 10000; optionLabel = "Chỉ lấy đồ ăn"; badgeClass += " badge-foodonly"; } 
         else if (optionRadio === "brown_rice") { finalPrice = selectedItem.price + 5000; optionLabel = "Gạo lức"; badgeClass += " badge-brownrice"; }
 
         const cartItemId = `${selectedItem.id}_${optionRadio}_${textNote}`;

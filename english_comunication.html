@@ -3,803 +3,748 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce Platform Hub</title>
+    <title>3-Month English Communication Roadmap for Beginners</title>
     <style>
-        /* ==========================================
-           1. CSS RESET & VARIABLES
-           ========================================== */
         :root {
-            --primary: #007aff;
-            --primary-light: #e5f1ff;
-            --success: #34c759;
-            --warning: #ff9500;
-            --danger: #ff3b30;
-            --gray-100: #f5f5f7;
-            --gray-200: #e5e5ea;
-            --gray-300: #d1d1d6;
-            --gray-500: #8e8e93;
-            --gray-900: #1d1d1f;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --transition: all 0.2s ease-in-out;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #10b981;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --radius: 12px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--gray-100);
-            color: var(--gray-900);
-            line-height: 1.5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--text-main);
+            line-height: 1.6;
         }
 
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-        img { max-width: 100%; height: auto; display: block; }
-        button, input, select { font-family: inherit; border: none; background: none; outline: none; }
-
-        /* Global Layout Container */
-        .app-container {
-            max-width: 1440px;
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 20px;
         }
 
-        /* Global Header Navigation */
-        .global-nav {
-            background: #fff;
-            border-bottom: 1px solid var(--gray-200);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
         }
-        .nav-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 72px;
-        }
-        .brand-logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .main-menu {
-            display: flex;
-            gap: 32px;
-        }
-        .menu-link {
-            font-weight: 500;
-            color: var(--gray-500);
-            padding: 8px 0;
-            border-bottom: 2px solid transparent;
-            transition: var(--transition);
-        }
-        .menu-link.active, .menu-link:hover {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-        .user-actions {
-            display: flex;
-            align-items: center;
+
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
+        header p { font-size: 1.1rem; opacity: 0.9; }
+
+        /* Dashboard Overview */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-        }
-        .icon-btn {
-            position: relative;
-            cursor: pointer;
-            font-size: 20px;
-        }
-        .badge {
-            position: absolute;
-            top: -6px;
-            right: -8px;
-            background: var(--danger);
-            color: #fff;
-            font-size: 11px;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 10px;
+            margin-bottom: 30px;
         }
 
-        /* Section Layout Utilities */
-        .section-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .view-all {
-            font-size: 15px;
-            color: var(--primary);
-            font-weight: 500;
-        }
-        .screen-section {
-            padding: 48px 0;
-            border-bottom: 2px dashed var(--gray-200);
-        }
-
-        /* ==========================================
-           2. HOMENEW SCREEN COMPONENT
-           ========================================== */
-        .hero-banner {
-            background: linear-gradient(135deg, #0051a8 0%, #007aff 100%);
-            border-radius: var(--radius-lg);
-            padding: 60px;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-        .hero-content { max-width: 50%; }
-        .hero-tag {
-            background: rgba(255,255,255,0.2);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 16px;
-        }
-        .hero-content h2 { font-size: 42px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
-        .hero-content p { font-size: 18px; opacity: 0.9; margin-bottom: 28px; }
-        .cta-btn {
-            background: #fff;
-            color: var(--primary);
-            font-weight: 600;
-            padding: 14px 28px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-        .cta-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .hero-graphic {
-            width: 400px;
-            height: 250px;
-            background: rgba(255,255,255,0.1);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            border: 2px dashed rgba(255,255,255,0.2);
-        }
-
-        /* Collection View Layout (Grid 4 Columns) */
-        .collection-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-        }
-        .product-cell {
-            background: #fff;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        .product-cell:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-        .cell-thumbnail {
-            background: var(--gray-100);
-            height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            font-weight: 500;
-            color: var(--gray-500);
-        }
-        .tag-status {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: var(--danger);
-            color: #fff;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-        .cell-info { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .cell-brand { font-size: 13px; color: var(--gray-500); text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
-        .cell-title { font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; line-height: 1.4; }
-        .cell-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 14px; }
-        .rating { color: var(--warning); font-weight: 600; }
-        .sales-count { color: var(--gray-500); }
-        .cell-footer { display: flex; align-items: center; justify-content: space-between; }
-        .price-group { display: flex; flex-direction: column; }
-        .current-price { font-size: 18px; font-weight: 700; color: var(--gray-900); }
-        .old-price { font-size: 14px; color: var(--gray-500); text-decoration: line-through; }
-        .add-to-cart-btn {
-            background: var(--primary-light);
-            color: var(--primary);
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .add-to-cart-btn:hover { background: var(--primary); color: #fff; }
-
-        /* ==========================================
-           3. SEARCHVIEWCONTROLLER SCREEN COMPONENT
-           ========================================== */
-        .search-screen-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 32px;
-            align-items: start;
-        }
-        /* Sidebar Filter Panel */
-        .filter-panel {
-            background: #fff;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            box-shadow: var(--shadow-sm);
-        }
-        .filter-group { margin-bottom: 28px; }
-        .filter-group-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--gray-900); }
-        .filter-checkbox-list { display: flex; flex-direction: column; gap: 12px; }
-        .filter-checkbox-item { display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
-        .filter-checkbox-item input { width: 18px; height: 18px; accent-color: var(--primary); }
-        .price-range-inputs { display: flex; align-items: center; gap: 8px; }
-        .price-input {
-            width: 100%;
-            border: 1px solid var(--gray-200);
-            padding: 8px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
+        .stat-card {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
             text-align: center;
         }
-        .filter-action-btns { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
-        .btn-apply { background: var(--primary); color: #fff; text-align: center; padding: 12px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
-        .btn-reset { background: var(--gray-100); color: var(--gray-900); text-align: center; padding: 12px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
 
-        /* Search Results Main Column */
-        .search-main-content { display: flex; flex-direction: column; gap: 24px; }
-        .search-bar-container {
+        .stat-card h3 { font-size: 1rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; }
+        .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--primary); }
+
+        /* Tab Navigation for Months */
+        .month-tabs {
             display: flex;
-            gap: 12px;
-            background: #fff;
-            padding: 12px;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
         }
-        .search-input-field { flex-grow: 1; background: var(--gray-100); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 15px; }
-        .search-trigger-btn { background: var(--primary); color: #fff; padding: 0 24px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
-        .search-meta-bar { display: flex; justify-content: space-between; align-items: center; }
-        .result-count { font-size: 15px; color: var(--gray-500); }
-        .sort-select { background: #fff; border: 1px solid var(--gray-200); padding: 8px 16px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; }
 
-        /* ==========================================
-           4. ITEMDETAILVIEWCONTROLLER SCREEN COMPONENT
-           ========================================== */
-        .detail-screen-layout {
-            background: #fff;
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            box-shadow: var(--shadow-sm);
+        .tab-btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: var(--radius);
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Main Content Grid */
+        .content-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
         }
-        /* Left: Media Gallery */
-        .detail-gallery { display: flex; flex-direction: column; gap: 16px; }
-        .main-preview-box {
-            background: var(--gray-100);
-            height: 480px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--gray-500);
-            font-weight: 600;
+
+        @media (max-width: 768px) {
+            .content-layout { grid-template-columns: 1fr; }
         }
-        .thumbnail-strip { display: flex; gap: 12px; }
-        .thumb-box {
-            flex: 1;
-            height: 90px;
-            background: var(--gray-100);
-            border-radius: var(--radius-sm);
-            border: 2px solid transparent;
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            height: fit-content;
+        }
+
+        .sidebar h2 { font-size: 1.2rem; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+        .week-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+        .week-item {
+            padding: 12px;
+            background: var(--background);
+            border-radius: 8px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
             font-weight: 500;
-            color: var(--gray-500);
+            transition: all 0.2s;
+            border-left: 4px solid transparent;
         }
-        .thumb-box.active { border-color: var(--primary); background: #fff; }
 
-        /* Right: Product Buy Flow */
-        .detail-info-panel { display: flex; flex-direction: column; }
-        .detail-brand-name { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
-        .detail-product-title { font-size: 32px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
-        .detail-rating-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-200); }
-        .detail-price-box { background: var(--gray-100); padding: 20px; border-radius: var(--radius-md); margin-bottom: 28px; }
-        .detail-current-price { font-size: 36px; font-weight: 800; color: var(--gray-900); display: flex; align-items: center; gap: 16px; }
-        .detail-discount-tag { background: var(--danger); color: #fff; font-size: 14px; font-weight: bold; padding: 4px 10px; border-radius: 6px; }
-        .detail-old-price-row { font-size: 16px; color: var(--gray-500); text-decoration: line-through; margin-top: 4px; }
-        
-        .variant-selector { margin-bottom: 24px; }
-        .variant-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
-        .variant-options { display: flex; gap: 12px; }
-        .variant-btn {
-            border: 1px solid var(--gray-200);
-            padding: 10px 20px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-weight: 600;
+        .week-item:hover, .week-item.active {
+            background: #eff6ff;
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        /* Lesson Viewer Area */
+        .lesson-viewer {
+            background: var(--surface);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .lesson-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .lesson-header h2 { font-size: 1.8rem; color: var(--primary); margin-bottom: 5px; }
+        .lesson-header .objective { color: var(--text-muted); font-style: italic; }
+
+        .section-block { margin-bottom: 30px; }
+        .section-block h3 { font-size: 1.3rem; margin-bottom: 15px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        .section-block h3::before { content: ""; display: inline-block; width: 4px; height: 18px; background: var(--secondary); border-radius: 2px; }
+
+        /* Vocabulary & Pattern Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .data-card {
+            background: var(--background);
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .data-card:hover { transform: translateX(5px); }
+
+        .card-content .en { font-size: 1.2rem; font-weight: 700; color: #1e4ed8; margin-bottom: 4px; }
+        .card-content .ipa { font-size: 0.95rem; color: #059669; font-family: monospace; margin-bottom: 4px; }
+        .card-content .vi { font-size: 1rem; color: var(--text-main); }
+        .card-content .context { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; font-style: italic; }
+
+        .action-btns { display: flex; gap: 10px; }
+
+        .audio-btn {
+            background: white;
+            border: 1px solid var(--border);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .variant-btn.active { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+
+        .audio-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Interactive Practice Quiz Block */
+        .quiz-container {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+        }
+
+        .quiz-question { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
         
-        .quantity-selector { margin-bottom: 32px; display: flex; align-items: center; gap: 16px; }
-        .quantity-counter { display: flex; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); overflow: hidden; }
-        .counter-btn { background: var(--gray-100); width: 40px; height: 40px; font-size: 18px; font-weight: bold; cursor: pointer; text-align: center; line-height: 40px; }
-        .counter-value { width: 50px; text-align: center; line-height: 40px; font-weight: 600; border-left: 1px solid var(--gray-200); border-right: 1px solid var(--gray-200); }
-
-        .purchase-actions { display: flex; gap: 16px; }
-        .primary-action-btn { flex: 1; height: 56px; border-radius: var(--radius-md); font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
-        .btn-add-bag { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary); }
-        .btn-add-bag:hover { background: var(--primary); color: #fff; }
-        .btn-buy-now { background: var(--primary); color: #fff; }
-        .btn-buy-now:hover { opacity: 0.9; }
-
-        /* Global Footer */
-        footer {
-            background: var(--gray-900);
-            color: #fff;
-            padding: 60px 0 30px;
-            margin-top: 80px;
+        .option-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 40px; }
-        .footer-col h4 { font-size: 16px; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .footer-col p { color: var(--gray-500); font-size: 14px; margin-bottom: 16px; }
-        .footer-links-list display: flex; flex-direction: column; gap: 12px; }
-        .footer-link { color: var(--gray-300); font-size: 14px; transition: var(--transition); }
-        .footer-link:hover { color: #fff; padding-left: 4px; }
-        .footer-bottom { border-top: 1px solid #2d2d2f; padding-top: 24px; display: flex; justify-content: space-between; font-size: 13px; color: var(--gray-500); }
+
+        .option-btn:hover { background: #f8fafc; border-color: var(--text-muted); }
+        .option-btn.correct { background: #dcfce7; border-color: #22c55e; color: #15803d; font-weight: 600; }
+        .option-btn.wrong { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+
+        .feedback-msg { margin-top: 15px; font-weight: 600; display: none; }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
-    <!-- GLOBAL MAIN NAVIGATION HEADER -->
-    <nav class="global-nav">
-        <div class="app-container nav-wrapper">
-            <a href="#" class="brand-logo">
-                <span>✦</span> SwiftShop
-            </a>
-            <ul class="main-menu">
-                <li><a href="#home-screen" class="menu-link active">HomeNew</a></li>
-                <li><a href="#search-screen" class="menu-link">Search Module</a></li>
-                <li><a href="#detail-screen" class="menu-link">Item Detail</a></li>
-            </ul>
-            <div class="user-actions">
-                <div class="icon-btn">🔍</div>
-                <div class="icon-btn">🛒 <span class="badge">3</span></div>
-                <div class="icon-btn">👤</div>
+    <div class="container">
+        <header>
+            <h1>Lộ Trình Giao Tiếp Tiếng Anh 3 Tháng</h1>
+            <p>Học từ vựng phát âm chuẩn, cấu trúc câu cốt lõi và phản xạ giao tiếp tự nhiên dành cho người mới bắt đầu</p>
+        </header>
+
+        <!-- DASHBOARD TRACKING -->
+        <div class="dashboard">
+            <div class="stat-card">
+                <h3>Tổng thời gian lộ trình</h3>
+                <div class="value">90 Ngày</div>
+            </div>
+            <div class="stat-card">
+                <h3>Tổng số bài học cốt lõi</h3>
+                <div class="value">12 Tuần</div>
+            </div>
+            <div class="stat-card">
+                <h3>Mục tiêu mẫu câu tích lũy</h3>
+                <div class="value">360+ Câu</div>
             </div>
         </div>
-    </nav>
 
-    <div class="app-container">
+        <!-- MONTH NAVIGATION TABS -->
+        <div class="month-tabs">
+            <button class="tab-btn active" onclick="switchMonth(1)">Tháng 1: Xây Dựng Nền Tảng</button>
+            <button class="tab-btn" onclick="switchMonth(2)">Tháng 2: Phản Xạ Đời Sống</button>
+            <button class="tab-btn" onclick="switchMonth(3)">Tháng 3: Giao Tiếp Công Việc</button>
+        </div>
 
-        <!-- ========================================================== -->
-        <!-- SCREEN 1: HOMENEWVIEWCONTROLLER                            -->
-        <!-- ========================================================== -->
-        <section id="home-screen" class="screen-section">
-            <div class="hero-banner">
-                <div class="hero-content">
-                    <span class="hero-tag">Bộ Sưu Tập Mùa Hè 2026</span>
-                    <h2>Nâng Tầm Trải Nghiệm Công Nghệ Của Bạn</h2>
-                    <p>Khám phá các thiết bị thông minh thế hệ mới đang được giảm giá lên tới 40% trong tuần này.</p>
-                    <button class="cta-btn">Mua Ngay Toàn Bộ</button>
-                </div>
-                <div class="hero-graphic">
-                    [ Hero Banner Image Showcase ]
-                </div>
-            </div>
+        <!-- MAIN LAYOUT -->
+        <div class="content-layout">
+            <!-- LEFT SIDEBAR: WEEKS LIST -->
+            <aside class="sidebar">
+                <h2>Danh Sách Tuần Học</h2>
+                <ul class="week-list" id="weekListContainer">
+                    <!-- Loaded dynamically via JavaScript to ensure 100% data integrity -->
+                </ul>
+            </aside>
 
-            <div class="section-title">
-                <h3>Sản phẩm Mới Mở Bán (HomeNew UICollectionView)</h3>
-                <a href="#" class="view-all">Xem tất cả →</a>
-            </div>
+            <!-- RIGHT WORKSPACE: LESSON CONTENT VIEWER -->
+            <main class="lesson-viewer" id="lessonViewer">
+                <!-- Loaded dynamically based on active selection -->
+            </main>
+        </div>
 
-            <!-- UICollectionView Grid Container -->
-            <div class="collection-grid">
-                <!-- Cell 1 -->
-                <article class="product-cell">
-                    <div class="cell-thumbnail">
-                        <span class="tag-status">MỚI</span>
-                        [ Product Image Asset 1 ]
-                    </div>
-                    <div class="cell-info">
-                        <div>
-                            <div class="cell-brand">Apple</div>
-                            <h4 class="cell-title">iPhone 17 Pro Max - 256GB Titanium</h4>
-                        </div>
-                        <div>
-                            <div class="cell-meta">
-                                <span class="rating">★ 4.9</span>
-                                <span class="sales-count">(1,240 đã bán)</span>
-                            </div>
-                            <div class="cell-footer">
-                                <div class="price-group">
-                                    <span class="current-price">34.990.000 đ</span>
-                                    <span class="old-price">36.990.000 đ</span>
-                                </div>
-                                <button class="add-to-cart-btn">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Cell 2 -->
-                <article class="product-cell">
-                    <div class="cell-thumbnail">
-                        <span class="tag-status">-15%</span>
-                        [ Product Image Asset 2 ]
-                    </div>
-                    <div class="cell-info">
-                        <div>
-                            <div class="cell-brand">Sony</div>
-                            <h4 class="cell-title">Tai nghe chống ồn WH-1000XM5 ANC</h4>
-                        </div>
-                        <div>
-                            <div class="cell-meta">
-                                <span class="rating">★ 4.8</span>
-                                <span class="sales-count">(850 đã bán)</span>
-                            </div>
-                            <div class="cell-footer">
-                                <div class="price-group">
-                                    <span class="current-price">6.790.000 đ</span>
-                                    <span class="old-price">7.990.000 đ</span>
-                                </div>
-                                <button class="add-to-cart-btn">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Cell 3 -->
-                <article class="product-cell">
-                    <div class="cell-thumbnail">
-                        [ Product Image Asset 3 ]
-                    </div>
-                    <div class="cell-info">
-                        <div>
-                            <div class="cell-brand">Logitech</div>
-                            <h4 class="cell-title">Bàn phím cơ không dây MX Mechanical Mini</h4>
-                        </div>
-                        <div>
-                            <div class="cell-meta">
-                                <span class="rating">★ 4.7</span>
-                                <span class="sales-count">(340 đã bán)</span>
-                            </div>
-                            <div class="cell-footer">
-                                <div class="price-group">
-                                    <span class="current-price">3.250.000 đ</span>
-                                    <span class="old-price"></span>
-                                </div>
-                                <button class="add-to-cart-btn">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Cell 4 -->
-                <article class="product-cell">
-                    <div class="cell-thumbnail">
-                        <span class="tag-status">HOT</span>
-                        [ Product Image Asset 4 ]
-                    </div>
-                    <div class="cell-info">
-                        <div>
-                            <div class="cell-brand">Nintendo</div>
-                            <h4 class="cell-title">Máy chơi game Nintendo Switch OLED Model</h4>
-                        </div>
-                        <div>
-                            <div class="cell-meta">
-                                <span class="rating">★ 4.9</span>
-                                <span class="sales-count">(2,110 đã bán)</span>
-                            </div>
-                            <div class="cell-footer">
-                                <div class="price-group">
-                                    <span class="current-price">8.190.000 đ</span>
-                                    <span class="old-price">8.990.000 đ</span>
-                                </div>
-                                <button class="add-to-cart-btn">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-
-        <!-- ========================================================== -->
-        <!-- SCREEN 2: SEARCHVIEWCONTROLLER WITH FILTERS               -->
-        <!-- ========================================================== -->
-        <section id="search-screen" class="screen-section">
-            <div class="section-title">
-                <h3>Bộ Lọc & Tìm Kiếm Toàn Diện (SearchViewController)</h3>
-            </div>
-
-            <div class="search-screen-layout">
-                <!-- Left Sidebar Filters Component -->
-                <aside class="filter-panel">
-                    <div class="filter-group">
-                        <h4 class="filter-group-title">Danh Mục Sản Phẩm</h4>
-                        <div class="filter-checkbox-list">
-                            <label class="filter-checkbox-item"><input type="checkbox" checked> Điện thoại & Tablet</label>
-                            <label class="filter-checkbox-item"><input type="checkbox"> Máy tính & Laptop</label>
-                            <label class="filter-checkbox-item"><input type="checkbox"> Phụ kiện công nghệ</label>
-                            <label class="filter-checkbox-item"><input type="checkbox"> Âm thanh & Tivi</label>
-                            <label class="filter-checkbox-item"><input type="checkbox"> Thiết bị nhà thông minh</label>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4 class="filter-group-title">Thương Hiệu</h4>
-                        <div class="filter-checkbox-list">
-                            <label class="filter-checkbox-item"><input type="checkbox"> Apple</label>
-                            <label class="filter-checkbox-item"><input type="checkbox"> Samsung</label>
-                            <label class="filter-checkbox-item"><input type="checkbox"> Sony</label>
-                            <label class="filter-checkbox-item"><input type="checkbox"> Logitech</label>
-                            <label class="filter-checkbox-item"><input type="checkbox"> ASUS ROG</label>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4 class="filter-group-title">Khoảng Giá (VND)</h4>
-                        <div class="price-range-inputs">
-                            <input type="text" class="price-input" placeholder="Từ">
-                            <span>-</span>
-                            <input type="text" class="price-input" placeholder="Đến">
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4 class="filter-group-title">Đánh Giá Từ Khách Hàng</h4>
-                        <div class="filter-checkbox-list">
-                            <label class="filter-checkbox-item"><input type="radio" name="rating_filter"> 5 Sao (Tuyệt đối)</label>
-                            <label class="filter-checkbox-item"><input type="radio" name="rating_filter"> Từ 4 Sao trở lên</label>
-                            <label class="filter-checkbox-item"><input type="radio" name="rating_filter"> Từ 3 Sao trở lên</label>
-                        </div>
-                    </div>
-
-                    <div class="filter-action-btns">
-                        <button class="btn-apply">Áp Dụng Bộ Lọc</button>
-                        <button class="btn-reset">Xóa Tất Cả</button>
-                    </div>
-                </aside>
-
-                <!-- Right Search Results Main View -->
-                <main class="search-main-content">
-                    <div class="search-bar-container">
-                        <input type="text" class="search-input-field" value="Bàn phím cơ Bluetooth công thái học" placeholder="Tìm kiếm sản phẩm, thương hiệu mong muốn...">
-                        <button class="search-trigger-btn">Tìm kiếm</button>
-                    </div>
-
-                    <div class="search-meta-bar">
-                        <div class="result-count">Tìm thấy <strong>24</strong> kết quả phù hợp</div>
-                        <select class="sort-select">
-                            <option>Phổ biến nhất</option>
-                            <option>Giá: Thấp đến Cao</option>
-                            <option>Giá: Cao đến Thấp</option>
-                            <option>Mới nhất sản xuất</option>
-                        </select>
-                    </div>
-
-                    <!-- Filtered Grid Results -->
-                    <div class="collection-grid">
-                        <!-- Result Cell 1 -->
-                        <article class="product-cell">
-                            <div class="cell-thumbnail">[ Keyboard Layout 1 ]</div>
-                            <div class="cell-info">
-                                <div>
-                                    <div class="cell-brand">Keychron</div>
-                                    <h4 class="cell-title">Bàn phím cơ Keychron Q1 Pro Knob</h4>
-                                </div>
-                                <div class="cell-footer">
-                                    <div class="price-group"><span class="current-price">4.290.000 đ</span></div>
-                                    <button class="add-to-cart-btn">+</button>
-                                </div>
-                            </div>
-                        </article>
-                        <!-- Result Cell 2 -->
-                        <article class="product-cell">
-                            <div class="cell-thumbnail">[ Keyboard Layout 2 ]</div>
-                            <div class="cell-info">
-                                <div>
-                                    <div class="cell-brand">Akko</div>
-                                    <h4 class="cell-title">Bàn phím Akko 3098B Plus Multi-mode</h4>
-                                </div>
-                                <div class="cell-footer">
-                                    <div class="price-group"><span class="current-price">2.150.000 đ</span></div>
-                                    <button class="add-to-cart-btn">+</button>
-                                </div>
-                            </div>
-                        </article>
-                        <!-- Result Cell 3 -->
-                        <article class="product-cell">
-                            <div class="cell-thumbnail">[ Keyboard Layout 3 ]</div>
-                            <div class="cell-info">
-                                <div>
-                                    <div class="cell-brand">Corsair</div>
-                                    <h4 class="cell-title">Corsair K70 RGB PRO Mechanical</h4>
-                                </div>
-                                <div class="cell-footer">
-                                    <div class="price-group"><span class="current-price">3.890.000 đ</span></div>
-                                    <button class="add-to-cart-btn">+</button>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </main>
-            </div>
-        </section>
-
-
-        <!-- ========================================================== -->
-        <!-- SCREEN 3: ITEMDETAILVIEWCONTROLLER                         -->
-        <!-- ========================================================== -->
-        <section id="detail-screen" class="screen-section">
-            <div class="section-title">
-                <h3>Chi Tiết Sản Phẩm (ItemDetailViewController)</h3>
-            </div>
-
-            <div class="detail-screen-layout">
-                <!-- Gallery Sub-Component (Left) -->
-                <div class="detail-gallery">
-                    <div class="main-preview-box">
-                        [ MAIN HD PRODUCT PREVIEW IMAGE ]
-                    </div>
-                    <div class="thumbnail-strip">
-                        <div class="thumb-box active">Góc chính diện</div>
-                        <div class="thumb-box">Góc nghiêng 45°</div>
-                        <div class="thumb-box">Cạnh bên / Cổng kết nối</div>
-                        <div class="thumb-box">Hộp và Phụ kiện đi kèm</div>
-                    </div>
-                </div>
-
-                <!-- Product Specifications & Checkout Actions Panel (Right) -->
-                <div class="detail-info-panel">
-                    <span class="detail-brand-name">ASUS ROG Series</span>
-                    <h1 class="detail-product-title">Laptop Gaming ROG Strix Scar 16 (2026) - RTX 5080</h1>
-                    
-                    <div class="detail-rating-row">
-                        <span class="rating">★ 4.95 (182 đánh giá chân thực)</span>
-                        <span class="sales-count">| Khách hàng đã mua: 540 sản phẩm</span>
-                    </div>
-
-                    <div class="detail-price-box">
-                        <div class="detail-current-price">
-                            <span>74.990.000 đ</span>
-                            <span class="detail-discount-tag">GIẢM 8%</span>
-                        </div>
-                        <div class="detail-old-price-row">Giá niêm yết cũ: 81.990.000 đ</div>
-                    </div>
-
-                    <!-- Config Variant Option Selector -->
-                    <div class="variant-selector">
-                        <div class="variant-title">Cấu hình Bộ nhớ (RAM / SSD)</div>
-                        <div class="variant-options">
-                            <button class="variant-btn active">32GB RAM / 1TB SSD</button>
-                            <button class="variant-btn">64GB RAM / 2TB SSD (+ 8.5tr)</button>
-                        </div>
-                    </div>
-
-                    <!-- Color Variant Option Selector -->
-                    <div class="variant-selector">
-                        <div class="variant-title">Màu Sắc Vỏ Máy</div>
-                        <div class="variant-options">
-                            <button class="variant-btn active">Stealth Black (Đen nhám)</button>
-                            <button class="variant-btn">Eclipse Gray (Xám không gian)</button>
-                        </div>
-                    </div>
-
-                    <!-- Quantity Counter Sub-Component -->
-                    <div class="quantity-selector">
-                        <div class="variant-title" style="margin-bottom:0;">Số lượng đặt mua:</div>
-                        <div class="quantity-counter">
-                            <button class="counter-btn">-</button>
-                            <div class="counter-value">1</div>
-                            <button class="counter-btn">+</button>
-                        </div>
-                    </div>
-
-                    <!-- Call To Action Purchase Buttons Group -->
-                    <div class="purchase-actions">
-                        <button class="primary-action-btn btn-add-bag">Thêm vào Giỏ hàng</button>
-                        <button class="primary-action-btn btn-buy-now">Mua Ngay Toàn Bộ</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+        <footer>
+            <p>&copy; 2026 English 3-Month Roadmap Engine. Thiết kế mã nguồn mở tối ưu cho GitHub Pages.</p>
+        </footer>
     </div>
 
-    <!-- GLOBAL COMPREHENSIVE FOOTER -->
-    <footer>
-        <div class="app-container footer-grid">
-            <div class="footer-col">
-                <h4 style="color: var(--primary);">✦ SwiftShop Inc.</h4>
-                <p>Hệ thống cung cấp giải pháp bán lẻ công nghệ phân phối chính hãng toàn quốc với trải nghiệm người dùng cao cấp tối đa.</p>
-                <p>Hotline hỗ trợ kỹ thuật: 1900-xxxx (8:00 - 22:00)</p>
-            </div>
-            <div class="footer-col">
-                <h4>Về Chúng Tôi</h4>
-                <ul class="footer-links-list">
-                    <li><a href="#" class="footer-link">Giới thiệu hệ thống</a></li>
-                    <li><a href="#" class="footer-link">Tuyển dụng Developer</a></li>
-                    <li><a href="#" class="footer-link">Hệ thống chuỗi cửa hàng</a></li>
-                    <li><a href="#" class="footer-link">Chính sách bảo mật dữ liệu</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Chính Sách Hỗ Trợ</h4>
-                <ul class="footer-links-list">
-                    <li><a href="#" class="footer-link">Chính sách đổi trả 1-1</a></li>
-                    <li><a href="#" class="footer-link">Chính sách trả góp qua thẻ</a></li>
-                    <li><a href="#" class="footer-link">Vận chuyển siêu tốc 2H</a></li>
-                    <li><a href="#" class="footer-link">Trung tâm bảo hành Apple</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Đối Tác Liên Kết</h4>
-                <ul class="footer-links-list">
-                    <li><a href="#" class="footer-link">Apple Authorised Reseller</a></li>
-                    <li><a href="#" class="footer-link">Sony VietNam Premium Partner</a></li>
-                    <li><a href="#" class="footer-link">Asus ROG Elite Club</a></li>
-                    <li><a href="#" class="footer-link">Logitech Official Distributor</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="app-container footer-bottom">
-            <p>&copy; 2026 SwiftShop Platform. Được thiết kế tối ưu hóa cho hiệu năng cao trên Mobile Web & Single Page App.</p>
-            <p>Quốc gia & Khu vực: Việt Nam | English | Nhật Bản</p>
-        </div>
-    </footer>
-
-    <!-- INTERACTIVE SCREEN SIMULATOR JS -->
+    <!-- DATA & APPLICATION ENGINE SCRIPT (COMPREHENSIVE DATABASE) -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log("E-Commerce UI Hub Rendered Successfully.");
+        // COMPREHENSIVE ROADMAP DATABASE CONTAINING ALL 12 WEEKS WITHOUT OMISSION
+        const roadmapData = {
+            1: [
+                {
+                    week: 1,
+                    title: "Tuần 1: Chào hỏi & Giới thiệu bản thân cơ bản",
+                    objective: "Mục tiêu: Biết cách mở đầu cuộc hội thoại ngẫu nhiên và giới thiệu tên tuổi, nghề nghiệp, quê quán mượt mà.",
+                    vocab: [
+                        { en: "Nice to meet you", ipa: "/naɪs tuː miːt juː/", vi: "Rất vui được gặp bạn", ctx: "Dùng khi lần đầu tiên gặp mặt ai đó." },
+                        { en: "How have you been?", ipa: "/haʊ hæv juː biːn/", vi: "Dạo này bạn thế nào?", ctx: "Hỏi thăm người đã quen biết từ trước." },
+                        { en: "Introduce myself", ipa: "/ˌɪntrəˈdjuːs maɪˈsɛlf/", vi: "Giới thiệu bản thân", ctx: "Let me introduce myself (Để tôi tự giới thiệu)." },
+                        { en: "Originally from", ipa: "/əˈrɪʤɪnəli frɒm/", vi: "Gốc gác từ đâu đến", ctx: "I'm originally from Long An (Tôi gốc ở Long An)." },
+                        { en: "Occupation", ipa: "/ˌɒkjʊˈpeɪʃən/", vi: "Nghề nghiệp / Công việc", ctx: "What is your current occupation?" }
+                    ],
+                    patterns: [
+                        { en: "Let me introduce myself, my name is John.", vi: "Để tôi tự giới thiệu, tên tôi là John.", ctx: "Mẫu câu lịch sự để bắt đầu thuyết trình hoặc gặp đối tác." },
+                        { en: "I was born and raised in Vietnam.", vi: "Tôi sinh ra và lớn lên tại Việt Nam.", ctx: "Cách nói tự nhiên thay vì chỉ nói 'I am from...'" },
+                        { en: "I currently work as a software engineer.", vi: "Tôi hiện đang làm kỹ sư phần mềm.", ctx: "Cấu trúc chuẩn: S + currently work as a/an + nghề nghiệp." },
+                        { en: "How about you? What do you do for a living?", vi: "Còn bạn thì sao? Bạn làm nghề gì để kiếm sống?", ctx: "Câu hỏi đáp lại lịch sự để duy trì mạch hội thoại." }
+                    ],
+                    quiz: {
+                        question: "Điền vào chỗ trống: 'I currently work ____ an iOS developer.'",
+                        options: ["at", "as", "for", "in"],
+                        correct: 1,
+                        explanation: "Cấu trúc 'work as + danh từ chỉ nghề nghiệp' nghĩa là làm việc với vị trí công việc nào đó."
+                    }
+                },
+                {
+                    week: 2,
+                    title: "Tuần 2: Gia đình & Các mối quan hệ",
+                    objective: "Mục tiêu: Mô tả thành viên gia đình, tình trạng hôn nhân và tính cách cơ bản.",
+                    vocab: [
+                        { en: "Nuclear family", ipa: "/ˈnjuːklɪə ˈfæmɪli/", vi: "Gia đình nhỏ (Bố mẹ và con cái)", ctx: "Phân biệt với Extended family (đại gia đình)." },
+                        { en: "Sibling", ipa: "/ˈsɪblɪŋ/", vi: "Anh chị em ruột", ctx: "Do you have any siblings?" },
+                        { en: "Get along with", ipa: "/ɡɛt əˈlɒŋ wɪð/", vi: "Hòa thuận, ăn ý với ai", ctx: "I get along well with my brother." },
+                        { en: "Marital status", ipa: "/ˈmærɪtl ˈsteɪtəs/", vi: "Tình trạng hôn nhân", ctx: "Single (độc thân), Married (đã kết hôn)." },
+                        { en: "Take after", ipa: "/teɪk ˈɑːftə/", vi: "Giống ai đó (ngoại hình/tính cách)", ctx: "I take after my father." }
+                    ],
+                    patterns: [
+                        { en: "There are four of us in my family.", vi: "Gia đình tôi có 4 người.", ctx: "Cách nói thông dụng của người bản xứ thay vì 'My family has...'" },
+                        { en: "I am the middle child in the family.", vi: "Tôi là con giữa trong gia đình.", ctx: "Middle child (con giữa), Eldest (con cả), Youngest (con út)." },
+                        { en: "We are a very close-knit family.", vi: "Gia đình chúng tôi rất gắn kết và khăng khít.", ctx: "Close-knit là tính từ rất hay để mô tả gia đình hạnh phúc." },
+                        { en: "My son was born in early March.", vi: "Con trai tôi sinh vào đầu tháng Ba.", ctx: "Sử dụng 'in early + tháng' để chỉ thời gian đầu tháng." }
+                    ],
+                    quiz: {
+                        question: "Từ nào có nghĩa là 'Anh chị em ruột'?",
+                        options: ["Cousins", "Siblings", "Relatives", "Parents"],
+                        correct: 1,
+                        explanation: "Siblings bao gồm cả anh, chị, em ruột trong nhà."
+                    }
+                },
+                {
+                    week: 3,
+                    title: "Tuần 3: Thời gian, Thời tiết & Cuộc sống hàng ngày",
+                    objective: "Mục tiêu: Hẹn lịch, hỏi giờ, diễn đạt các thói quen lặp đi lặp lại hàng ngày.",
+                    vocab: [
+                        { en: "Daily routine", ipa: "/ˈdeɪli ruːˈtiːn/", vi: "Thói quen sinh hoạt hàng ngày", ctx: "What's your morning routine?" },
+                        { en: "At the weekend", ipa: "/æt ðə ˌwiːkˈɛnd/", vi: "Vào cuối tuần", ctx: "I usually clean my room at the weekend." },
+                        { en: "Reschedule", ipa: "/ˌriːˈʃɛdjuːl/", vi: "Dời lịch, sắp xếp lại lịch hẹn", ctx: "Can we reschedule our meeting?" },
+                        { en: "Pouring with rain", ipa: "/ˈpɔːrɪŋ wɪð reɪn/", vi: "Mưa lớn, mưa xối xả", ctx: "It's pouring with rain outside." },
+                        { en: "Catch up with", ipa: "/kæʧ ʌp wɪð/", vi: "Gặp gỡ hàn huyên, cập nhật tin tức", ctx: "Catch up with some old friends." }
+                    ],
+                    patterns: [
+                        { en: "I usually wake up at 6 AM to make coffee.", vi: "Tôi thường thức dậy lúc 6 giờ sáng để pha cà phê.", ctx: "Mô tả thói quen sử dụng trạng từ tần suất 'usually'." },
+                        { en: "Does this Saturday afternoon work for you?", vi: "Chiều thứ Bảy tuần này có tiện cho bạn không?", ctx: "Mẫu câu đặt lịch hẹn cực kỳ tự nhiên trong giao tiếp." },
+                        { en: "Let's push the meeting back to next Monday.", vi: "Hãy lùi cuộc họp lại sang thứ Hai tuần tới nhé.", ctx: "Push back là phrasal verb nghĩa là hoãn lại/lùi lại lịch." },
+                        { en: "The weather is freezing cold today.", vi: "Thời tiết hôm nay lạnh giá buốt.", ctx: "Freezing cold nhấn mạnh mức độ lạnh hơn rất nhiều so với 'cold'." }
+                    ],
+                    quiz: {
+                        question: "Cụm từ nào dùng để hẹn lịch tiện cho ai đó?",
+                        options: ["Does it work for you?", "Are you job?", "Make it down?", "Do you match?"],
+                        correct: 0,
+                        explanation: "'Does it work for you?' nghĩa là lịch đó/việc đó có tiện cho bạn không."
+                    }
+                },
+                {
+                    week: 4,
+                    title: "Tuần 4: Sở thích, Giải trí & Phong cách sống",
+                    objective: "Mục tiêu: Nói về đam mê cá nhân, âm nhạc, phim ảnh, xe cộ hoặc thói quen thưởng thức cà phê.",
+                    vocab: [
+                        { en: "Be into something", ipa: "/biː ˈɪntuː ˈsʌmθɪŋ/", vi: "Đam mê, cực kỳ thích cái gì", ctx: "I am really into tech gadgets." },
+                        { en: "Coffee enthusiast", ipa: "/ˈkɒfi ɪnˈθjuːzɪæst/", vi: "Người đam mê cà phê", ctx: "He is a home-brew coffee enthusiast." },
+                        { en: "Unwind", ipa: "/ʌnˈwaɪnd/", vi: "Thư giãn, xả stress", ctx: "Listen to music to unwind after work." },
+                        { en: "Sedan", ipa: "/sɪˈdæn/", vi: "Dòng xe hơi 4 chỗ đầu ngắn đuôi dài", ctx: "I drive a 4-door sedan car." },
+                        { en: "Binge-watch", ipa: "/bɪnʤ-wɒʧ/", vi: "Cày phim liên tục nhiều tập", ctx: "I binge-watched the whole season." }
+                    ],
+                    patterns: [
+                        { en: "In my free time, I love brewing espresso at home.", vi: "Vào thời gian rảnh, tôi thích tự pha cà phê espresso tại nhà.", ctx: "Diễn tả sở thích cụ thể đem lại niềm vui." },
+                        { en: "I prefer pop ballads from the 2000s.", vi: "Tôi thích nhạc pop ballad từ những năm 2000 hơn.", ctx: "Cấu trúc: Prefer + Noun + from/in..." },
+                        { en: "Listening to music helps me clear my mind.", vi: "Nghe nhạc giúp tôi giải tỏa tâm trí.", ctx: "Clear my mind giải nghĩa cho việc thư giãn đầu óc." },
+                        { en: "I'm a big fan of high-performance flashlights.", vi: "Tôi là người hâm mộ lớn của các dòng đèn pin hiệu năng cao.", ctx: "Be a big fan of sth = rất thích cái gì." }
+                    ],
+                    quiz: {
+                        question: "Đồng nghĩa với cụm 'I like tech gadgets rất nhiều' là?",
+                        options: ["I am into tech gadgets.", "I am out tech gadgets.", "I work tech gadgets.", "I hate tech gadgets."],
+                        correct: 0,
+                        explanation: "'Be into something' biểu thị sự yêu thích cuồng nhiệt."
+                    }
+                }
+            ],
+            2: [
+                {
+                    week: 5,
+                    title: "Tuần 5: Đi mua sắm & Hỏi giá cả",
+                    objective: "Mục tiêu: Hỏi giá, mặc cả cơ bản, thanh toán bằng tiền mặt/thẻ và hỏi size số.",
+                    vocab: [
+                        { en: "How much does it cost?", ipa: "/haʊ mʌʧ dʌz ɪt kɒst/", vi: "Cái này có giá bao nhiêu?", ctx: "Câu hỏi giá kinh điển." },
+                        { en: "Affordable", ipa: "/əˈfɔːdəbl/", vi: "Giá cả phải chăng, vừa túi tiền", ctx: "The price is quite affordable." },
+                        { en: "Receipt", ipa: "/rɪˈsiːt/", vi: "Hóa đơn mua hàng (chữ P câm)", ctx: "Could I have a receipt, please?" },
+                        { en: "Fit", ipa: "/fɪt/", vi: "Vừa vặn kích cỡ", ctx: "This shirt fits me perfectly." },
+                        { en: "Refund", ipa: "/ˈriːfʌnd/", vi: "Hoàn lại tiền mua hàng", ctx: "Can I get a full refund?" }
+                    ],
+                    patterns: [
+                        { en: "Do you accept credit cards or cash only?", vi: "Ở đây nhận thẻ tín dụng hay chỉ nhận tiền mặt thôi?", ctx: "Câu hỏi cực kỳ quan trọng khi đi mua sắm nước ngoài." },
+                        { en: "Is there any discount on this item?", vi: "Mặt hàng này có được giảm giá chút nào không?", ctx: "Hỏi chương trình khuyến mãi khéo léo." },
+                        { en: "I'm just looking around, thank you.", vi: "Tôi chỉ đang xem xung quanh thôi, cảm ơn nhé.", ctx: "Nói với nhân viên bán hàng khi bạn muốn tự do xem đồ." },
+                        { en: "Keep the change, please.", vi: "Xin cứ giữ lại tiền thối lẻ.", ctx: "Dùng khi bạn muốn boa tiền thừa cho người bán/tài xế." }
+                    ],
+                    quiz: {
+                        question: "Cách phát âm đúng của từ hóa đơn 'Receipt' là gì?",
+                        options: ["Ri-sípt (bật âm P)", "Ri-sít (âm P câm)", "Ri-kép", "Ri-sáp"],
+                        correct: 1,
+                        explanation: "Từ 'Receipt' có âm 'p' là âm câm, phát âm chuẩn là /rɪˈsiːt/."
+                    }
+                },
+                {
+                    week: 6,
+                    title: "Tuần 6: Ăn uống, Nhà hàng & Quán cà phê",
+                    objective: "Mục tiêu: Đặt bàn, gọi món ăn, oder các loại cà phê chi tiết và yêu cầu hóa đơn.",
+                    vocab: [
+                        { en: "Book a table", ipa: "/bʊk ə ˈteɪbl/", vi: "Đặt bàn trước", ctx: "I'd like to book a table for two." },
+                        { en: "Menu", ipa: "/ˈmɛnjuː/", vi: "Thực đơn", ctx: "Could we see the menu, please?" },
+                        { en: "Allergies", ipa: "/ˈæləʤɪz/", vi: "Dị ứng thực phẩm", ctx: "I have an allergy to peanuts." },
+                        { en: "Robusta and Arabica", ipa: "/rəʊˈbʌstə ænd æˈræbɪkə/", vi: "Hai dòng hạt cà phê phổ biến", ctx: "I prefer Arabica because it's less bitter." },
+                        { en: "Split the bill", ipa: "/splɪt ðə bɪl/", vi: "Chia đôi hóa đơn tiền ăn", ctx: "Let's split the bill tonight." }
+                    ],
+                    patterns: [
+                        { en: "Are you ready to order, sir?", vi: "Anh đã sẵn sàng gọi món chưa ạ?", ctx: "Câu hỏi thường gặp từ bồi bàn." },
+                        { en: "I would like a hot Latte with double espresso shots.", vi: "Tôi muốn một ly Latte nóng với 2 shot espresso.", ctx: "Mẫu câu oder chuẩn cho tín đồ cà phê." },
+                        { en: "Could you bring us some water, please?", vi: "Bạn có thể mang cho chúng tôi ít nước lọc được không?", ctx: "Yêu cầu phục vụ lịch sự dùng cấu trúc 'Could you...'." },
+                        { en: "Can we have the bill, please?", vi: "Cho chúng tôi xin hóa đơn thanh toán nhé.", ctx: "Mẫu câu gọi tính tiền thông dụng nhất." }
+                    ],
+                    quiz: {
+                        question: "Khi muốn rủ bạn bè chia đôi tiền ăn, bạn nói:",
+                        options: ["Let's split the bill.", "Cut the money.", "Share the papers.", "You pay all."],
+                        correct: 0,
+                        explanation: "'Split the bill' nghĩa là chia đều hóa đơn ăn uống."
+                    }
+                },
+                {
+                    week: 7,
+                    title: "Tuần 7: Hỏi đường & Di chuyển trên phố",
+                    objective: "Mục tiêu: Hỏi đường đi, bắt xe taxi/Grab, hiểu các bảng chỉ dẫn giao thông.",
+                    vocab: [
+                        { en: "Lost", ipa: "/lɒst/", vi: "Bị lạc đường", ctx: "Excuse me, I think I am lost." },
+                        { en: "Intersection", ipa: "/ˌɪntə(r)ˈsɛkʃən/", vi: "Ngã tư đường", ctx: "Turn left at the next intersection." },
+                        { en: "Go straight ahead", ipa: "/ɡəʊ streɪt əˈhɛd/", vi: "Đi thẳng về phía trước", ctx: "Just go straight ahead for 200 meters." },
+                        { en: "Destination", ipa: "/ˌdɛstɪˈneɪʃən/", vi: "Điểm đến, đích đến", ctx: "We have arrived at your destination." },
+                        { en: "Traffic jam", ipa: "/ˈtræfɪk ʤæm/", vi: "Kẹt xe, tắc đường", ctx: "I got stuck in a severe traffic jam." }
+                    ],
+                    patterns: [
+                        { en: "Excuse me, could you tell me how to get to the station?", vi: "Xin lỗi, bạn có thể chỉ tôi đường đến nhà ga được không?", ctx: "Mở đầu lịch sự bằng 'Excuse me'." },
+                        { en: "Is it far from here? Can I walk there?", vi: "Chỗ đó có xa đây không? Tôi đi bộ đến đó được không?", ctx: "Hỏi để ước lượng khoảng cách hành trình." },
+                        { en: "Please pull over right here.", vi: "Vui lòng tấp xe vào lề ngay tại đây.", ctx: "Nói với tài xế taxi khi bạn muốn xuống xe." },
+                        { en: "How long does it take to get to the airport?", vi: "Mất bao lâu để đi đến sân bay?", ctx: "Hỏi về tổng thời gian di chuyển." }
+                    ],
+                    quiz: {
+                        question: "Cụm từ bảo bác tài xế 'tấp xe vào lề' là:",
+                        options: ["Pull over", "Go fast", "Stop top", "Drive out"],
+                        correct: 0,
+                        explanation: "'Pull over' là cụm từ chuẩn để yêu cầu xe dừng đỗ sát lề đường."
+                    }
+                },
+                {
+                    week: 8,
+                    title: "Tuần 8: Khám bệnh & Các tình huống khẩn cấp",
+                    objective: "Mục tiêu: Mô tả triệu chứng sức khỏe cơ bản, mua thuốc tại hiệu thuốc.",
+                    vocab: [
+                        { en: "Symptoms", ipa: "/ˈsɪmptəmz/", vi: "Triệu chứng bệnh", ctx: "What are your exact symptoms?" },
+                        { en: "Headache", ipa: "/ˈhɛdeɪk/", vi: "Đau đầu", ctx: "I have a splitting headache." },
+                        { en: "Prescription", ipa: "/prɪsˈkrɪpʃən/", vi: "Đơn thuốc của bác sĩ", ctx: "Can I buy this medicine without a prescription?" },
+                        { en: "Dizzy", ipa: "/ˈdɪzi/", vi: "Chóng mặt, choáng váng", ctx: "I suddenly feel a bit dizzy." },
+                        { en: "Painkiller", ipa: "/ˈpeɪnˌkɪlə/", vi: "Thuốc giảm đau", ctx: "Take a painkiller to reduce the ache." }
+                    ],
+                    patterns: [
+                        { en: "I have been feeling unwell since yesterday.", vi: "Tôi cảm thấy trong người không khỏe từ ngày hôm qua.", ctx: "Diễn tả trạng thái kéo dài dùng Hiện tại hoàn thành tiếp diễn." },
+                        { en: "I have a sore throat and a runny nose.", vi: "Tôi bị đau họng và chảy nước mũi.", ctx: "Sore throat (đau họng), Runny nose (chảy nước mũi)." },
+                        { en: "How many times a day should I take this medicine?", vi: "Tôi nên uống loại thuốc này mấy lần một ngày?", ctx: "Hỏi dược sĩ hướng dẫn sử dụng thuốc." },
+                        { en: "Call an ambulance immediately, please!", vi: "Làm ơn gọi xe cứu thương ngay lập tức giúp tôi!", ctx: "Tình huống nguy cấp cần trợ giúp khẩn cấp." }
+                    ],
+                    quiz: {
+                        question: "Từ nào có nghĩa là 'Đơn thuốc do bác sĩ kê'?",
+                        options: ["Menu", "Bill", "Prescription", "Paper"],
+                        correct: 2,
+                        explanation: "Prescription là đơn thuốc chính thức bắt buộc phải có cho một số loại thuốc đặc trị."
+                    }
+                }
+            ],
+            3: [
+                {
+                    week: 9,
+                    title: "Tuần 9: Giao tiếp văn phòng & Chào hỏi đồng nghiệp",
+                    objective: "Mục tiêu: Chào hỏi buổi sáng tại nơi làm việc, bàn luận tiến độ công việc trong daily meeting.",
+                    vocab: [
+                        { en: "Colleague", ipa: "/ˈkɒliːɡ/", vi: "Đồng nghiệp làm chung công ty", ctx: "He is one of my close colleagues." },
+                        { en: "Deadline", ipa: "/ˈdɛdlaɪn/", vi: "Hạn chót hoàn thành công việc", ctx: "The deadline is coming up very soon." },
+                        { en: "Update status", ipa: "/ʌpˈdeɪt ˈsteɪtəs/", vi: "Cập nhật tình hình, trạng thái", ctx: "Let me update the project status." },
+                        { en: "Task assignment", ipa: "/tɑːsk əˈsaɪnmənt/", vi: "Phân công nhiệm vụ", ctx: "Check your email for task assignment." },
+                        { en: "In progress", ipa: "/ɪn ˈprəʊɡrəs/", vi: "Đang trong quá trình xử lý", ctx: "This feature is currently in progress." }
+                    ],
+                    patterns: [
+                        { en: "Good morning team, let's start our daily stand-up meeting.", vi: "Chào buổi sáng cả đội, chúng ta bắt đầu họp nhanh hàng ngày nhé.", ctx: "Mở đầu cuộc họp ngắn quen thuộc trong ngành IT." },
+                        { en: "I am working on fixing some layout bugs on the main branch.", vi: "Tôi đang tập trung sửa một số lỗi giao diện trên nhánh chính.", ctx: "Mô tả công việc hiện tại dùng Hiện tại tiếp diễn." },
+                        { en: "I have completed all my assigned tasks for this sprint.", vi: "Tôi đã hoàn thành toàn bộ nhiệm vụ được giao cho sprint này.", ctx: "Báo cáo tiến độ dùng Thì hiện tại hoàn thành." },
+                        { en: "I am currently stuck on this issue and need some help.", vi: "Tôi hiện đang bị kẹt ở vấn đề này và cần sự trợ giúp.", ctx: "Be stuck on sth = bị mắc kẹt, gặp khó khăn không tự giải quyết được." }
+                    ],
+                    quiz: {
+                        question: "Khi một công việc đang được làm chưa xong, trạng thái của nó là:",
+                        options: ["Done", "In progress", "Pending", "Cancelled"],
+                        correct: 1,
+                        explanation: "'In progress' nghĩa là việc đó đang tiến hành xử lý."
+                    }
+                },
+                {
+                    week: 10,
+                    title: "Tuần 10: Trao đổi qua Email & Viết tin nhắn chat Slack",
+                    objective: "Mục tiêu: Viết câu ngắn gọn báo cáo nghỉ phép, xin review tài liệu hoặc code chuẩn mực.",
+                    vocab: [
+                        { en: "Take a day off", ipa: "/teɪk ə deɪ ɒf/", vi: "Nghỉ phép một ngày", ctx: "I would like to take a day off tomorrow." },
+                        { en: "Review code", ipa: "/rɪˈvjuː kəʊd/", vi: "Kiểm tra, xem xét mã nguồn", ctx: "Could you review my code when you are free?" },
+                        { en: "Approve", ipa: "/əˈpruːv/", vi: "Phê duyệt, chấp thuận", ctx: "The manager approved my vacation request." },
+                        { en: "Attached file", ipa: "/əˈtæʧt faɪl/", vi: "Tập tin đính kèm", ctx: "Please find the attached file below." },
+                        { en: "As soon as possible", ipa: "/æz suːn æz ˈpɒsəbl/", vi: "Càng sớm càng tốt (viết tắt: ASAP)", ctx: "Please reply to me as soon as possible." }
+                    ],
+                    patterns: [
+                        { en: "Please let me know if you have any questions or feedback.", vi: "Vui lòng cho tôi biết nếu bạn có bất kỳ câu hỏi hoặc phản hồi nào.", ctx: "Câu kết thúc email lịch sự kinh điển." },
+                        { en: "I am writing this email to inform you that I will be absent tomorrow.", vi: "Tôi viết email này để thông báo rằng tôi sẽ vắng mặt ngày mai.", ctx: "Mẫu câu xin nghỉ phép trang trọng." },
+                        { en: "Could you please take a look at my pull request?", vi: "Bạn có thể dành chút thời gian xem qua pull request của tôi được không?", ctx: "Lời nhờ vả đồng nghiệp review code rất văn minh." },
+                        { en: "Thank you for your prompt response.", vi: "Cảm ơn vì sự phản hồi nhanh chóng của bạn.", ctx: "Prompt response dùng để khen ngợi tiến độ rep mail/tin nhắn nhanh." }
+                    ],
+                    quiz: {
+                        question: "Cụm từ viết tắt 'ASUS/ASAP' hay dùng cuối tin nhắn có nghĩa là gì?",
+                        options: ["As soon as possible", "As slow as possible", "Always say apples please", "After hours"],
+                        correct: 0,
+                        explanation: "ASAP viết tắt của 'As soon as possible' - Càng nhanh càng tốt."
+                    }
+                },
+                {
+                    week: 11,
+                    title: "Tuần 11: Họp trực tuyến (Online Meeting / Zoom)",
+                    objective: "Mục tiêu: Xử lý các sự cố kỹ thuật âm thanh, đường truyền internet, share màn hình thuyết trình.",
+                    vocab: [
+                        { en: "Screen sharing", ipa: "/skriːn ˈʃeərɪŋ/", vi: "Chia sẻ màn hình máy tính", ctx: "Let me start screen sharing." },
+                        { en: "Mute", ipa: "/mjuːt/", vi: "Tắt tiếng microphone", ctx: "You are on mute, we can't hear you." },
+                        { en: "Unmute", ipa: "/ʌnˈmjuːt/", vi: "Bật lại tiếng micro", ctx: "Please unmute your microphone." },
+                        { en: "Laggy", ipa: "/ˈlæɡi/", vi: "Mạng bị giật lag, trễ tín hiệu", ctx: "Your connection is a bit laggy." },
+                        { en: "Cut out", ipa: "/kʌt aʊt/", vi: "Âm thanh bị mất tiếng, đứt quãng", ctx: "Your voice is cutting out." }
+                    ],
+                    patterns: [
+                        { en: "Can everyone see my shared screen clearly?", vi: "Mọi người có nhìn thấy màn hình tôi chia sẻ rõ không?", ctx: "Câu hỏi bắt buộc khi chuẩn bị trình chiếu slide/code." },
+                        { en: "Sorry, I think your voice is cutting out, could you repeat that?", vi: "Xin lỗi, tôi thấy giọng bạn bị mất chữ, bạn lặp lại được không?", ctx: "Xử lý lỗi mạng chập chờn khi đối phương đang nói." },
+                        { en: "Hold on a second, let me check my internet connection.", vi: "Chờ một giây nhé, để tôi kiểm tra lại đường truyền mạng của tôi.", ctx: "Hold on a second = chờ một chút." },
+                        { en: "I will drop the meeting link inside the group chat right now.", vi: "Tôi sẽ thả đường link cuộc họp vào nhóm chat ngay bây giờ.", ctx: "Drop the link = gửi link nhanh." }
+                    ],
+                    quiz: {
+                        question: "Khi đối phương quên bật micro và nói thầm, bạn sẽ bảo:",
+                        options: ["You are on mute.", "You are dead.", "Speak loud engine.", "Go away."],
+                        correct: 0,
+                        explanation: "'You are on mute' là câu nói kinh điển để nhắc nhở người khác chưa bật mic trên Zoom/Meet."
+                    }
+                },
+                {
+                    week: 12,
+                    title: "Tuần 12: Tổng kết lộ trình & Thảo luận kế hoạch tương lai",
+                    objective: "Mục tiêu: Đánh giá kết quả học tập sau 3 tháng, tự tin vạch ra mục tiêu dài hạn tiếp theo.",
+                    vocab: [
+                        { en: "Milestone", ipa: "/ˈmaɪlstəʊn/", vi: "Cột mốc quan trọng", ctx: "We have reached our 3-month milestone." },
+                        { en: "Fluency", ipa: "/ˈfluːənsi/", vi: "Sự trôi chảy, lưu loát", ctx: "My goal is to achieve English fluency." },
+                        { en: "Long-term plan", ipa: "/lɒŋ-tɜːm plæn/", vi: "Kế hoạch dài hạn", ctx: "What is your long-term plan?" },
+                        { en: "Improvement", ipa: "/ɪmˈpruːvmənt/", vi: "Sự tiến bộ, cải thiện rõ rệt", ctx: "I notice a big improvement in my speaking." },
+                        { en: "Consistency", ipa: "/kənˈsɪstənsi/", vi: "Sự kiên trì, nhất quán liên tục", ctx: "Consistency is the key to success." }
+                    ],
+                    patterns: [
+                        { en: "I feel much more confident speaking English now.", vi: "Bây giờ tôi cảm thấy tự tin hơn nhiều khi nói tiếng Anh.", ctx: "Khẳng định sự tiến bộ của bản thân." },
+                        { en: "My immediate goal is to master basic writing as well.", vi: "Mục tiêu ngay trước mắt của tôi là thành thạo cả viết cơ bản nữa.", ctx: "Immediate goal = mục tiêu ngắn hạn, khẩn cấp." },
+                        { en: "Hard work pays off in the end.", vi: "Sự chăm chỉ nỗ lực cuối cùng cũng sẽ được đền đáp xứng đáng.", ctx: "Thành ngữ khích lệ tinh thần học tập." },
+                        { en: "Let's keep practicing every single day to maintain this momentum.", vi: "Hãy tiếp tục luyện tập mỗi ngày để giữ vững đà tiến bộ này.", ctx: "Maintain the momentum = duy trì đà phát triển." }
+                    ],
+                    quiz: {
+                        question: "Điền từ đúng vào câu: '____ is the key to success in learning languages.'",
+                        options: ["Money", "Consistency", "Lucky", "Speed"],
+                        correct: 1,
+                        explanation: "Consistency (sự kiên trì đều đặn) là yếu tố quyết định hàng đầu khi học ngôn ngữ."
+                    }
+                }
+            ]
+        };
+
+        let currentMonth = 1;
+        let currentWeek = 1;
+
+        // Initialize Application UI
+        function initApp() {
+            renderWeeksSidebar();
+            loadLesson(currentWeek);
+        }
+
+        // Render Sidebar Navigation based on chosen month
+        function renderWeeksSidebar() {
+            const container = document.getElementById('weekListContainer');
+            container.innerHTML = '';
             
-            // Handle Single Page Routing tabs smoothly
-            const links = document.querySelectorAll('.menu-link');
-            links.forEach(link => {
-                link.addEventListener('click', function() {
-                    links.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                });
+            const weeks = roadmapData[currentMonth];
+            weeks.forEach(item => {
+                const li = document.createElement('li');
+                li.className = `week-item ${item.week === currentWeek ? 'active' : ''}`;
+                li.innerText = `Tuần ${item.week}: ${item.title.split(': ')[1]}`;
+                li.onclick = () => {
+                    document.querySelectorAll('.week-item').forEach(el => el.classList.remove('active'));
+                    li.classList.add('active');
+                    currentWeek = item.week;
+                    loadLesson(item.week);
+                };
+                container.appendChild(li);
             });
-        });
+        }
+
+        // Switch Tab Months
+        function switchMonth(monthNum) {
+            currentMonth = monthNum;
+            currentWeek = roadmapData[monthNum][0].week; // default to first week of that month
+            
+            document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+                if(idx === monthNum - 1) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+
+            renderWeeksSidebar();
+            loadLesson(currentWeek);
+        }
+
+        // Load Content into Viewer Workspace
+        function loadLesson(weekNum) {
+            // Find specific lesson inside database safely
+            let lesson = null;
+            for (let m in roadmapData) {
+                let found = roadmapData[m].find(w => w.week === weekNum);
+                if(found) { lesson = found; break; }
+            }
+
+            if(!lesson) return;
+
+            const viewer = document.getElementById('lessonViewer');
+            
+            // Build Vocabulary Cards HTML block
+            let vocabHTML = '';
+            lesson.vocab.forEach(v => {
+                vocabHTML += `
+                    <div class="data-card">
+                        <div class="card-content">
+                            <div class="en">${v.en}</div>
+                            <div class="ipa">${v.ipa}</div>
+                            <div class="vi">${v.vi}</div>
+                            <div class="context">Ngữ cảnh: ${v.ctx}</div>
+                        </div>
+                        <button class="audio-btn" onclick="speakText('${v.en.replace(/'/g, "\\'")}')">🔊</button>
+                    </div>
+                `;
+            });
+
+            // Build Patterns Cards HTML block
+            let patternHTML = '';
+            lesson.patterns.forEach(p => {
+                patternHTML += `
+                    <div class="data-card">
+                        <div class="card-content">
+                            <div class="en" style="color:#10b981;">${p.en}</div>
+                            <div class="vi">${p.vi}</div>
+                            <div class="context">Cách dùng: ${p.ctx}</div>
+                        </div>
+                        <button class="audio-btn" onclick="speakText('${p.en.replace(/'/g, "\\'")}')">🔊</button>
+                    </div>
+                `;
+            });
+
+            // Assemble Full Layout Template
+            viewer.innerHTML = `
+                <div class="lesson-header">
+                    <h2>${lesson.title}</h2>
+                    <p class="objective">${lesson.objective}</p>
+                </div>
+
+                <div class="section-block">
+                    <h3>Từ Vựng Cốt Lõi Điểm Nhấn</h3>
+                    <div class="card-grid">${vocabHTML}</div>
+                </div>
+
+                <div class="section-block">
+                    <h3>Mẫu Câu Phản Xạ Ứng Dụng</h3>
+                    <div class="card-grid">${patternHTML}</div>
+                </div>
+
+                <div class="section-block">
+                    <h3>Bài Tập Củng Cố Phản Xạ Nhanh</h3>
+                    <div class="quiz-container">
+                        <div class="quiz-question">${lesson.quiz.question}</div>
+                        <div class="quiz-options">
+                            ${lesson.quiz.options.map((opt, i) => `
+                                <button class="option-btn" onclick="checkQuizAnswer(this, ${i}, ${lesson.quiz.correct}, '${lesson.quiz.explanation.replace(/'/g, "\\'")}')">${opt}</button>
+                            `).join('')}
+                        </div>
+                        <div class="feedback-msg" id="quizFeedback"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Native Native Speech API Engine for Pronunciation Audio Playback
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop any ongoing speech instantly
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.85; // Slightly slowed down path for better listener comprehension
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ tính năng phát âm tự động Web Speech.");
+            }
+        }
+
+        // Quiz Correction Validation Logic
+        function checkQuizAnswer(btn, selectedIndex, correctIndex, explanation) {
+            const options = btn.parentElement.querySelectorAll('.option-btn');
+            options.forEach(opt => {
+                opt.disabled = true; // Block multiple clicks
+                opt.classList.remove('correct', 'wrong');
+            });
+
+            const feedback = document.getElementById('quizFeedback');
+            feedback.style.display = "block";
+
+            if (selectedIndex === correctIndex) {
+                btn.classList.add('correct');
+                feedback.innerHTML = `<span style="color:#16a34a;">Chính xác! 🎉</span> <br><small style="color:var(--text-muted); font-weight:normal;">${explanation}</small>`;
+            } else {
+                btn.classList.add('wrong');
+                options[correctIndex].classList.add('correct');
+                feedback.innerHTML = `<span style="color:#dc2626;">Chưa đúng rồi! 💡</span> <br><small style="color:var(--text-muted); font-weight:normal;">${explanation}</small>`;
+            }
+        }
+
+        // Bootstrapping initialization
+        window.onload = initApp;
     </script>
 </body>
 </html>

@@ -3,257 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer English - Native Speech Guide</title>
+    <title>Dev English - Core Chunks</title>
     <style>
         :root {
             --primary: #2563eb;
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text: #1e293b;
-            --accent: #059669;
             --border: #e2e8f0;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.5;
             margin: 0;
-            padding: 30px 20px;
+            padding: 20px;
         }
         .container {
-            max-width: 850px;
+            max-width: 700px;
             margin: 0 auto;
         }
-        h1 {
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 5px;
-            font-size: 2rem;
-        }
-        .subtitle {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 40px;
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
             font-size: 1rem;
-        }
-        .section {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
-            margin-bottom: 30px;
-            border: 1px solid var(--border);
-        }
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            box-sizing: border-box;
             margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.2s;
         }
-        h2 {
-            margin: 0;
-            font-size: 1.4rem;
-            color: #0f172a;
-        }
-        .badge {
-            background: #dbeafe;
-            color: var(--primary);
-            font-size: 0.8rem;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        .scenario-box {
-            background: #f1f5f9;
-            padding: 15px;
-            border-left: 4px solid var(--primary);
-            border-radius: 0 8px 8px 0;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-        }
-        h3 {
-            font-size: 1.1rem;
-            margin-top: 0;
-            color: #334155;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .search-box:focus {
+            border-color: var(--primary);
         }
         .chunk-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 25px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         .chunk-item {
-            background: #fff;
+            background: var(--card-bg);
             border: 1px solid var(--border);
-            padding: 14px;
+            padding: 16px;
             border-radius: 8px;
-            margin-bottom: 10px;
             cursor: pointer;
             transition: all 0.2s;
+            position: relative;
         }
         .chunk-item:hover {
             border-color: var(--primary);
             background: #eff6ff;
-            transform: translateX(3px);
+            transform: translateX(4px);
         }
         .chunk-en {
             font-weight: 700;
             color: var(--primary);
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
         }
         .chunk-vi {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #475569;
-            margin-top: 4px;
-        }
-        .full-speech-box {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        .full-speech-title {
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 1rem;
             margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
-        .full-speech-en {
-            font-size: 1.15rem;
-            color: #166534;
-            font-weight: 600;
-            line-height: 1.5;
-        }
-        .grammar-timeline {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        .time-tag {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            background: #fff7ed;
-            border: 1px solid #ffedd5;
-            color: #c2410c;
+        .chunk-usage {
+            font-size: 0.85rem;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 6px 10px;
             border-radius: 4px;
-            font-weight: 500;
+            display: inline-block;
+        }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Dev English: Native Speech Guide 🚀</h1>
-    <div class="subtitle">Bộ tài liệu hướng dẫn nói tiếng Anh tự nhiên theo ngữ cảnh thực chiến (Click cụm từ để copy nhanh)</div>
-
-    <!-- SCENARIO 1 -->
-    <div class="section">
-        <div class="section-header">
-            <h2>01. Daily Stand-up</h2>
-            <span class="badge">Họp Tiến Độ Đầu Ngày</span>
-        </div>
-        
-        <div class="scenario-box">
-            <strong>Bối cảnh thực tế:</strong> Bạn cần báo cáo công việc mượt mà bằng cách ráp nối việc đã làm hôm qua, việc đang làm hôm nay và một blocker đột xuất vừa xảy ra do bên thứ ba (API thay đổi).
-        </div>
-        
-        <h3>💡 Cụm Từ Cốt Lõi (Native Chunks)</h3>
-        <ul class="chunk-list">
-            <li class="chunk-item" onclick="copyText('Yesterday, I managed to finish the list view.')">
-                <div class="chunk-en">I managed to finish...</div>
-                <div class="chunk-vi">Tôi đã xử lý/xoay sở xong... (Người bản xứ dùng thay cho "I finished" để tăng tính chủ động)</div>
-            </li>
-            <li class="chunk-item" onclick="copyText('Today, I\'m currently working on the detail view.')">
-                <div class="chunk-en">I'm currently working on...</div>
-                <div class="chunk-vi">Hiện tại tôi đang tập trung xử lý... (Tự nhiên hơn "I am doing")</div>
-            </li>
-            <li class="chunk-item" onclick="copyText('However, I\'ve run into a minor issue with...')">
-                <div class="chunk-en">I've run into a minor issue with...</div>
-                <div class="chunk-vi">Tuy nhiên, tôi vừa đụng phải một lỗi nhỏ với... (Cách nói giảm nói tránh chuyên nghiệp)</div>
-            </li>
-        </ul>
-
-        <div class="full-speech-box">
-            <div class="full-speech-title">🗣️ Câu Nói Hoàn Chỉnh Từ Người Bản Xứ</div>
-            <div class="full-speech-en">
-                "Yesterday, I managed to finish the list view. Today, I'm currently working on the detail view. However, I've run into a minor issue because the API response has changed."
-            </div>
-            <div class="grammar-timeline">
-                <span class="time-tag">Past Simple (Hôm qua)</span>
-                <span class="time-tag">Present Continuous (Hiện tại)</span>
-                <span class="time-tag">Present Perfect (Sự cố vừa xảy ra)</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- SCENARIO 2 -->
-    <div class="section">
-        <div class="section-header">
-            <h2>02. Code Review & Architecture Discussion</h2>
-            <span class="badge">Góp Ý & Đề Xuất Giải Pháp</span>
-        </div>
-        
-        <div class="scenario-box">
-            <strong>Bối cảnh thực tế:</strong> Khi xem code hoặc thảo luận giải pháp, bạn phát hiện cấu trúc đang bị hardcode cứng nhắc, khó bảo trì. Bạn cần góp ý để chuyển sang giải pháp mềm dẻo và linh hoạt hơn.
-        </div>
-        
-        <h3>💡 Cụm Từ Cốt Lõi (Native Chunks)</h3>
-        <ul class="chunk-list">
-            <li class="chunk-item" onclick="copyText('I think this part is a bit too rigid because the data is hardcoded.')">
-                <div class="chunk-en">It's a bit too rigid / hardcoded.</div>
-                <div class="chunk-vi">Chỗ này hơi bị cứng nhắc / dữ liệu đang bị viết chết.</div>
-            </li>
-            <li class="chunk-item" onclick="copyText('What if we use a protocol here to make it more flexible?')">
-                <div class="chunk-en">What if we...?</div>
-                <div class="chunk-vi">Sẽ ra sao nếu chúng ta...? (Cấu trúc đề xuất ý kiến cực kỳ lịch sự và cởi mở)</div>
-            </li>
-            <li class="chunk-item" onclick="copyText('It will be much easier to maintain and extend later.')">
-                <div class="chunk-en">Easier to maintain / extend later.</div>
-                <div class="chunk-vi">Dễ bảo trì và mở rộng hơn về sau này.</div>
-            </li>
-        </ul>
-
-        <div class="full-speech-box">
-            <div class="full-speech-title">🗣️ Câu Nói Hoàn Chỉnh Từ Người Bản Xứ</div>
-            <div class="full-speech-en">
-                "I think this part is a bit too rigid because the data is hardcoded. What if we use a protocol here? It will make it more flexible and easier to extend later."
-            </div>
-            <div class="grammar-timeline">
-                <span class="time-tag">Present Simple (Bản chất code hiện tại)</span>
-                <span class="time-tag">Future Simple (Lợi ích về sau)</span>
-            </div>
-        </div>
-    </div>
+    <input type="text" id="search" class="search-box" placeholder="Tìm kiếm cụm từ hoặc cách dùng..." oninput="filterChunks()">
+    <div id="list" class="chunk-list"></div>
 </div>
 
+<div id="toast" class="toast">📋 Đã copy cụm từ!</div>
+
 <script>
+    // Một biến duy nhất chứa toàn bộ data text hướng dẫn
+    const DATA = [
+        {
+            en: "I managed to finish...",
+            vi: "Tôi đã xử lý/xoay sở xong...",
+            usage: "Dùng ở thì Past Simple khi báo cáo Stand-up để nhấn mạnh tính chủ động xử lý task."
+        },
+        {
+            en: "I'm currently working on...",
+            vi: "Hiện tại tôi đang tập trung xử lý...",
+            usage: "Dùng ở thì Present Continuous để nói về task đang chạy trong ngày."
+        },
+        {
+            en: "I've run into a minor issue with...",
+            vi: "Tôi vừa đụng phải một lỗi nhỏ với...",
+            usage: "Dùng ở thì Present Perfect khi gặp sự cố/blocker đột xuất cần báo cáo giảm nhẹ vấn đề."
+        },
+        {
+            en: "The API response has changed",
+            vi: "Phản hồi từ API đã bị thay đổi.",
+            usage: "Dùng ở thì Present Perfect để giải thích lý do bị block do yếu tố bên ngoài vừa xảy ra."
+        },
+        {
+            en: "It's a bit too rigid / hardcoded.",
+            vi: "Nó hơi bị cứng nhắc / dữ liệu đang bị viết chết.",
+            usage: "Dùng ở thì Present Simple khi làm Code Review để nhận xét về cấu trúc code hiện tại."
+        },
+        {
+            en: "What if we...?",
+            vi: "Sẽ ra sao nếu chúng ta...?",
+            usage: "Cấu trúc giả định dùng để đề xuất giải pháp thay thế một cách lịch sự, cởi mở."
+        },
+        {
+            en: "Make it more flexible",
+            vi: "Làm cho nó linh hoạt hơn.",
+            usage: "Dùng khi đưa ra định hướng refactor code (ví dụ: dùng Protocol hoặc Dependency Injection)."
+        },
+        {
+            en: "It will be much easier to maintain and extend later.",
+            vi: "Dễ bảo trì và mở rộng hơn về sau này.",
+            usage: "Dùng ở thì Future Simple để nêu bật lợi ích lâu dài của giải pháp mới."
+        }
+    ];
+
+    function render(items) {
+        const listEl = document.getElementById("list");
+        listEl.innerHTML = items.map(item => `
+            <div class="chunk-item" onclick="copyText(\`${item.en}\`)">
+                <div class="chunk-en">${item.en}</div>
+                <div class="chunk-vi">${item.vi}</div>
+                <div class="chunk-usage">💡 ${item.usage}</div>
+            </div>
+        `).join('');
+    }
+
+    function filterChunks() {
+        const keyword = document.getElementById("search").value.toLowerCase();
+        const filtered = DATA.filter(item => 
+            item.en.toLowerCase().includes(keyword) || 
+            item.vi.toLowerCase().includes(keyword) ||
+            item.usage.toLowerCase().includes(keyword)
+        );
+        render(filtered);
+    }
+
     function copyText(text) {
         navigator.clipboard.writeText(text).then(() => {
-            // Hiển thị thông báo nhỏ trên màn hình
-            const toast = document.createElement('div');
-            toast.innerText = "📋 Đã copy câu nói!";
-            toast.style.position = 'fixed';
-            toast.style.bottom = '20px';
-            toast.style.right = '20px';
-            toast.style.background = '#1e293b';
-            toast.style.color = '#fff';
-            toast.style.padding = '10px 20px';
-            toast.style.borderRadius = '6px';
-            toast.style.zIndex = '1000';
-            toast.style.fontSize = '0.9rem';
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2000);
+            const toast = document.getElementById("toast");
+            toast.style.display = "block";
+            setTimeout(() => toast.style.display = "none", 1500);
         });
     }
+
+    // Khởi chạy lần đầu
+    render(DATA);
 </script>
 
 </body>

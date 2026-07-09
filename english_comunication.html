@@ -1,102 +1,804 @@
 <!DOCTYPE html>
-<html lang="vi" dir="ltr">
+<html lang="vi">
 <head>
-    <!-- 1. Meta Tags Bắt Buộc -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <!-- 2. SEO Cơ Bản -->
-    <title>Tiêu Đề Dự Án Của Bạn (Tối đa 60-70 ký tự)</title>
-    <meta name="description" content="Mô tả ngắn gọn về nội dung trang web để hiển thị trên kết quả tìm kiếm (khoảng 150-160 ký tự).">
-    <meta name="keywords" content="từ khóa 1, từ khóa 2, từ khóa 3">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://domain-cua-ban.com/trang-hien-tai">
-
-    <!-- 3. Open Graph / Facebook (Mạng xã hội) -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://domain-cua-ban.com/trang-hien-tai">
-    <meta property="og:title" content="Tiêu Đề Khi Chia Sẻ Lên Facebook">
-    <meta property="og:description" content="Mô tả ngắn hiển thị khi link được chia sẻ trên mạng xã hội.">
-    <meta property="og:image" content="https://domain-cua-ban.com/assets/images/thumbnail.jpg">
-    <meta property="og:site_name" content="Tên Website">
-
-    <!-- 4. Twitter Cards -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://domain-cua-ban.com/trang-hien-tai">
-    <meta name="twitter:title" content="Tiêu Đề Khi Chia Sẻ Lên Twitter">
-    <meta name="twitter:description" content="Mô tả ngắn hiển thị trên Twitter.">
-    <meta name="twitter:image" content="https://domain-cua-ban.com/assets/images/thumbnail.jpg">
-
-    <!-- 5. Favicon & Mobile App Icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- 6. Preconnect Font / CDN (Tối ưu tốc độ tải) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <!-- 7. Nhúng CSS Bên Ngoài và CSS Nội Bộ -->
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>E-Commerce Platform Hub</title>
     <style>
-        /* CSS reset hoặc CSS khẩn cấp viết tại đây */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: system-ui, sans-serif; line-height: 1.6; color: #333; }
-        .wrapper { display: flex; flex-direction: column; min-height: 100vh; }
-        main { flex: 1; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; padding: 20px; }
-        @media (max-width: 768px) { main { grid-template-columns: 1fr; } }
+        /* ==========================================
+           1. CSS RESET & VARIABLES
+           ========================================== */
+        :root {
+            --primary: #007aff;
+            --primary-light: #e5f1ff;
+            --success: #34c759;
+            --warning: #ff9500;
+            --danger: #ff3b30;
+            --gray-100: #f5f5f7;
+            --gray-200: #e5e5ea;
+            --gray-300: #d1d1d6;
+            --gray-500: #8e8e93;
+            --gray-900: #1d1d1f;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.2s ease-in-out;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--gray-100);
+            color: var(--gray-900);
+            line-height: 1.5;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+        button, input, select { font-family: inherit; border: none; background: none; outline: none; }
+
+        /* Global Layout Container */
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Global Header Navigation */
+        .global-nav {
+            background: #fff;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .main-menu {
+            display: flex;
+            gap: 32px;
+        }
+        .menu-link {
+            font-weight: 500;
+            color: var(--gray-500);
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+        .menu-link.active, .menu-link:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .icon-btn {
+            position: relative;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background: var(--danger);
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* Section Layout Utilities */
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .view-all {
+            font-size: 15px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .screen-section {
+            padding: 48px 0;
+            border-bottom: 2px dashed var(--gray-200);
+        }
+
+        /* ==========================================
+           2. HOMENEW SCREEN COMPONENT
+           ========================================== */
+        .hero-banner {
+            background: linear-gradient(135deg, #0051a8 0%, #007aff 100%);
+            border-radius: var(--radius-lg);
+            padding: 60px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .hero-content { max-width: 50%; }
+        .hero-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        .hero-content h2 { font-size: 42px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+        .hero-content p { font-size: 18px; opacity: 0.9; margin-bottom: 28px; }
+        .cta-btn {
+            background: #fff;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .hero-graphic {
+            width: 400px;
+            height: 250px;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 2px dashed rgba(255,255,255,0.2);
+        }
+
+        /* Collection View Layout (Grid 4 Columns) */
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .product-cell {
+            background: #fff;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-cell:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .cell-thumbnail {
+            background: var(--gray-100);
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-weight: 500;
+            color: var(--gray-500);
+        }
+        .tag-status {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--danger);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .cell-info { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .cell-brand { font-size: 13px; color: var(--gray-500); text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+        .cell-title { font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; line-height: 1.4; }
+        .cell-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 14px; }
+        .rating { color: var(--warning); font-weight: 600; }
+        .sales-count { color: var(--gray-500); }
+        .cell-footer { display: flex; align-items: center; justify-content: space-between; }
+        .price-group { display: flex; flex-direction: column; }
+        .current-price { font-size: 18px; font-weight: 700; color: var(--gray-900); }
+        .old-price { font-size: 14px; color: var(--gray-500); text-decoration: line-through; }
+        .add-to-cart-btn {
+            background: var(--primary-light);
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .add-to-cart-btn:hover { background: var(--primary); color: #fff; }
+
+        /* ==========================================
+           3. SEARCHVIEWCONTROLLER SCREEN COMPONENT
+           ========================================== */
+        .search-screen-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+        /* Sidebar Filter Panel */
+        .filter-panel {
+            background: #fff;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+        .filter-group { margin-bottom: 28px; }
+        .filter-group-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--gray-900); }
+        .filter-checkbox-list { display: flex; flex-direction: column; gap: 12px; }
+        .filter-checkbox-item { display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
+        .filter-checkbox-item input { width: 18px; height: 18px; accent-color: var(--primary); }
+        .price-range-inputs { display: flex; align-items: center; gap: 8px; }
+        .price-input {
+            width: 100%;
+            border: 1px solid var(--gray-200);
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            text-align: center;
+        }
+        .filter-action-btns { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+        .btn-apply { background: var(--primary); color: #fff; text-align: center; padding: 12px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+        .btn-reset { background: var(--gray-100); color: var(--gray-900); text-align: center; padding: 12px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+
+        /* Search Results Main Column */
+        .search-main-content { display: flex; flex-direction: column; gap: 24px; }
+        .search-bar-container {
+            display: flex;
+            gap: 12px;
+            background: #fff;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        .search-input-field { flex-grow: 1; background: var(--gray-100); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 15px; }
+        .search-trigger-btn { background: var(--primary); color: #fff; padding: 0 24px; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; }
+        .search-meta-bar { display: flex; justify-content: space-between; align-items: center; }
+        .result-count { font-size: 15px; color: var(--gray-500); }
+        .sort-select { background: #fff; border: 1px solid var(--gray-200); padding: 8px 16px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; }
+
+        /* ==========================================
+           4. ITEMDETAILVIEWCONTROLLER SCREEN COMPONENT
+           ========================================== */
+        .detail-screen-layout {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+        }
+        /* Left: Media Gallery */
+        .detail-gallery { display: flex; flex-direction: column; gap: 16px; }
+        .main-preview-box {
+            background: var(--gray-100);
+            height: 480px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+        .thumbnail-strip { display: flex; gap: 12px; }
+        .thumb-box {
+            flex: 1;
+            height: 90px;
+            background: var(--gray-100);
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gray-500);
+        }
+        .thumb-box.active { border-color: var(--primary); background: #fff; }
+
+        /* Right: Product Buy Flow */
+        .detail-info-panel { display: flex; flex-direction: column; }
+        .detail-brand-name { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+        .detail-product-title { font-size: 32px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+        .detail-rating-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-200); }
+        .detail-price-box { background: var(--gray-100); padding: 20px; border-radius: var(--radius-md); margin-bottom: 28px; }
+        .detail-current-price { font-size: 36px; font-weight: 800; color: var(--gray-900); display: flex; align-items: center; gap: 16px; }
+        .detail-discount-tag { background: var(--danger); color: #fff; font-size: 14px; font-weight: bold; padding: 4px 10px; border-radius: 6px; }
+        .detail-old-price-row { font-size: 16px; color: var(--gray-500); text-decoration: line-through; margin-top: 4px; }
+        
+        .variant-selector { margin-bottom: 24px; }
+        .variant-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+        .variant-options { display: flex; gap: 12px; }
+        .variant-btn {
+            border: 1px solid var(--gray-200);
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .variant-btn.active { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        
+        .quantity-selector { margin-bottom: 32px; display: flex; align-items: center; gap: 16px; }
+        .quantity-counter { display: flex; border: 1px solid var(--gray-200); border-radius: var(--radius-sm); overflow: hidden; }
+        .counter-btn { background: var(--gray-100); width: 40px; height: 40px; font-size: 18px; font-weight: bold; cursor: pointer; text-align: center; line-height: 40px; }
+        .counter-value { width: 50px; text-align: center; line-height: 40px; font-weight: 600; border-left: 1px solid var(--gray-200); border-right: 1px solid var(--gray-200); }
+
+        .purchase-actions { display: flex; gap: 16px; }
+        .primary-action-btn { flex: 1; height: 56px; border-radius: var(--radius-md); font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .btn-add-bag { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary); }
+        .btn-add-bag:hover { background: var(--primary); color: #fff; }
+        .btn-buy-now { background: var(--primary); color: #fff; }
+        .btn-buy-now:hover { opacity: 0.9; }
+
+        /* Global Footer */
+        footer {
+            background: var(--gray-900);
+            color: #fff;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+        .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { font-size: 16px; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer-col p { color: var(--gray-500); font-size: 14px; margin-bottom: 16px; }
+        .footer-links-list display: flex; flex-direction: column; gap: 12px; }
+        .footer-link { color: var(--gray-300); font-size: 14px; transition: var(--transition); }
+        .footer-link:hover { color: #fff; padding-left: 4px; }
+        .footer-bottom { border-top: 1px solid #2d2d2f; padding-top: 24px; display: flex; justify-content: space-between; font-size: 13px; color: var(--gray-500); }
     </style>
 </head>
 <body>
 
-    <div class="wrapper">
-        <!-- Thanh điều hướng / Menu -->
-        <header>
-            <nav aria-label="Main navigation">
-                <ul>
-                    <li><a href="#">Trang chủ</a></li>
-                    <li><a href="#">Sản phẩm</a></li>
-                    <li><a href="#">Liên hệ</a></li>
-                </ul>
-            </nav>
-        </header>
+    <!-- GLOBAL MAIN NAVIGATION HEADER -->
+    <nav class="global-nav">
+        <div class="app-container nav-wrapper">
+            <a href="#" class="brand-logo">
+                <span>✦</span> SwiftShop
+            </a>
+            <ul class="main-menu">
+                <li><a href="#home-screen" class="menu-link active">HomeNew</a></li>
+                <li><a href="#search-screen" class="menu-link">Search Module</a></li>
+                <li><a href="#detail-screen" class="menu-link">Item Detail</a></li>
+            </ul>
+            <div class="user-actions">
+                <div class="icon-btn">🔍</div>
+                <div class="icon-btn">🛒 <span class="badge">3</span></div>
+                <div class="icon-btn">👤</div>
+            </div>
+        </div>
+    </nav>
 
-        <!-- Bố cục nội dung chính -->
-        <main>
-            <!-- Khu vực nội dung chính độc lập -->
-            <article>
-                <section>
-                    <h2>Nội dung chính thứ nhất</h2>
-                    <p>Chi tiết bài viết hoặc danh sách sản phẩm...</p>
-                </section>
-                <section>
-                    <h2>Nội dung chính thứ hai</h2>
-                    <p>Chi tiết phần tiếp theo...</p>
-                </section>
-            </article>
+    <div class="app-container">
 
-            <!-- Thanh bên (Sidebar / Quảng cáo / Menu phụ) -->
-            <aside>
-                <h3>Thông tin thêm</h3>
-                <p>Nội dung bổ trợ, danh mục phụ hoặc banner quảng cáo.</p>
-            </aside>
-        </main>
+        <!-- ========================================================== -->
+        <!-- SCREEN 1: HOMENEWVIEWCONTROLLER                            -->
+        <!-- ========================================================== -->
+        <section id="home-screen" class="screen-section">
+            <div class="hero-banner">
+                <div class="hero-content">
+                    <span class="hero-tag">Bộ Sưu Tập Mùa Hè 2026</span>
+                    <h2>Nâng Tầm Trải Nghiệm Công Nghệ Của Bạn</h2>
+                    <p>Khám phá các thiết bị thông minh thế hệ mới đang được giảm giá lên tới 40% trong tuần này.</p>
+                    <button class="cta-btn">Mua Ngay Toàn Bộ</button>
+                </div>
+                <div class="hero-graphic">
+                    [ Hero Banner Image Showcase ]
+                </div>
+            </div>
 
-        <!-- Chân trang -->
-        <footer>
-            <p>&copy; 2026 Tên Công Ty. Tất cả các quyền được bảo lưu.</p>
-        </footer>
+            <div class="section-title">
+                <h3>Sản phẩm Mới Mở Bán (HomeNew UICollectionView)</h3>
+                <a href="#" class="view-all">Xem tất cả →</a>
+            </div>
+
+            <!-- UICollectionView Grid Container -->
+            <div class="collection-grid">
+                <!-- Cell 1 -->
+                <article class="product-cell">
+                    <div class="cell-thumbnail">
+                        <span class="tag-status">MỚI</span>
+                        [ Product Image Asset 1 ]
+                    </div>
+                    <div class="cell-info">
+                        <div>
+                            <div class="cell-brand">Apple</div>
+                            <h4 class="cell-title">iPhone 17 Pro Max - 256GB Titanium</h4>
+                        </div>
+                        <div>
+                            <div class="cell-meta">
+                                <span class="rating">★ 4.9</span>
+                                <span class="sales-count">(1,240 đã bán)</span>
+                            </div>
+                            <div class="cell-footer">
+                                <div class="price-group">
+                                    <span class="current-price">34.990.000 đ</span>
+                                    <span class="old-price">36.990.000 đ</span>
+                                </div>
+                                <button class="add-to-cart-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Cell 2 -->
+                <article class="product-cell">
+                    <div class="cell-thumbnail">
+                        <span class="tag-status">-15%</span>
+                        [ Product Image Asset 2 ]
+                    </div>
+                    <div class="cell-info">
+                        <div>
+                            <div class="cell-brand">Sony</div>
+                            <h4 class="cell-title">Tai nghe chống ồn WH-1000XM5 ANC</h4>
+                        </div>
+                        <div>
+                            <div class="cell-meta">
+                                <span class="rating">★ 4.8</span>
+                                <span class="sales-count">(850 đã bán)</span>
+                            </div>
+                            <div class="cell-footer">
+                                <div class="price-group">
+                                    <span class="current-price">6.790.000 đ</span>
+                                    <span class="old-price">7.990.000 đ</span>
+                                </div>
+                                <button class="add-to-cart-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Cell 3 -->
+                <article class="product-cell">
+                    <div class="cell-thumbnail">
+                        [ Product Image Asset 3 ]
+                    </div>
+                    <div class="cell-info">
+                        <div>
+                            <div class="cell-brand">Logitech</div>
+                            <h4 class="cell-title">Bàn phím cơ không dây MX Mechanical Mini</h4>
+                        </div>
+                        <div>
+                            <div class="cell-meta">
+                                <span class="rating">★ 4.7</span>
+                                <span class="sales-count">(340 đã bán)</span>
+                            </div>
+                            <div class="cell-footer">
+                                <div class="price-group">
+                                    <span class="current-price">3.250.000 đ</span>
+                                    <span class="old-price"></span>
+                                </div>
+                                <button class="add-to-cart-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Cell 4 -->
+                <article class="product-cell">
+                    <div class="cell-thumbnail">
+                        <span class="tag-status">HOT</span>
+                        [ Product Image Asset 4 ]
+                    </div>
+                    <div class="cell-info">
+                        <div>
+                            <div class="cell-brand">Nintendo</div>
+                            <h4 class="cell-title">Máy chơi game Nintendo Switch OLED Model</h4>
+                        </div>
+                        <div>
+                            <div class="cell-meta">
+                                <span class="rating">★ 4.9</span>
+                                <span class="sales-count">(2,110 đã bán)</span>
+                            </div>
+                            <div class="cell-footer">
+                                <div class="price-group">
+                                    <span class="current-price">8.190.000 đ</span>
+                                    <span class="old-price">8.990.000 đ</span>
+                                </div>
+                                <button class="add-to-cart-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- SCREEN 2: SEARCHVIEWCONTROLLER WITH FILTERS               -->
+        <!-- ========================================================== -->
+        <section id="search-screen" class="screen-section">
+            <div class="section-title">
+                <h3>Bộ Lọc & Tìm Kiếm Toàn Diện (SearchViewController)</h3>
+            </div>
+
+            <div class="search-screen-layout">
+                <!-- Left Sidebar Filters Component -->
+                <aside class="filter-panel">
+                    <div class="filter-group">
+                        <h4 class="filter-group-title">Danh Mục Sản Phẩm</h4>
+                        <div class="filter-checkbox-list">
+                            <label class="filter-checkbox-item"><input type="checkbox" checked> Điện thoại & Tablet</label>
+                            <label class="filter-checkbox-item"><input type="checkbox"> Máy tính & Laptop</label>
+                            <label class="filter-checkbox-item"><input type="checkbox"> Phụ kiện công nghệ</label>
+                            <label class="filter-checkbox-item"><input type="checkbox"> Âm thanh & Tivi</label>
+                            <label class="filter-checkbox-item"><input type="checkbox"> Thiết bị nhà thông minh</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="filter-group-title">Thương Hiệu</h4>
+                        <div class="filter-checkbox-list">
+                            <label class="filter-checkbox-item"><input type="checkbox"> Apple</label>
+                            <label class="filter-checkbox-item"><input type="checkbox"> Samsung</label>
+                            <label class="filter-checkbox-item"><input type="checkbox"> Sony</label>
+                            <label class="filter-checkbox-item"><input type="checkbox"> Logitech</label>
+                            <label class="filter-checkbox-item"><input type="checkbox"> ASUS ROG</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="filter-group-title">Khoảng Giá (VND)</h4>
+                        <div class="price-range-inputs">
+                            <input type="text" class="price-input" placeholder="Từ">
+                            <span>-</span>
+                            <input type="text" class="price-input" placeholder="Đến">
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="filter-group-title">Đánh Giá Từ Khách Hàng</h4>
+                        <div class="filter-checkbox-list">
+                            <label class="filter-checkbox-item"><input type="radio" name="rating_filter"> 5 Sao (Tuyệt đối)</label>
+                            <label class="filter-checkbox-item"><input type="radio" name="rating_filter"> Từ 4 Sao trở lên</label>
+                            <label class="filter-checkbox-item"><input type="radio" name="rating_filter"> Từ 3 Sao trở lên</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-action-btns">
+                        <button class="btn-apply">Áp Dụng Bộ Lọc</button>
+                        <button class="btn-reset">Xóa Tất Cả</button>
+                    </div>
+                </aside>
+
+                <!-- Right Search Results Main View -->
+                <main class="search-main-content">
+                    <div class="search-bar-container">
+                        <input type="text" class="search-input-field" value="Bàn phím cơ Bluetooth công thái học" placeholder="Tìm kiếm sản phẩm, thương hiệu mong muốn...">
+                        <button class="search-trigger-btn">Tìm kiếm</button>
+                    </div>
+
+                    <div class="search-meta-bar">
+                        <div class="result-count">Tìm thấy <strong>24</strong> kết quả phù hợp</div>
+                        <select class="sort-select">
+                            <option>Phổ biến nhất</option>
+                            <option>Giá: Thấp đến Cao</option>
+                            <option>Giá: Cao đến Thấp</option>
+                            <option>Mới nhất sản xuất</option>
+                        </select>
+                    </div>
+
+                    <!-- Filtered Grid Results -->
+                    <div class="collection-grid">
+                        <!-- Result Cell 1 -->
+                        <article class="product-cell">
+                            <div class="cell-thumbnail">[ Keyboard Layout 1 ]</div>
+                            <div class="cell-info">
+                                <div>
+                                    <div class="cell-brand">Keychron</div>
+                                    <h4 class="cell-title">Bàn phím cơ Keychron Q1 Pro Knob</h4>
+                                </div>
+                                <div class="cell-footer">
+                                    <div class="price-group"><span class="current-price">4.290.000 đ</span></div>
+                                    <button class="add-to-cart-btn">+</button>
+                                </div>
+                            </div>
+                        </article>
+                        <!-- Result Cell 2 -->
+                        <article class="product-cell">
+                            <div class="cell-thumbnail">[ Keyboard Layout 2 ]</div>
+                            <div class="cell-info">
+                                <div>
+                                    <div class="cell-brand">Akko</div>
+                                    <h4 class="cell-title">Bàn phím Akko 3098B Plus Multi-mode</h4>
+                                </div>
+                                <div class="cell-footer">
+                                    <div class="price-group"><span class="current-price">2.150.000 đ</span></div>
+                                    <button class="add-to-cart-btn">+</button>
+                                </div>
+                            </div>
+                        </article>
+                        <!-- Result Cell 3 -->
+                        <article class="product-cell">
+                            <div class="cell-thumbnail">[ Keyboard Layout 3 ]</div>
+                            <div class="cell-info">
+                                <div>
+                                    <div class="cell-brand">Corsair</div>
+                                    <h4 class="cell-title">Corsair K70 RGB PRO Mechanical</h4>
+                                </div>
+                                <div class="cell-footer">
+                                    <div class="price-group"><span class="current-price">3.890.000 đ</span></div>
+                                    <button class="add-to-cart-btn">+</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- SCREEN 3: ITEMDETAILVIEWCONTROLLER                         -->
+        <!-- ========================================================== -->
+        <section id="detail-screen" class="screen-section">
+            <div class="section-title">
+                <h3>Chi Tiết Sản Phẩm (ItemDetailViewController)</h3>
+            </div>
+
+            <div class="detail-screen-layout">
+                <!-- Gallery Sub-Component (Left) -->
+                <div class="detail-gallery">
+                    <div class="main-preview-box">
+                        [ MAIN HD PRODUCT PREVIEW IMAGE ]
+                    </div>
+                    <div class="thumbnail-strip">
+                        <div class="thumb-box active">Góc chính diện</div>
+                        <div class="thumb-box">Góc nghiêng 45°</div>
+                        <div class="thumb-box">Cạnh bên / Cổng kết nối</div>
+                        <div class="thumb-box">Hộp và Phụ kiện đi kèm</div>
+                    </div>
+                </div>
+
+                <!-- Product Specifications & Checkout Actions Panel (Right) -->
+                <div class="detail-info-panel">
+                    <span class="detail-brand-name">ASUS ROG Series</span>
+                    <h1 class="detail-product-title">Laptop Gaming ROG Strix Scar 16 (2026) - RTX 5080</h1>
+                    
+                    <div class="detail-rating-row">
+                        <span class="rating">★ 4.95 (182 đánh giá chân thực)</span>
+                        <span class="sales-count">| Khách hàng đã mua: 540 sản phẩm</span>
+                    </div>
+
+                    <div class="detail-price-box">
+                        <div class="detail-current-price">
+                            <span>74.990.000 đ</span>
+                            <span class="detail-discount-tag">GIẢM 8%</span>
+                        </div>
+                        <div class="detail-old-price-row">Giá niêm yết cũ: 81.990.000 đ</div>
+                    </div>
+
+                    <!-- Config Variant Option Selector -->
+                    <div class="variant-selector">
+                        <div class="variant-title">Cấu hình Bộ nhớ (RAM / SSD)</div>
+                        <div class="variant-options">
+                            <button class="variant-btn active">32GB RAM / 1TB SSD</button>
+                            <button class="variant-btn">64GB RAM / 2TB SSD (+ 8.5tr)</button>
+                        </div>
+                    </div>
+
+                    <!-- Color Variant Option Selector -->
+                    <div class="variant-selector">
+                        <div class="variant-title">Màu Sắc Vỏ Máy</div>
+                        <div class="variant-options">
+                            <button class="variant-btn active">Stealth Black (Đen nhám)</button>
+                            <button class="variant-btn">Eclipse Gray (Xám không gian)</button>
+                        </div>
+                    </div>
+
+                    <!-- Quantity Counter Sub-Component -->
+                    <div class="quantity-selector">
+                        <div class="variant-title" style="margin-bottom:0;">Số lượng đặt mua:</div>
+                        <div class="quantity-counter">
+                            <button class="counter-btn">-</button>
+                            <div class="counter-value">1</div>
+                            <button class="counter-btn">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Call To Action Purchase Buttons Group -->
+                    <div class="purchase-actions">
+                        <button class="primary-action-btn btn-add-bag">Thêm vào Giỏ hàng</button>
+                        <button class="primary-action-btn btn-buy-now">Mua Ngay Toàn Bộ</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 
-    <!-- 8. Nhúng Javascript (Sử dụng defer để không chặn render UI) -->
-    <script defer src="assets/js/main.js"></script>
+    <!-- GLOBAL COMPREHENSIVE FOOTER -->
+    <footer>
+        <div class="app-container footer-grid">
+            <div class="footer-col">
+                <h4 style="color: var(--primary);">✦ SwiftShop Inc.</h4>
+                <p>Hệ thống cung cấp giải pháp bán lẻ công nghệ phân phối chính hãng toàn quốc với trải nghiệm người dùng cao cấp tối đa.</p>
+                <p>Hotline hỗ trợ kỹ thuật: 1900-xxxx (8:00 - 22:00)</p>
+            </div>
+            <div class="footer-col">
+                <h4>Về Chúng Tôi</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#" class="footer-link">Giới thiệu hệ thống</a></li>
+                    <li><a href="#" class="footer-link">Tuyển dụng Developer</a></li>
+                    <li><a href="#" class="footer-link">Hệ thống chuỗi cửa hàng</a></li>
+                    <li><a href="#" class="footer-link">Chính sách bảo mật dữ liệu</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Chính Sách Hỗ Trợ</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#" class="footer-link">Chính sách đổi trả 1-1</a></li>
+                    <li><a href="#" class="footer-link">Chính sách trả góp qua thẻ</a></li>
+                    <li><a href="#" class="footer-link">Vận chuyển siêu tốc 2H</a></li>
+                    <li><a href="#" class="footer-link">Trung tâm bảo hành Apple</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Đối Tác Liên Kết</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#" class="footer-link">Apple Authorised Reseller</a></li>
+                    <li><a href="#" class="footer-link">Sony VietNam Premium Partner</a></li>
+                    <li><a href="#" class="footer-link">Asus ROG Elite Club</a></li>
+                    <li><a href="#" class="footer-link">Logitech Official Distributor</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="app-container footer-bottom">
+            <p>&copy; 2026 SwiftShop Platform. Được thiết kế tối ưu hóa cho hiệu năng cao trên Mobile Web & Single Page App.</p>
+            <p>Quốc gia & Khu vực: Việt Nam | English | Nhật Bản</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCREEN SIMULATOR JS -->
     <script>
-        // Script nội bộ xử lý nhanh logic trang
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM đã tải xong và sẵn sàng!');
+            console.log("E-Commerce UI Hub Rendered Successfully.");
+            
+            // Handle Single Page Routing tabs smoothly
+            const links = document.querySelectorAll('.menu-link');
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    links.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
         });
     </script>
 </body>

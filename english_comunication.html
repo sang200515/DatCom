@@ -3,748 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3-Month English Communication Roadmap for Beginners</title>
+    <title>Developer English - Native Chunks Practice</title>
     <style>
         :root {
             --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --secondary: #10b981;
-            --background: #f8fafc;
-            --surface: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --radius: 12px;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --accent: #059669;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--background);
-            color: var(--text-main);
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
+            margin: 0;
+            padding: 20px;
         }
-
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
         }
-
-        header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-            color: white;
-            padding: 40px 20px;
-            border-radius: var(--radius);
-            margin-bottom: 30px;
+        h1 {
             text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; }
-        header p { font-size: 1.1rem; opacity: 0.9; }
-
-        /* Dashboard Overview */
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: var(--surface);
-            padding: 20px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .stat-card h3 { font-size: 1rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; }
-        .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--primary); }
-
-        /* Tab Navigation for Months */
-        .month-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 10px;
-        }
-
-        .tab-btn {
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            border-radius: var(--radius);
-            transition: all 0.2s;
-        }
-
-        .tab-btn.active {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        /* Main Content Grid */
-        .content-layout {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 25px;
-        }
-
-        @media (max-width: 768px) {
-            .content-layout { grid-template-columns: 1fr; }
-        }
-
-        /* Sidebar Navigation */
-        .sidebar {
-            background: var(--surface);
-            padding: 20px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            height: fit-content;
-        }
-
-        .sidebar h2 { font-size: 1.2rem; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-
-        .week-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-
-        .week-item {
-            padding: 12px;
-            background: var(--background);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-            border-left: 4px solid transparent;
-        }
-
-        .week-item:hover, .week-item.active {
-            background: #eff6ff;
             color: var(--primary);
-            border-left-color: var(--primary);
+            margin-bottom: 30px;
         }
-
-        /* Lesson Viewer Area */
-        .lesson-viewer {
-            background: var(--surface);
-            padding: 30px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-
-        .lesson-header {
+        .section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border);
         }
-
-        .lesson-header h2 { font-size: 1.8rem; color: var(--primary); margin-bottom: 5px; }
-        .lesson-header .objective { color: var(--text-muted); font-style: italic; }
-
-        .section-block { margin-bottom: 30px; }
-        .section-block h3 { font-size: 1.3rem; margin-bottom: 15px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
-        .section-block h3::before { content: ""; display: inline-block; width: 4px; height: 18px; background: var(--secondary); border-radius: 2px; }
-
-        /* Vocabulary & Pattern Cards */
-        .card-grid {
+        h2 {
+            margin-top: 0;
+            color: var(--text);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge {
+            background: #dbeafe;
+            color: var(--primary);
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .scenario-box {
+            background: #f1f5f9;
+            padding: 15px;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
-
-        .data-card {
-            background: var(--background);
-            padding: 16px;
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+        .chunk-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .chunk-item {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
             border-radius: 8px;
-            border: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.2s;
-        }
-
-        .data-card:hover { transform: translateX(5px); }
-
-        .card-content .en { font-size: 1.2rem; font-weight: 700; color: #1e4ed8; margin-bottom: 4px; }
-        .card-content .ipa { font-size: 0.95rem; color: #059669; font-family: monospace; margin-bottom: 4px; }
-        .card-content .vi { font-size: 1rem; color: var(--text-main); }
-        .card-content .context { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; font-style: italic; }
-
-        .action-btns { display: flex; gap: 10px; }
-
-        .audio-btn {
-            background: white;
-            border: 1px solid var(--border);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            margin-bottom: 10px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
             transition: all 0.2s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-
-        .audio-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-
-        /* Interactive Practice Quiz Block */
-        .quiz-container {
+        .chunk-item:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+            transform: translateX(5px);
+        }
+        .chunk-en {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        .chunk-vi {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .practice-area {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: none;
+            box-sizing: border-box;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            align-self: flex-end;
+        }
+        .btn:hover { background: #1d4ed8; }
+        .result-box {
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 6px;
             background: #f0fdf4;
             border: 1px solid #bbf7d0;
-            padding: 20px;
-            border-radius: var(--radius);
-            margin-top: 20px;
+            color: var(--accent);
+            font-weight: 500;
+            display: none;
         }
-
-        .quiz-question { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; }
-        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
-        
-        .option-btn {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 12px 16px;
+        .grammar-tip {
+            font-size: 0.85rem;
+            color: #64748b;
+            background: #fff7ed;
+            border: 1px dashed #fdba74;
+            padding: 10px;
             border-radius: 8px;
-            text-align: left;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .option-btn:hover { background: #f8fafc; border-color: var(--text-muted); }
-        .option-btn.correct { background: #dcfce7; border-color: #22c55e; color: #15803d; font-weight: 600; }
-        .option-btn.wrong { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
-
-        .feedback-msg { margin-top: 15px; font-weight: 600; display: none; }
-
-        footer {
-            margin-top: 50px;
-            text-align: center;
-            padding: 20px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border);
-            font-size: 0.9rem;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Lộ Trình Giao Tiếp Tiếng Anh 3 Tháng</h1>
-            <p>Học từ vựng phát âm chuẩn, cấu trúc câu cốt lõi và phản xạ giao tiếp tự nhiên dành cho người mới bắt đầu</p>
-        </header>
+<div class="container">
+    <h1>Dev English - Bản Xứ Thực Chiến 🚀</h1>
 
-        <!-- DASHBOARD TRACKING -->
-        <div class="dashboard">
-            <div class="stat-card">
-                <h3>Tổng thời gian lộ trình</h3>
-                <div class="value">90 Ngày</div>
-            </div>
-            <div class="stat-card">
-                <h3>Tổng số bài học cốt lõi</h3>
-                <div class="value">12 Tuần</div>
-            </div>
-            <div class="stat-card">
-                <h3>Mục tiêu mẫu câu tích lũy</h3>
-                <div class="value">360+ Câu</div>
-            </div>
+    <!-- SCENARIO 1 -->
+    <div class="section">
+        <h2>
+            <span>01. Daily Stand-up</span>
+            <span class="badge">Họp Đầu Ngày</span>
+        </h2>
+        <div class="scenario-box">
+            <strong>Tình huống:</strong> Hôm qua làm xong giao diện danh sách, hôm nay làm màn hình chi tiết, nhưng bị khựng lại (block) vì backend đổi format API.
         </div>
-
-        <!-- MONTH NAVIGATION TABS -->
-        <div class="month-tabs">
-            <button class="tab-btn active" onclick="switchMonth(1)">Tháng 1: Xây Dựng Nền Tảng</button>
-            <button class="tab-btn" onclick="switchMonth(2)">Tháng 2: Phản Xạ Đời Sống</button>
-            <button class="tab-btn" onclick="switchMonth(3)">Tháng 3: Giao Tiếp Công Việc</button>
-        </div>
-
-        <!-- MAIN LAYOUT -->
-        <div class="content-layout">
-            <!-- LEFT SIDEBAR: WEEKS LIST -->
-            <aside class="sidebar">
-                <h2>Danh Sách Tuần Học</h2>
-                <ul class="week-list" id="weekListContainer">
-                    <!-- Loaded dynamically via JavaScript to ensure 100% data integrity -->
+        
+        <div class="grid">
+            <div>
+                <h3>💡 Cụm từ bản xứ (Click để copy)</h3>
+                <ul class="chunk-list">
+                    <li class="chunk-item" onclick="copyText('I managed to finish the list view.')">
+                        <div class="chunk-en">I managed to finish...</div>
+                        <div class="chunk-vi">Tôi đã xử lý/xoay sở xong... (Nghe rất chủ động)</div>
+                    </li>
+                    <li class="chunk-item" onclick="copyText('I\'m currently working on the detail view.')">
+                        <div class="chunk-en">I'm currently working on...</div>
+                        <div class="chunk-vi">Hiện tại tôi đang tập trung làm...</div>
+                    </li>
+                    <li class="chunk-item" onclick="copyText('I\'ve run into a minor issue with the API.')">
+                        <div class="chunk-en">I've run into a minor issue with...</div>
+                        <div class="chunk-vi">Tôi vừa đụng phải một lỗi nhỏ với...</div>
+                    </li>
                 </ul>
-            </aside>
-
-            <!-- RIGHT WORKSPACE: LESSON CONTENT VIEWER -->
-            <main class="lesson-viewer" id="lessonViewer">
-                <!-- Loaded dynamically based on active selection -->
-            </main>
+                <div class="grammar-tip">
+                    <strong>💡 Mix thì:</strong> Past Simple (Hôm qua) ➔ Present Continuous (Đang làm) ➔ Present Perfect (Vừa bị block).
+                </div>
+            </div>
+            
+            <div class="practice-area">
+                <h3>✍️ Luyện tập ráp câu</h3>
+                <textarea id="tx1" placeholder="Nhìn các cụm từ bên trái, thử gõ lại một câu báo cáo hoàn chỉnh của bạn vào đây..."></textarea>
+                <button class="btn" onclick="showSuggestion(1)">Xem câu mẫu</button>
+                <div id="res1" class="result-box">
+                    <strong>Câu mẫu chuẩn:</strong><br>
+                    "Yesterday, I managed to finish the list view. Today, I'm currently working on the detail view. However, I've run into a minor issue because the API response has changed."
+                </div>
+            </div>
         </div>
-
-        <footer>
-            <p>&copy; 2026 English 3-Month Roadmap Engine. Thiết kế mã nguồn mở tối ưu cho GitHub Pages.</p>
-        </footer>
     </div>
 
-    <!-- DATA & APPLICATION ENGINE SCRIPT (COMPREHENSIVE DATABASE) -->
-    <script>
-        // COMPREHENSIVE ROADMAP DATABASE CONTAINING ALL 12 WEEKS WITHOUT OMISSION
-        const roadmapData = {
-            1: [
-                {
-                    week: 1,
-                    title: "Tuần 1: Chào hỏi & Giới thiệu bản thân cơ bản",
-                    objective: "Mục tiêu: Biết cách mở đầu cuộc hội thoại ngẫu nhiên và giới thiệu tên tuổi, nghề nghiệp, quê quán mượt mà.",
-                    vocab: [
-                        { en: "Nice to meet you", ipa: "/naɪs tuː miːt juː/", vi: "Rất vui được gặp bạn", ctx: "Dùng khi lần đầu tiên gặp mặt ai đó." },
-                        { en: "How have you been?", ipa: "/haʊ hæv juː biːn/", vi: "Dạo này bạn thế nào?", ctx: "Hỏi thăm người đã quen biết từ trước." },
-                        { en: "Introduce myself", ipa: "/ˌɪntrəˈdjuːs maɪˈsɛlf/", vi: "Giới thiệu bản thân", ctx: "Let me introduce myself (Để tôi tự giới thiệu)." },
-                        { en: "Originally from", ipa: "/əˈrɪʤɪnəli frɒm/", vi: "Gốc gác từ đâu đến", ctx: "I'm originally from Long An (Tôi gốc ở Long An)." },
-                        { en: "Occupation", ipa: "/ˌɒkjʊˈpeɪʃən/", vi: "Nghề nghiệp / Công việc", ctx: "What is your current occupation?" }
-                    ],
-                    patterns: [
-                        { en: "Let me introduce myself, my name is John.", vi: "Để tôi tự giới thiệu, tên tôi là John.", ctx: "Mẫu câu lịch sự để bắt đầu thuyết trình hoặc gặp đối tác." },
-                        { en: "I was born and raised in Vietnam.", vi: "Tôi sinh ra và lớn lên tại Việt Nam.", ctx: "Cách nói tự nhiên thay vì chỉ nói 'I am from...'" },
-                        { en: "I currently work as a software engineer.", vi: "Tôi hiện đang làm kỹ sư phần mềm.", ctx: "Cấu trúc chuẩn: S + currently work as a/an + nghề nghiệp." },
-                        { en: "How about you? What do you do for a living?", vi: "Còn bạn thì sao? Bạn làm nghề gì để kiếm sống?", ctx: "Câu hỏi đáp lại lịch sự để duy trì mạch hội thoại." }
-                    ],
-                    quiz: {
-                        question: "Điền vào chỗ trống: 'I currently work ____ an iOS developer.'",
-                        options: ["at", "as", "for", "in"],
-                        correct: 1,
-                        explanation: "Cấu trúc 'work as + danh từ chỉ nghề nghiệp' nghĩa là làm việc với vị trí công việc nào đó."
-                    }
-                },
-                {
-                    week: 2,
-                    title: "Tuần 2: Gia đình & Các mối quan hệ",
-                    objective: "Mục tiêu: Mô tả thành viên gia đình, tình trạng hôn nhân và tính cách cơ bản.",
-                    vocab: [
-                        { en: "Nuclear family", ipa: "/ˈnjuːklɪə ˈfæmɪli/", vi: "Gia đình nhỏ (Bố mẹ và con cái)", ctx: "Phân biệt với Extended family (đại gia đình)." },
-                        { en: "Sibling", ipa: "/ˈsɪblɪŋ/", vi: "Anh chị em ruột", ctx: "Do you have any siblings?" },
-                        { en: "Get along with", ipa: "/ɡɛt əˈlɒŋ wɪð/", vi: "Hòa thuận, ăn ý với ai", ctx: "I get along well with my brother." },
-                        { en: "Marital status", ipa: "/ˈmærɪtl ˈsteɪtəs/", vi: "Tình trạng hôn nhân", ctx: "Single (độc thân), Married (đã kết hôn)." },
-                        { en: "Take after", ipa: "/teɪk ˈɑːftə/", vi: "Giống ai đó (ngoại hình/tính cách)", ctx: "I take after my father." }
-                    ],
-                    patterns: [
-                        { en: "There are four of us in my family.", vi: "Gia đình tôi có 4 người.", ctx: "Cách nói thông dụng của người bản xứ thay vì 'My family has...'" },
-                        { en: "I am the middle child in the family.", vi: "Tôi là con giữa trong gia đình.", ctx: "Middle child (con giữa), Eldest (con cả), Youngest (con út)." },
-                        { en: "We are a very close-knit family.", vi: "Gia đình chúng tôi rất gắn kết và khăng khít.", ctx: "Close-knit là tính từ rất hay để mô tả gia đình hạnh phúc." },
-                        { en: "My son was born in early March.", vi: "Con trai tôi sinh vào đầu tháng Ba.", ctx: "Sử dụng 'in early + tháng' để chỉ thời gian đầu tháng." }
-                    ],
-                    quiz: {
-                        question: "Từ nào có nghĩa là 'Anh chị em ruột'?",
-                        options: ["Cousins", "Siblings", "Relatives", "Parents"],
-                        correct: 1,
-                        explanation: "Siblings bao gồm cả anh, chị, em ruột trong nhà."
-                    }
-                },
-                {
-                    week: 3,
-                    title: "Tuần 3: Thời gian, Thời tiết & Cuộc sống hàng ngày",
-                    objective: "Mục tiêu: Hẹn lịch, hỏi giờ, diễn đạt các thói quen lặp đi lặp lại hàng ngày.",
-                    vocab: [
-                        { en: "Daily routine", ipa: "/ˈdeɪli ruːˈtiːn/", vi: "Thói quen sinh hoạt hàng ngày", ctx: "What's your morning routine?" },
-                        { en: "At the weekend", ipa: "/æt ðə ˌwiːkˈɛnd/", vi: "Vào cuối tuần", ctx: "I usually clean my room at the weekend." },
-                        { en: "Reschedule", ipa: "/ˌriːˈʃɛdjuːl/", vi: "Dời lịch, sắp xếp lại lịch hẹn", ctx: "Can we reschedule our meeting?" },
-                        { en: "Pouring with rain", ipa: "/ˈpɔːrɪŋ wɪð reɪn/", vi: "Mưa lớn, mưa xối xả", ctx: "It's pouring with rain outside." },
-                        { en: "Catch up with", ipa: "/kæʧ ʌp wɪð/", vi: "Gặp gỡ hàn huyên, cập nhật tin tức", ctx: "Catch up with some old friends." }
-                    ],
-                    patterns: [
-                        { en: "I usually wake up at 6 AM to make coffee.", vi: "Tôi thường thức dậy lúc 6 giờ sáng để pha cà phê.", ctx: "Mô tả thói quen sử dụng trạng từ tần suất 'usually'." },
-                        { en: "Does this Saturday afternoon work for you?", vi: "Chiều thứ Bảy tuần này có tiện cho bạn không?", ctx: "Mẫu câu đặt lịch hẹn cực kỳ tự nhiên trong giao tiếp." },
-                        { en: "Let's push the meeting back to next Monday.", vi: "Hãy lùi cuộc họp lại sang thứ Hai tuần tới nhé.", ctx: "Push back là phrasal verb nghĩa là hoãn lại/lùi lại lịch." },
-                        { en: "The weather is freezing cold today.", vi: "Thời tiết hôm nay lạnh giá buốt.", ctx: "Freezing cold nhấn mạnh mức độ lạnh hơn rất nhiều so với 'cold'." }
-                    ],
-                    quiz: {
-                        question: "Cụm từ nào dùng để hẹn lịch tiện cho ai đó?",
-                        options: ["Does it work for you?", "Are you job?", "Make it down?", "Do you match?"],
-                        correct: 0,
-                        explanation: "'Does it work for you?' nghĩa là lịch đó/việc đó có tiện cho bạn không."
-                    }
-                },
-                {
-                    week: 4,
-                    title: "Tuần 4: Sở thích, Giải trí & Phong cách sống",
-                    objective: "Mục tiêu: Nói về đam mê cá nhân, âm nhạc, phim ảnh, xe cộ hoặc thói quen thưởng thức cà phê.",
-                    vocab: [
-                        { en: "Be into something", ipa: "/biː ˈɪntuː ˈsʌmθɪŋ/", vi: "Đam mê, cực kỳ thích cái gì", ctx: "I am really into tech gadgets." },
-                        { en: "Coffee enthusiast", ipa: "/ˈkɒfi ɪnˈθjuːzɪæst/", vi: "Người đam mê cà phê", ctx: "He is a home-brew coffee enthusiast." },
-                        { en: "Unwind", ipa: "/ʌnˈwaɪnd/", vi: "Thư giãn, xả stress", ctx: "Listen to music to unwind after work." },
-                        { en: "Sedan", ipa: "/sɪˈdæn/", vi: "Dòng xe hơi 4 chỗ đầu ngắn đuôi dài", ctx: "I drive a 4-door sedan car." },
-                        { en: "Binge-watch", ipa: "/bɪnʤ-wɒʧ/", vi: "Cày phim liên tục nhiều tập", ctx: "I binge-watched the whole season." }
-                    ],
-                    patterns: [
-                        { en: "In my free time, I love brewing espresso at home.", vi: "Vào thời gian rảnh, tôi thích tự pha cà phê espresso tại nhà.", ctx: "Diễn tả sở thích cụ thể đem lại niềm vui." },
-                        { en: "I prefer pop ballads from the 2000s.", vi: "Tôi thích nhạc pop ballad từ những năm 2000 hơn.", ctx: "Cấu trúc: Prefer + Noun + from/in..." },
-                        { en: "Listening to music helps me clear my mind.", vi: "Nghe nhạc giúp tôi giải tỏa tâm trí.", ctx: "Clear my mind giải nghĩa cho việc thư giãn đầu óc." },
-                        { en: "I'm a big fan of high-performance flashlights.", vi: "Tôi là người hâm mộ lớn của các dòng đèn pin hiệu năng cao.", ctx: "Be a big fan of sth = rất thích cái gì." }
-                    ],
-                    quiz: {
-                        question: "Đồng nghĩa với cụm 'I like tech gadgets rất nhiều' là?",
-                        options: ["I am into tech gadgets.", "I am out tech gadgets.", "I work tech gadgets.", "I hate tech gadgets."],
-                        correct: 0,
-                        explanation: "'Be into something' biểu thị sự yêu thích cuồng nhiệt."
-                    }
-                }
-            ],
-            2: [
-                {
-                    week: 5,
-                    title: "Tuần 5: Đi mua sắm & Hỏi giá cả",
-                    objective: "Mục tiêu: Hỏi giá, mặc cả cơ bản, thanh toán bằng tiền mặt/thẻ và hỏi size số.",
-                    vocab: [
-                        { en: "How much does it cost?", ipa: "/haʊ mʌʧ dʌz ɪt kɒst/", vi: "Cái này có giá bao nhiêu?", ctx: "Câu hỏi giá kinh điển." },
-                        { en: "Affordable", ipa: "/əˈfɔːdəbl/", vi: "Giá cả phải chăng, vừa túi tiền", ctx: "The price is quite affordable." },
-                        { en: "Receipt", ipa: "/rɪˈsiːt/", vi: "Hóa đơn mua hàng (chữ P câm)", ctx: "Could I have a receipt, please?" },
-                        { en: "Fit", ipa: "/fɪt/", vi: "Vừa vặn kích cỡ", ctx: "This shirt fits me perfectly." },
-                        { en: "Refund", ipa: "/ˈriːfʌnd/", vi: "Hoàn lại tiền mua hàng", ctx: "Can I get a full refund?" }
-                    ],
-                    patterns: [
-                        { en: "Do you accept credit cards or cash only?", vi: "Ở đây nhận thẻ tín dụng hay chỉ nhận tiền mặt thôi?", ctx: "Câu hỏi cực kỳ quan trọng khi đi mua sắm nước ngoài." },
-                        { en: "Is there any discount on this item?", vi: "Mặt hàng này có được giảm giá chút nào không?", ctx: "Hỏi chương trình khuyến mãi khéo léo." },
-                        { en: "I'm just looking around, thank you.", vi: "Tôi chỉ đang xem xung quanh thôi, cảm ơn nhé.", ctx: "Nói với nhân viên bán hàng khi bạn muốn tự do xem đồ." },
-                        { en: "Keep the change, please.", vi: "Xin cứ giữ lại tiền thối lẻ.", ctx: "Dùng khi bạn muốn boa tiền thừa cho người bán/tài xế." }
-                    ],
-                    quiz: {
-                        question: "Cách phát âm đúng của từ hóa đơn 'Receipt' là gì?",
-                        options: ["Ri-sípt (bật âm P)", "Ri-sít (âm P câm)", "Ri-kép", "Ri-sáp"],
-                        correct: 1,
-                        explanation: "Từ 'Receipt' có âm 'p' là âm câm, phát âm chuẩn là /rɪˈsiːt/."
-                    }
-                },
-                {
-                    week: 6,
-                    title: "Tuần 6: Ăn uống, Nhà hàng & Quán cà phê",
-                    objective: "Mục tiêu: Đặt bàn, gọi món ăn, oder các loại cà phê chi tiết và yêu cầu hóa đơn.",
-                    vocab: [
-                        { en: "Book a table", ipa: "/bʊk ə ˈteɪbl/", vi: "Đặt bàn trước", ctx: "I'd like to book a table for two." },
-                        { en: "Menu", ipa: "/ˈmɛnjuː/", vi: "Thực đơn", ctx: "Could we see the menu, please?" },
-                        { en: "Allergies", ipa: "/ˈæləʤɪz/", vi: "Dị ứng thực phẩm", ctx: "I have an allergy to peanuts." },
-                        { en: "Robusta and Arabica", ipa: "/rəʊˈbʌstə ænd æˈræbɪkə/", vi: "Hai dòng hạt cà phê phổ biến", ctx: "I prefer Arabica because it's less bitter." },
-                        { en: "Split the bill", ipa: "/splɪt ðə bɪl/", vi: "Chia đôi hóa đơn tiền ăn", ctx: "Let's split the bill tonight." }
-                    ],
-                    patterns: [
-                        { en: "Are you ready to order, sir?", vi: "Anh đã sẵn sàng gọi món chưa ạ?", ctx: "Câu hỏi thường gặp từ bồi bàn." },
-                        { en: "I would like a hot Latte with double espresso shots.", vi: "Tôi muốn một ly Latte nóng với 2 shot espresso.", ctx: "Mẫu câu oder chuẩn cho tín đồ cà phê." },
-                        { en: "Could you bring us some water, please?", vi: "Bạn có thể mang cho chúng tôi ít nước lọc được không?", ctx: "Yêu cầu phục vụ lịch sự dùng cấu trúc 'Could you...'." },
-                        { en: "Can we have the bill, please?", vi: "Cho chúng tôi xin hóa đơn thanh toán nhé.", ctx: "Mẫu câu gọi tính tiền thông dụng nhất." }
-                    ],
-                    quiz: {
-                        question: "Khi muốn rủ bạn bè chia đôi tiền ăn, bạn nói:",
-                        options: ["Let's split the bill.", "Cut the money.", "Share the papers.", "You pay all."],
-                        correct: 0,
-                        explanation: "'Split the bill' nghĩa là chia đều hóa đơn ăn uống."
-                    }
-                },
-                {
-                    week: 7,
-                    title: "Tuần 7: Hỏi đường & Di chuyển trên phố",
-                    objective: "Mục tiêu: Hỏi đường đi, bắt xe taxi/Grab, hiểu các bảng chỉ dẫn giao thông.",
-                    vocab: [
-                        { en: "Lost", ipa: "/lɒst/", vi: "Bị lạc đường", ctx: "Excuse me, I think I am lost." },
-                        { en: "Intersection", ipa: "/ˌɪntə(r)ˈsɛkʃən/", vi: "Ngã tư đường", ctx: "Turn left at the next intersection." },
-                        { en: "Go straight ahead", ipa: "/ɡəʊ streɪt əˈhɛd/", vi: "Đi thẳng về phía trước", ctx: "Just go straight ahead for 200 meters." },
-                        { en: "Destination", ipa: "/ˌdɛstɪˈneɪʃən/", vi: "Điểm đến, đích đến", ctx: "We have arrived at your destination." },
-                        { en: "Traffic jam", ipa: "/ˈtræfɪk ʤæm/", vi: "Kẹt xe, tắc đường", ctx: "I got stuck in a severe traffic jam." }
-                    ],
-                    patterns: [
-                        { en: "Excuse me, could you tell me how to get to the station?", vi: "Xin lỗi, bạn có thể chỉ tôi đường đến nhà ga được không?", ctx: "Mở đầu lịch sự bằng 'Excuse me'." },
-                        { en: "Is it far from here? Can I walk there?", vi: "Chỗ đó có xa đây không? Tôi đi bộ đến đó được không?", ctx: "Hỏi để ước lượng khoảng cách hành trình." },
-                        { en: "Please pull over right here.", vi: "Vui lòng tấp xe vào lề ngay tại đây.", ctx: "Nói với tài xế taxi khi bạn muốn xuống xe." },
-                        { en: "How long does it take to get to the airport?", vi: "Mất bao lâu để đi đến sân bay?", ctx: "Hỏi về tổng thời gian di chuyển." }
-                    ],
-                    quiz: {
-                        question: "Cụm từ bảo bác tài xế 'tấp xe vào lề' là:",
-                        options: ["Pull over", "Go fast", "Stop top", "Drive out"],
-                        correct: 0,
-                        explanation: "'Pull over' là cụm từ chuẩn để yêu cầu xe dừng đỗ sát lề đường."
-                    }
-                },
-                {
-                    week: 8,
-                    title: "Tuần 8: Khám bệnh & Các tình huống khẩn cấp",
-                    objective: "Mục tiêu: Mô tả triệu chứng sức khỏe cơ bản, mua thuốc tại hiệu thuốc.",
-                    vocab: [
-                        { en: "Symptoms", ipa: "/ˈsɪmptəmz/", vi: "Triệu chứng bệnh", ctx: "What are your exact symptoms?" },
-                        { en: "Headache", ipa: "/ˈhɛdeɪk/", vi: "Đau đầu", ctx: "I have a splitting headache." },
-                        { en: "Prescription", ipa: "/prɪsˈkrɪpʃən/", vi: "Đơn thuốc của bác sĩ", ctx: "Can I buy this medicine without a prescription?" },
-                        { en: "Dizzy", ipa: "/ˈdɪzi/", vi: "Chóng mặt, choáng váng", ctx: "I suddenly feel a bit dizzy." },
-                        { en: "Painkiller", ipa: "/ˈpeɪnˌkɪlə/", vi: "Thuốc giảm đau", ctx: "Take a painkiller to reduce the ache." }
-                    ],
-                    patterns: [
-                        { en: "I have been feeling unwell since yesterday.", vi: "Tôi cảm thấy trong người không khỏe từ ngày hôm qua.", ctx: "Diễn tả trạng thái kéo dài dùng Hiện tại hoàn thành tiếp diễn." },
-                        { en: "I have a sore throat and a runny nose.", vi: "Tôi bị đau họng và chảy nước mũi.", ctx: "Sore throat (đau họng), Runny nose (chảy nước mũi)." },
-                        { en: "How many times a day should I take this medicine?", vi: "Tôi nên uống loại thuốc này mấy lần một ngày?", ctx: "Hỏi dược sĩ hướng dẫn sử dụng thuốc." },
-                        { en: "Call an ambulance immediately, please!", vi: "Làm ơn gọi xe cứu thương ngay lập tức giúp tôi!", ctx: "Tình huống nguy cấp cần trợ giúp khẩn cấp." }
-                    ],
-                    quiz: {
-                        question: "Từ nào có nghĩa là 'Đơn thuốc do bác sĩ kê'?",
-                        options: ["Menu", "Bill", "Prescription", "Paper"],
-                        correct: 2,
-                        explanation: "Prescription là đơn thuốc chính thức bắt buộc phải có cho một số loại thuốc đặc trị."
-                    }
-                }
-            ],
-            3: [
-                {
-                    week: 9,
-                    title: "Tuần 9: Giao tiếp văn phòng & Chào hỏi đồng nghiệp",
-                    objective: "Mục tiêu: Chào hỏi buổi sáng tại nơi làm việc, bàn luận tiến độ công việc trong daily meeting.",
-                    vocab: [
-                        { en: "Colleague", ipa: "/ˈkɒliːɡ/", vi: "Đồng nghiệp làm chung công ty", ctx: "He is one of my close colleagues." },
-                        { en: "Deadline", ipa: "/ˈdɛdlaɪn/", vi: "Hạn chót hoàn thành công việc", ctx: "The deadline is coming up very soon." },
-                        { en: "Update status", ipa: "/ʌpˈdeɪt ˈsteɪtəs/", vi: "Cập nhật tình hình, trạng thái", ctx: "Let me update the project status." },
-                        { en: "Task assignment", ipa: "/tɑːsk əˈsaɪnmənt/", vi: "Phân công nhiệm vụ", ctx: "Check your email for task assignment." },
-                        { en: "In progress", ipa: "/ɪn ˈprəʊɡrəs/", vi: "Đang trong quá trình xử lý", ctx: "This feature is currently in progress." }
-                    ],
-                    patterns: [
-                        { en: "Good morning team, let's start our daily stand-up meeting.", vi: "Chào buổi sáng cả đội, chúng ta bắt đầu họp nhanh hàng ngày nhé.", ctx: "Mở đầu cuộc họp ngắn quen thuộc trong ngành IT." },
-                        { en: "I am working on fixing some layout bugs on the main branch.", vi: "Tôi đang tập trung sửa một số lỗi giao diện trên nhánh chính.", ctx: "Mô tả công việc hiện tại dùng Hiện tại tiếp diễn." },
-                        { en: "I have completed all my assigned tasks for this sprint.", vi: "Tôi đã hoàn thành toàn bộ nhiệm vụ được giao cho sprint này.", ctx: "Báo cáo tiến độ dùng Thì hiện tại hoàn thành." },
-                        { en: "I am currently stuck on this issue and need some help.", vi: "Tôi hiện đang bị kẹt ở vấn đề này và cần sự trợ giúp.", ctx: "Be stuck on sth = bị mắc kẹt, gặp khó khăn không tự giải quyết được." }
-                    ],
-                    quiz: {
-                        question: "Khi một công việc đang được làm chưa xong, trạng thái của nó là:",
-                        options: ["Done", "In progress", "Pending", "Cancelled"],
-                        correct: 1,
-                        explanation: "'In progress' nghĩa là việc đó đang tiến hành xử lý."
-                    }
-                },
-                {
-                    week: 10,
-                    title: "Tuần 10: Trao đổi qua Email & Viết tin nhắn chat Slack",
-                    objective: "Mục tiêu: Viết câu ngắn gọn báo cáo nghỉ phép, xin review tài liệu hoặc code chuẩn mực.",
-                    vocab: [
-                        { en: "Take a day off", ipa: "/teɪk ə deɪ ɒf/", vi: "Nghỉ phép một ngày", ctx: "I would like to take a day off tomorrow." },
-                        { en: "Review code", ipa: "/rɪˈvjuː kəʊd/", vi: "Kiểm tra, xem xét mã nguồn", ctx: "Could you review my code when you are free?" },
-                        { en: "Approve", ipa: "/əˈpruːv/", vi: "Phê duyệt, chấp thuận", ctx: "The manager approved my vacation request." },
-                        { en: "Attached file", ipa: "/əˈtæʧt faɪl/", vi: "Tập tin đính kèm", ctx: "Please find the attached file below." },
-                        { en: "As soon as possible", ipa: "/æz suːn æz ˈpɒsəbl/", vi: "Càng sớm càng tốt (viết tắt: ASAP)", ctx: "Please reply to me as soon as possible." }
-                    ],
-                    patterns: [
-                        { en: "Please let me know if you have any questions or feedback.", vi: "Vui lòng cho tôi biết nếu bạn có bất kỳ câu hỏi hoặc phản hồi nào.", ctx: "Câu kết thúc email lịch sự kinh điển." },
-                        { en: "I am writing this email to inform you that I will be absent tomorrow.", vi: "Tôi viết email này để thông báo rằng tôi sẽ vắng mặt ngày mai.", ctx: "Mẫu câu xin nghỉ phép trang trọng." },
-                        { en: "Could you please take a look at my pull request?", vi: "Bạn có thể dành chút thời gian xem qua pull request của tôi được không?", ctx: "Lời nhờ vả đồng nghiệp review code rất văn minh." },
-                        { en: "Thank you for your prompt response.", vi: "Cảm ơn vì sự phản hồi nhanh chóng của bạn.", ctx: "Prompt response dùng để khen ngợi tiến độ rep mail/tin nhắn nhanh." }
-                    ],
-                    quiz: {
-                        question: "Cụm từ viết tắt 'ASUS/ASAP' hay dùng cuối tin nhắn có nghĩa là gì?",
-                        options: ["As soon as possible", "As slow as possible", "Always say apples please", "After hours"],
-                        correct: 0,
-                        explanation: "ASAP viết tắt của 'As soon as possible' - Càng nhanh càng tốt."
-                    }
-                },
-                {
-                    week: 11,
-                    title: "Tuần 11: Họp trực tuyến (Online Meeting / Zoom)",
-                    objective: "Mục tiêu: Xử lý các sự cố kỹ thuật âm thanh, đường truyền internet, share màn hình thuyết trình.",
-                    vocab: [
-                        { en: "Screen sharing", ipa: "/skriːn ˈʃeərɪŋ/", vi: "Chia sẻ màn hình máy tính", ctx: "Let me start screen sharing." },
-                        { en: "Mute", ipa: "/mjuːt/", vi: "Tắt tiếng microphone", ctx: "You are on mute, we can't hear you." },
-                        { en: "Unmute", ipa: "/ʌnˈmjuːt/", vi: "Bật lại tiếng micro", ctx: "Please unmute your microphone." },
-                        { en: "Laggy", ipa: "/ˈlæɡi/", vi: "Mạng bị giật lag, trễ tín hiệu", ctx: "Your connection is a bit laggy." },
-                        { en: "Cut out", ipa: "/kʌt aʊt/", vi: "Âm thanh bị mất tiếng, đứt quãng", ctx: "Your voice is cutting out." }
-                    ],
-                    patterns: [
-                        { en: "Can everyone see my shared screen clearly?", vi: "Mọi người có nhìn thấy màn hình tôi chia sẻ rõ không?", ctx: "Câu hỏi bắt buộc khi chuẩn bị trình chiếu slide/code." },
-                        { en: "Sorry, I think your voice is cutting out, could you repeat that?", vi: "Xin lỗi, tôi thấy giọng bạn bị mất chữ, bạn lặp lại được không?", ctx: "Xử lý lỗi mạng chập chờn khi đối phương đang nói." },
-                        { en: "Hold on a second, let me check my internet connection.", vi: "Chờ một giây nhé, để tôi kiểm tra lại đường truyền mạng của tôi.", ctx: "Hold on a second = chờ một chút." },
-                        { en: "I will drop the meeting link inside the group chat right now.", vi: "Tôi sẽ thả đường link cuộc họp vào nhóm chat ngay bây giờ.", ctx: "Drop the link = gửi link nhanh." }
-                    ],
-                    quiz: {
-                        question: "Khi đối phương quên bật micro và nói thầm, bạn sẽ bảo:",
-                        options: ["You are on mute.", "You are dead.", "Speak loud engine.", "Go away."],
-                        correct: 0,
-                        explanation: "'You are on mute' là câu nói kinh điển để nhắc nhở người khác chưa bật mic trên Zoom/Meet."
-                    }
-                },
-                {
-                    week: 12,
-                    title: "Tuần 12: Tổng kết lộ trình & Thảo luận kế hoạch tương lai",
-                    objective: "Mục tiêu: Đánh giá kết quả học tập sau 3 tháng, tự tin vạch ra mục tiêu dài hạn tiếp theo.",
-                    vocab: [
-                        { en: "Milestone", ipa: "/ˈmaɪlstəʊn/", vi: "Cột mốc quan trọng", ctx: "We have reached our 3-month milestone." },
-                        { en: "Fluency", ipa: "/ˈfluːənsi/", vi: "Sự trôi chảy, lưu loát", ctx: "My goal is to achieve English fluency." },
-                        { en: "Long-term plan", ipa: "/lɒŋ-tɜːm plæn/", vi: "Kế hoạch dài hạn", ctx: "What is your long-term plan?" },
-                        { en: "Improvement", ipa: "/ɪmˈpruːvmənt/", vi: "Sự tiến bộ, cải thiện rõ rệt", ctx: "I notice a big improvement in my speaking." },
-                        { en: "Consistency", ipa: "/kənˈsɪstənsi/", vi: "Sự kiên trì, nhất quán liên tục", ctx: "Consistency is the key to success." }
-                    ],
-                    patterns: [
-                        { en: "I feel much more confident speaking English now.", vi: "Bây giờ tôi cảm thấy tự tin hơn nhiều khi nói tiếng Anh.", ctx: "Khẳng định sự tiến bộ của bản thân." },
-                        { en: "My immediate goal is to master basic writing as well.", vi: "Mục tiêu ngay trước mắt của tôi là thành thạo cả viết cơ bản nữa.", ctx: "Immediate goal = mục tiêu ngắn hạn, khẩn cấp." },
-                        { en: "Hard work pays off in the end.", vi: "Sự chăm chỉ nỗ lực cuối cùng cũng sẽ được đền đáp xứng đáng.", ctx: "Thành ngữ khích lệ tinh thần học tập." },
-                        { en: "Let's keep practicing every single day to maintain this momentum.", vi: "Hãy tiếp tục luyện tập mỗi ngày để giữ vững đà tiến bộ này.", ctx: "Maintain the momentum = duy trì đà phát triển." }
-                    ],
-                    quiz: {
-                        question: "Điền từ đúng vào câu: '____ is the key to success in learning languages.'",
-                        options: ["Money", "Consistency", "Lucky", "Speed"],
-                        correct: 1,
-                        explanation: "Consistency (sự kiên trì đều đặn) là yếu tố quyết định hàng đầu khi học ngôn ngữ."
-                    }
-                }
-            ]
-        };
-
-        let currentMonth = 1;
-        let currentWeek = 1;
-
-        // Initialize Application UI
-        function initApp() {
-            renderWeeksSidebar();
-            loadLesson(currentWeek);
-        }
-
-        // Render Sidebar Navigation based on chosen month
-        function renderWeeksSidebar() {
-            const container = document.getElementById('weekListContainer');
-            container.innerHTML = '';
+    <!-- SCENARIO 2 -->
+    <div class="section">
+        <h2>
+            <span>02. Code Review</span>
+            <span class="badge">Góp Ý Linh Hoạt</span>
+        </h2>
+        <div class="scenario-box">
+            <strong>Tình huống:</strong> Thấy code của đồng nghiệp bị hardcode (cố định), cứng nhắc, khó mở rộng. Muốn góp ý đổi sang dùng protocol/cấu trúc linh hoạt hơn.
+        </div>
+        
+        <div class="grid">
+            <div>
+                <h3>💡 Cụm từ bản xứ (Click để copy)</h3>
+                <ul class="chunk-list">
+                    <li class="chunk-item" onclick="copyText('It\'s a bit too rigid.')">
+                        <div class="chunk-en">It's a bit too rigid / hardcoded.</div>
+                        <div class="chunk-vi">Nó hơi bị cứng nhắc / bị viết chết dữ liệu rồi.</div>
+                    </li>
+                    <li class="chunk-item" onclick="copyText('What if we make it more flexible?')">
+                        <div class="chunk-en">What if we...?</div>
+                        <div class="chunk-vi">Sẽ ra sao nếu chúng ta...? (Đề xuất cực kỳ lịch sự)</div>
+                    </li>
+                    <li class="chunk-item" onclick="copyText('It will be easier to maintain and extend.')">
+                        <div class="chunk-en">Easier to maintain / extend later.</div>
+                        <div class="chunk-vi">Dễ bảo trì / mở rộng hơn về sau.</div>
+                    </li>
+                </ul>
+                <div class="grammar-tip">
+                    <strong>💡 Mix thì:</strong> Present Simple (Đánh giá code hiện tại) ➔ Future Simple (Sẽ dễ mở rộng hơn).
+                </div>
+            </div>
             
-            const weeks = roadmapData[currentMonth];
-            weeks.forEach(item => {
-                const li = document.createElement('li');
-                li.className = `week-item ${item.week === currentWeek ? 'active' : ''}`;
-                li.innerText = `Tuần ${item.week}: ${item.title.split(': ')[1]}`;
-                li.onclick = () => {
-                    document.querySelectorAll('.week-item').forEach(el => el.classList.remove('active'));
-                    li.classList.add('active');
-                    currentWeek = item.week;
-                    loadLesson(item.week);
-                };
-                container.appendChild(li);
-            });
-        }
-
-        // Switch Tab Months
-        function switchMonth(monthNum) {
-            currentMonth = monthNum;
-            currentWeek = roadmapData[monthNum][0].week; // default to first week of that month
-            
-            document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
-                if(idx === monthNum - 1) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
-
-            renderWeeksSidebar();
-            loadLesson(currentWeek);
-        }
-
-        // Load Content into Viewer Workspace
-        function loadLesson(weekNum) {
-            // Find specific lesson inside database safely
-            let lesson = null;
-            for (let m in roadmapData) {
-                let found = roadmapData[m].find(w => w.week === weekNum);
-                if(found) { lesson = found; break; }
-            }
-
-            if(!lesson) return;
-
-            const viewer = document.getElementById('lessonViewer');
-            
-            // Build Vocabulary Cards HTML block
-            let vocabHTML = '';
-            lesson.vocab.forEach(v => {
-                vocabHTML += `
-                    <div class="data-card">
-                        <div class="card-content">
-                            <div class="en">${v.en}</div>
-                            <div class="ipa">${v.ipa}</div>
-                            <div class="vi">${v.vi}</div>
-                            <div class="context">Ngữ cảnh: ${v.ctx}</div>
-                        </div>
-                        <button class="audio-btn" onclick="speakText('${v.en.replace(/'/g, "\\'")}')">🔊</button>
-                    </div>
-                `;
-            });
-
-            // Build Patterns Cards HTML block
-            let patternHTML = '';
-            lesson.patterns.forEach(p => {
-                patternHTML += `
-                    <div class="data-card">
-                        <div class="card-content">
-                            <div class="en" style="color:#10b981;">${p.en}</div>
-                            <div class="vi">${p.vi}</div>
-                            <div class="context">Cách dùng: ${p.ctx}</div>
-                        </div>
-                        <button class="audio-btn" onclick="speakText('${p.en.replace(/'/g, "\\'")}')">🔊</button>
-                    </div>
-                `;
-            });
-
-            // Assemble Full Layout Template
-            viewer.innerHTML = `
-                <div class="lesson-header">
-                    <h2>${lesson.title}</h2>
-                    <p class="objective">${lesson.objective}</p>
+            <div class="practice-area">
+                <h3>✍️ Luyện tập ráp câu</h3>
+                <textarea id="tx2" placeholder="Thử viết câu góp ý code bằng tiếng Anh của bạn vào đây..."></textarea>
+                <button class="btn" onclick="showSuggestion(2)">Xem câu mẫu</button>
+                <div id="res2" class="result-box">
+                    <strong>Câu mẫu chuẩn:</strong><br>
+                    "I think this part is a bit too rigid because the data is hardcoded. What if we use a protocol here? It will make it more flexible and easier to extend later."
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <div class="section-block">
-                    <h3>Từ Vựng Cốt Lõi Điểm Nhấn</h3>
-                    <div class="card-grid">${vocabHTML}</div>
-                </div>
+<script>
+    function copyText(text) {
+        navigator.clipboard.writeText(text);
+        alert("Đã copy cụm từ: " + text);
+    }
 
-                <div class="section-block">
-                    <h3>Mẫu Câu Phản Xạ Ứng Dụng</h3>
-                    <div class="card-grid">${patternHTML}</div>
-                </div>
-
-                <div class="section-block">
-                    <h3>Bài Tập Củng Cố Phản Xạ Nhanh</h3>
-                    <div class="quiz-container">
-                        <div class="quiz-question">${lesson.quiz.question}</div>
-                        <div class="quiz-options">
-                            ${lesson.quiz.options.map((opt, i) => `
-                                <button class="option-btn" onclick="checkQuizAnswer(this, ${i}, ${lesson.quiz.correct}, '${lesson.quiz.explanation.replace(/'/g, "\\'")}')">${opt}</button>
-                            `).join('')}
-                        </div>
-                        <div class="feedback-msg" id="quizFeedback"></div>
-                    </div>
-                </div>
-            `;
+    function showSuggestion(id) {
+        const res = document.getElementById("res" + id);
+        if (res.style.display === "block") {
+            res.style.display = "none";
+        } else {
+            res.style.display = "block";
         }
+    }
+</script>
 
-        // Native Native Speech API Engine for Pronunciation Audio Playback
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Stop any ongoing speech instantly
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.85; // Slightly slowed down path for better listener comprehension
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert("Trình duyệt của bạn không hỗ trợ tính năng phát âm tự động Web Speech.");
-            }
-        }
-
-        // Quiz Correction Validation Logic
-        function checkQuizAnswer(btn, selectedIndex, correctIndex, explanation) {
-            const options = btn.parentElement.querySelectorAll('.option-btn');
-            options.forEach(opt => {
-                opt.disabled = true; // Block multiple clicks
-                opt.classList.remove('correct', 'wrong');
-            });
-
-            const feedback = document.getElementById('quizFeedback');
-            feedback.style.display = "block";
-
-            if (selectedIndex === correctIndex) {
-                btn.classList.add('correct');
-                feedback.innerHTML = `<span style="color:#16a34a;">Chính xác! 🎉</span> <br><small style="color:var(--text-muted); font-weight:normal;">${explanation}</small>`;
-            } else {
-                btn.classList.add('wrong');
-                options[correctIndex].classList.add('correct');
-                feedback.innerHTML = `<span style="color:#dc2626;">Chưa đúng rồi! 💡</span> <br><small style="color:var(--text-muted); font-weight:normal;">${explanation}</small>`;
-            }
-        }
-
-        // Bootstrapping initialization
-        window.onload = initApp;
-    </script>
 </body>
 </html>

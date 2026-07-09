@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+<head>
+    <!-- 1. Meta Tags Bắt Buộc -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- 2. SEO Cơ Bản -->
+    <title>Tiêu Đề Dự Án Của Bạn (Tối đa 60-70 ký tự)</title>
+    <meta name="description" content="Mô tả ngắn gọn về nội dung trang web để hiển thị trên kết quả tìm kiếm (khoảng 150-160 ký tự).">
+    <meta name="keywords" content="từ khóa 1, từ khóa 2, từ khóa 3">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://domain-cua-ban.com/trang-hien-tai">
+
+    <!-- 3. Open Graph / Facebook (Mạng xã hội) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://domain-cua-ban.com/trang-hien-tai">
+    <meta property="og:title" content="Tiêu Đề Khi Chia Sẻ Lên Facebook">
+    <meta property="og:description" content="Mô tả ngắn hiển thị khi link được chia sẻ trên mạng xã hội.">
+    <meta property="og:image" content="https://domain-cua-ban.com/assets/images/thumbnail.jpg">
+    <meta property="og:site_name" content="Tên Website">
+
+    <!-- 4. Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://domain-cua-ban.com/trang-hien-tai">
+    <meta name="twitter:title" content="Tiêu Đề Khi Chia Sẻ Lên Twitter">
+    <meta name="twitter:description" content="Mô tả ngắn hiển thị trên Twitter.">
+    <meta name="twitter:image" content="https://domain-cua-ban.com/assets/images/thumbnail.jpg">
+
+    <!-- 5. Favicon & Mobile App Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- 6. Preconnect Font / CDN (Tối ưu tốc độ tải) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- 7. Nhúng CSS Bên Ngoài và CSS Nội Bộ -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        /* CSS reset hoặc CSS khẩn cấp viết tại đây */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: system-ui, sans-serif; line-height: 1.6; color: #333; }
+        .wrapper { display: flex; flex-direction: column; min-height: 100vh; }
+        main { flex: 1; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; padding: 20px; }
+        @media (max-width: 768px) { main { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- Thanh điều hướng / Menu -->
+        <header>
+            <nav aria-label="Main navigation">
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Sản phẩm</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Bố cục nội dung chính -->
+        <main>
+            <!-- Khu vực nội dung chính độc lập -->
+            <article>
+                <section>
+                    <h2>Nội dung chính thứ nhất</h2>
+                    <p>Chi tiết bài viết hoặc danh sách sản phẩm...</p>
+                </section>
+                <section>
+                    <h2>Nội dung chính thứ hai</h2>
+                    <p>Chi tiết phần tiếp theo...</p>
+                </section>
+            </article>
+
+            <!-- Thanh bên (Sidebar / Quảng cáo / Menu phụ) -->
+            <aside>
+                <h3>Thông tin thêm</h3>
+                <p>Nội dung bổ trợ, danh mục phụ hoặc banner quảng cáo.</p>
+            </aside>
+        </main>
+
+        <!-- Chân trang -->
+        <footer>
+            <p>&copy; 2026 Tên Công Ty. Tất cả các quyền được bảo lưu.</p>
+        </footer>
+    </div>
+
+    <!-- 8. Nhúng Javascript (Sử dụng defer để không chặn render UI) -->
+    <script defer src="assets/js/main.js"></script>
+    <script>
+        // Script nội bộ xử lý nhanh logic trang
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM đã tải xong và sẵn sàng!');
+        });
+    </script>
+</body>
+</html>

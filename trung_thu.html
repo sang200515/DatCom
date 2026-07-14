@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>Giỏ Hàng Đi Chợ - Bánh Trung Thu 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #8c1d1d; /* Đỏ đô ấm cúng Trung Thu */
+            --accent-color: #d4af37;  /* Vàng kim sang trọng */
+            --bg-color: #fcf8f2;      /* Kem ấm */
+            --card-bg: #ffffff;
+            --border-color: #ebdcb9;
+            --success-color: #27ae60;
+            --share-color: #2980b9;
+        }
+
+        body, button, .btn-qty, .btn-step, .menu-item, .order-table tbody tr {
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: #4a3319;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding-bottom: 80px; 
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 10px rgba(140, 29, 29, 0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-box {
+            width: 100%; padding: 12px; border: 1px solid var(--border-color);
+            border-radius: 8px; font-size: 1rem; box-sizing: border-box; margin-bottom: 15px;
+            background-color: #fffdf9;
+        }
+        .search-box:focus {
+            outline: 1.5px solid var(--primary-color);
+        }
+
+        .menu-list {
+            max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color);
+            border-radius: 8px; margin-bottom: 15px;
+            background: #fffdfa;
+        }
+
+        .menu-item { 
+            padding: 12px; cursor: pointer; border-bottom: 1px solid var(--border-color); 
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .menu-item:hover { background-color: #fdfaf2; }
+        .menu-item.selected { background-color: #f5eacf; font-weight: bold; }
+        .menu-item .weight-badge {
+            font-size: 0.75rem; background: var(--primary-color); color: #fff;
+            padding: 2px 6px; border-radius: 4px; margin-left: 6px;
+        }
+
+        .options-group { margin-bottom: 15px; }
+        .options-group label.group-title { display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary-color); }
+
+        /* Stepper Component */
+        .inline-stepper {
+            display: inline-flex;
+            align-items: center;
+            background: #fdf6e2;
+            border-radius: 6px;
+            padding: 2px;
+            border: 1px solid var(--border-color);
+        }
+        .btn-step {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--primary-color);
+            user-select: none;
+        }
+        .btn-step:active { background: #ebdcb9; }
+        .step-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            min-width: 28px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .inline-stepper.large-stepper { border-radius: 8px; padding: 4px; }
+        .inline-stepper.large-stepper .btn-step { width: 38px; height: 38px; font-size: 1.2rem; border-radius: 6px; }
+        .inline-stepper.large-stepper .step-value { font-size: 1.2rem; min-width: 42px; }
+        
+        .radio-option { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; cursor: pointer; }
+        .note-box { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; box-sizing: border-box; background: #fffdfa; }
+
+        .btn-add {
+            background-color: var(--primary-color); color: white; border: none; padding: 14px;
+            border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px;
+            box-shadow: 0 3px 6px rgba(140,29,29,0.2);
+        }
+        .btn-add:disabled { background-color: #cbd5e1; cursor: not-allowed; box-shadow: none; }
+
+        /* Style Table */
+        .order-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
+        .order-table th, .order-table td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border-color); word-break: break-word; vertical-align: middle; }
+        .order-table th { background-color: #fdf5e2; color: var(--primary-color); font-weight: 600; border-bottom: 2px solid var(--border-color); }
+        .order-table tbody tr:last-child td { border-bottom: none; }
+        .order-table tbody tr { cursor: pointer; transition: background-color 0.2s; }
+
+        .order-table tbody tr.highlighted td {
+            border-top: 2px solid var(--primary-color) !important;
+            border-bottom: 2px solid var(--primary-color) !important;
+        }
+        .order-table tbody tr.highlighted td:first-child {
+            border-left: 2px solid var(--primary-color) !important;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+        .order-table tbody tr.highlighted td:last-child {
+            border-right: 2px solid var(--primary-color) !important;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .btn-delete { background: none; border: none; color: #e74c3c; cursor: pointer; font-weight: bold; font-size: 1.1rem; padding: 4px 8px; }
+        .cart-placeholder { color: #a0aec0; text-align: center; padding: 30px 0; font-style: italic; font-size: 1rem; }
+        
+        .footer-summary {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px dashed var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; }
+        .summary-row.total-price-row { font-size: 1.25rem; margin-top: 4px; }
+        .text-label { font-weight: 600; color: #5c401c; }
+        .text-value { font-weight: 700; color: #1a202c; }
+        .text-value.highlight { color: var(--primary-color); }
+        
+        .item-meta-text { display: block; font-size: 0.8rem; color: #5c401c; margin-top: 4px; }
+        .badge-option { display: inline-block; padding: 1px 6px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; background-color: #ebdcb9; color: var(--primary-color); }
+
+        /* SECTION 3: TĂNG SIZE FONT ĐỂ XUẤT ẢNH CHỐT ĐƠN CHẤT LƯỢNG */
+        .capture-area {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 2px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            width: 100%;
+            position: relative;
+        }
+        .capture-area::before {
+            content: "PHƯƠNG DIÊM THUẬN 2026";
+            position: absolute;
+            top: 15px; right: 24px;
+            font-size: 0.8rem; font-weight: bold; color: var(--primary-color); opacity: 0.3;
+        }
+
+        .capture-area h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 3px double var(--border-color);
+            padding-bottom: 12px;
+            font-size: calc(1.3rem * 1.2); 
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .capture-area .order-table th, 
+        .capture-area .order-table td {
+            font-size: calc(0.95rem * 1.2);
+            padding: 12px 10px;
+        }
+
+        .capture-area .item-meta-text { font-size: calc(0.8rem * 1.2); }
+        .capture-area .badge-option { font-size: calc(0.75rem * 1.2); }
+
+        .capture-area .footer-summary {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 3px dashed var(--primary-color);
+            gap: 10px;
+        }
+        .capture-area .summary-row { font-size: calc(1.05rem * 1.2); }
+        .capture-area .summary-row.total-price-row { font-size: calc(1.3rem * 1.2); }
+
+        /* FLOATING ACTION BUTTON - IOS STYLE */
+        .ios-share-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 56px;
+            height: 56px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(140, 29, 29, 0.3);
+            border: 1px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .ios-share-fab:active { transform: scale(0.9); background-color: #721616; }
+        .ios-share-fab svg { width: 24px; height: 24px; color: var(--accent-color); }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; gap: 15px; }
+            .full-width { grid-column: span 1; }
+            body { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- SECTION 1: CHỌN BÁNH & TÙY CHỌN HỘP -->
+    <div class="section">
+        <h2>🛍️ 1. Chọn Bánh Trung Thu</h2>
+        <input type="text" id="search" class="search-box" placeholder="Tìm kiếm vị bánh (vị xá xíu, vi cá, đậu xanh, khoai môn...)" oninput="filterMenu()">
+        <div class="menu-list" id="menu-container"></div>
+
+        <div class="options-group">
+            <label class="group-title">Số lượng cái:</label>
+            <div class="inline-stepper large-stepper">
+                <div class="btn-step" onclick="updateQuantity(-1)">-</div>
+                <span id="quantity-val" class="step-value">1</span>
+                <div class="btn-step" onclick="updateQuantity(1)">+</div>
+            </div>
+        </div>
+
+        <div class="options-group">
+            <label class="group-title">Tùy chọn đóng hộp đi kèm:</label>
+            <label class="radio-option">
+                <input type="radio" name="meal-option" value="none" checked onchange="toggleCustomNote(true)">
+                <span>Không lấy hộp đặc biệt (Hộp thường)</span>
+            </label>
+            <label class="radio-option">
+                <input type="radio" name="meal-option" value="hpq" onchange="toggleCustomNote(false)">
+                <span>Hộp Phú Quý <span style="color: var(--primary-color); font-weight:600;">(+60.000 đ)</span></span>
+            </label>
+            <label class="radio-option">
+                <input type="radio" name="meal-option" value="hktvh" onchange="toggleCustomNote(false)">
+                <span>Hộp Khổng Tước Vinh Hoa <span style="color: var(--primary-color); font-weight:600;">(+110.000 đ)</span></span>
+            </label>
+            <label class="radio-option">
+                <input type="radio" name="meal-option" value="hksnh" onchange="toggleCustomNote(false)">
+                <span>Hộp Kim Sắc Niên Hoa <span style="color: var(--primary-color); font-weight:600;">(+150.000 đ)</span></span>
+            </label>
+            <label class="radio-option">
+                <input type="radio" name="meal-option" value="hhvmn" onchange="toggleCustomNote(false)">
+                <span>Hộp Hạc Vũ Minh Nguyệt <span style="color: var(--primary-color); font-weight:600;">(+170.000 đ)</span></span>
+            </label>
+            <div id="custom-note-container" style="margin-top: 10px;">
+                <input type="text" id="custom-note" class="note-box" placeholder="Ghi chú thêm (ví dụ: Tặng đối tác, nhờ cắt bánh sẵn...)">
+            </div>
+        </div>
+        <button id="add-btn" class="btn-add" onclick="addToCart()" disabled>Thêm Vào Giỏ Hàng</button>
+    </div>
+
+    <!-- SECTION 2: ĐIỀU CHỈNH GIỎ HÀNG -->
+    <div class="section">
+        <h2>🛒 2. Giỏ Hàng Chi Tiết</h2>
+        <div id="cart-placeholder" class="cart-placeholder">Chưa có chiếc bánh nào trong giỏ.</div>
+        <table id="order-table" class="order-table">
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Vị bánh / Hộp</th>
+                    <th style="text-align: center; width: 22%;">SL</th>
+                    <th style="text-align: right; width: 20%;">Thành tiền</th>
+                    <th style="text-align: center; width: 8%;">Xóa</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items"></tbody>
+        </table>
+        
+        <div class="footer-summary" id="cart-summary-container" style="display: none;">
+            <div class="summary-row">
+                <span class="text-label">Tổng số bánh & hộp:</span>
+                <span class="text-value" id="cart-total-qty">0 chiếc</span>
+            </div>
+            <div class="summary-row total-price-row">
+                <span class="text-label">Tổng chi phí tạm tính:</span>
+                <span class="text-value highlight" id="cart-total-price">0 đ</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: KHU VỰC CHỤP ẢNH CHỐT ĐƠN -->
+    <div class="full-width" id="section-checkout">
+        <div id="print-area" class="capture-area">
+            <h2 id="checkout-title">Đơn Gom Hàng Trung Thu</h2>
+            <div id="checkout-placeholder" class="cart-placeholder">Chưa có dữ liệu chốt đơn.</div>
+            <table id="checkout-table" class="order-table">
+                <thead>
+                    <tr>
+                        <th style="width: 55%;">Chi tiết vị bánh & phụ kiện</th>
+                        <th style="text-align: center; width: 15%;">SL</th>
+                        <th style="text-align: right; width: 30%;">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody id="checkout-items"></tbody>
+            </table>
+            
+            <div class="footer-summary" id="checkout-summary-container" style="display: none;">
+                <div class="summary-row">
+                    <span class="text-label">Tổng số lượng đặt:</span>
+                    <span class="text-value" id="checkout-total-qty">0 cái</span>
+                </div>
+                <div class="summary-row total-price-row">
+                    <span class="text-label">Tổng tiền thanh toán:</span>
+                    <span class="text-value highlight" id="checkout-total-price">0 đ</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NÚT CHIA SẺ NỔI ĐỘC QUYỀN IOS -->
+<div id="ios-share-btn" class="ios-share-fab" onclick="shareOrderAsImage()" style="display: none;" title="Chia sẻ đơn đi chợ">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+        <polyline points="16 6 12 2 8 6" />
+        <line x1="12" y1="2" x2="12" y2="15" />
+    </svg>
+</div>
+
+<script>
+    // Xử lý zoom/double-tap iOS mượt mà
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+            if (event.target) {
+                event.target.click();
+            }
+        }
+        lastTouchEnd = now;
+    }, false);
+
+    // Nạp dữ liệu Bảng Giá Bánh Trung Thu 2026 chính xác từ ảnh của bạn
+    const menuData = [
+        // BÁNH 2 TRỨNG 210G (Set 01 - Set 03 & Menu lẻ)
+        { id: 1, name: "Bánh Nhân Vi Cá Gà Quay (2 Trứng)", price: 196000, weight: "210g" },
+        { id: 2, name: "Bánh Nhân Thập Cẩm Tôm (2 Trứng)", price: 188000, weight: "210g" },
+        { id: 3, name: "Bánh Nhân Môn Dứa (2 Trứng)", price: 145000, weight: "210g" },
+        { id: 4, name: "Bánh Nhân Khóm Dứa (Thơm) (2 Trứng)", price: 162000, weight: "210g" },
+        { id: 5, name: "Bánh Nhân Gà Quay (2 Trứng)", price: 175000, weight: "210g" },
+        { id: 6, name: "Bánh Nhân Thập Cẩm Sò Điệp Sốt XO (2 Trứng)", price: 194000, weight: "210g" },
+        { id: 7, name: "Bánh Nhân Khoai Môn (2 Trứng)", price: 139000, weight: "210g" },
+        { id: 8, name: "Bánh Nhân Trà Xanh Hạt Sen Hạnh Nhân (2 Trứng)", price: 145000, weight: "210g" },
+        { id: 9, name: "Bánh Nhân Thập Cẩm Jambon (2 Trứng)", price: 160000, weight: "210g" },
+        { id: 10, name: "Bánh Nhân Hạt Sen (2 Trứng)", price: 139000, weight: "210g" },
+        { id: 11, name: "Bánh Nhân Đậu Xanh (2 Trứng)", price: 132000, weight: "210g" },
+        { id: 12, name: "Bánh Nhân Dừa Hạt Dưa (2 Trứng)", price: 132000, weight: "210g" },
+        { id: 13, name: "Bánh Nhân Hạt Sen Lá Dứa (2 Trứng)", price: 141000, weight: "210g" },
+        { id: 14, name: "Bánh Nhân Bí Đỏ Hạt Dưa (2 Trứng)", price: 139000, weight: "210g" },
+        { id: 15, name: "Bánh Nhân Giò Heo Bát Bửu Jambon (2 Trứng)", price: 164000, weight: "210g" },
+        { id: 16, name: "Bánh Ngũ Nhân Thượng Hạng (2 Trứng)", price: 162000, weight: "210g" },
+        { id: 17, name: "Bánh Nhân Bào Ngư Gà Quay (2 Trứng)", price: 201000, weight: "210g" },
+        { id: 18, name: "Bánh Nhân Đậu Đỏ Hạnh Nhân (2 Trứng)", price: 140000, weight: "210g" },
+
+        // BÁNH 1 TRỨNG 150G
+        { id: 101, name: "Bánh Nhân Thập Cẩm Jambon (1 Trứng)", price: 104000, weight: "150g" },
+        { id: 102, name: "Bánh Nhân Hạt Sen (1 Trứng)", price: 91000, weight: "150g" },
+        { id: 103, name: "Bánh Nhân Đậu Xanh (1 Trứng)", price: 89000, weight: "150g" },
+        { id: 104, name: "Bánh Nhân Dừa Hạt Dưa (1 Trứng)", price: 89000, weight: "150g" },
+        { id: 105, name: "Bánh Nhân Gà Quay (1 Trứng)", price: 107000, weight: "150g" },
+        { id: 106, name: "Bánh Nhân Môn Dứa (1 Trứng)", price: 93000, weight: "150g" },
+        { id: 107, name: "Bánh Nhân Hạt Sen Trà Xanh Hạnh Nhân (1 Trứng)", price: 93000, weight: "150g" },
+        { id: 108, name: "Bánh Nhân Khoai Môn (1 Trứng)", price: 91000, weight: "150g" },
+        { id: 109, name: "Bánh Nhân Khóm Dứa (Thơm) (1 Trứng)", price: 107000, weight: "150g" },
+        { id: 110, name: "Bánh Nhân Đậu Đỏ Hạnh Nhân (1 Trứng)", price: 91000, weight: "150g" },
+        { id: 111, name: "Bánh Nhân Hạt Sen Lá Dứa (1 Trứng)", price: 92000, weight: "150g" },
+        { id: 112, name: "Bánh Nhân Bí Đỏ Hạt Dưa (1 Trứng)", price: 91000, weight: "150g" },
+
+        // BÁNH ĐẶC BIỆT CAO CẤP 250G
+        { id: 201, name: "Đặc Biệt Vi Cá Bào Ngư Gà Quay (2 Trứng)", price: 262000, weight: "250g" },
+        { id: 202, name: "Đặc Biệt Bào Ngư Gà Quay (2 Trứng)", price: 232000, weight: "250g" },
+        { id: 203, name: "Đặc Biệt Vi Cá Gà Quay (2 Trứng)", price: 222000, weight: "250g" },
+        { id: 204, name: "Đặc Biệt Gà Quay (2 Trứng)", price: 194000, weight: "250g" },
+        { id: 205, name: "Đặc Biệt Thập Cẩm Tôm (2 Trứng)", price: 211000, weight: "250g" },
+        { id: 206, name: "Đặc Biệt Môn Dứa (2 Trứng)", price: 164000, weight: "250g" },
+        { id: 207, name: "Đặc Biệt Thập Cẩm Sò Điệp Sốt XO (2 Trứng)", price: 219000, weight: "250g" },
+        { id: 208, name: "Đặc Biệt Hạt Sen (2 Trứng)", price: 157000, weight: "250g" },
+        { id: 209, name: "Đặc Biệt Đậu Xanh (2 Trứng)", price: 150000, weight: "250g" },
+        { id: 210, name: "Đặc Biệt Dừa Hạt Dưa (2 Trứng)", price: 150000, weight: "250g" },
+        { id: 211, name: "Đặc Biệt Bí Đỏ Hạt Dưa (2 Trứng)", price: 157000, weight: "250g" },
+        { id: 212, name: "Đặc Biệt Hạt Sen Lá Dứa (2 Trứng)", price: 159000, weight: "250g" },
+        { id: 213, name: "Đặc Biệt Khoai Môn (2 Trứng)", price: 157000, weight: "250g" },
+        { id: 214, name: "Đặc Biệt Khóm Dứa (Thơm) (2 Trứng)", price: 182000, weight: "250g" },
+        { id: 215, name: "Đặc Biệt Trà Xanh Hạt Sen Hạnh Nhân (2 Trứng)", price: 163000, weight: "250g" },
+        { id: 216, name: "Đặc Biệt Đậu Đỏ Hạnh Nhân (2 Trứng)", price: 158000, weight: "250g" },
+        { id: 217, name: "Đặc Biệt Uyên Ương Thưởng Nguyệt (4 Trứng)", price: 770000, weight: "800g" },
+        { id: 218, name: "Đặc Biệt Phước Lộc Thọ (6 Trứng)", price: 870000, weight: "1kg" }
+    ];
+
+    let selectedItem = null; let currentQuantity = 1; let cart = [];
+
+    function initTitleDate() {
+        const days = ["Chủ Nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+        const today = new Date();
+        const dayName = days[today.getDay()];
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        document.getElementById('checkout-title').innerText = `Đơn Đi Chợ Trung Thu - ${dayName} (${dd}/${mm}/2026)`;
+    }
+
+    function renderMenu(items) {
+        const container = document.getElementById('menu-container'); container.innerHTML = '';
+        if(items.length === 0) { container.innerHTML = '<div style="padding:15px; color:#999; text-align:center;">Không tìm thấy vị bánh</div>'; return; }
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = `menu-item ${selectedItem && selectedItem.id === item.id ? 'selected' : ''}`;
+            div.innerHTML = `
+                <div>
+                    <span>${item.name}</span>
+                    <span class="weight-badge">${item.weight}</span>
+                </div> 
+                <span>${item.price.toLocaleString('vi-VN')} đ</span>`;
+            div.onclick = () => selectItem(item);
+            container.appendChild(div);
+        });
+    }
+
+    function filterMenu() {
+        const keyword = document.getElementById('search').value.toLowerCase().trim();
+        const filtered = menuData.filter(item => item.name.toLowerCase().includes(keyword));
+        renderMenu(filtered);
+    }
+
+    function selectItem(item) { selectedItem = item; document.getElementById('add-btn').disabled = false; filterMenu(); }
+    
+    function updateQuantity(amount) { 
+        currentQuantity += amount; 
+        if (currentQuantity < 1) currentQuantity = 1; 
+        document.getElementById('quantity-val').innerText = currentQuantity; 
+    }
+    
+    function toggleCustomNote(show) { 
+        const customNoteInput = document.getElementById('custom-note'); 
+        // Luôn cho phép ghi chú cho giỏ hàng linh hoạt hơn
+        customNoteInput.disabled = false; 
+        customNoteInput.style.opacity = "1"; 
+    }
+
+    function addToCart() {
+        if (!selectedItem) return;
+        const optionRadio = document.querySelector('input[name="meal-option"]:checked').value;
+        let finalPrice = selectedItem.price; 
+        let optionLabel = "Hộp thường"; 
+        let badgeClass = "badge-option"; 
+        let textNote = document.getElementById('custom-note').value.trim();
+
+        if (optionRadio === "hpq") { 
+            finalPrice = selectedItem.price + 60000; 
+            optionLabel = "Kèm Hộp Phú Quý (+60k)"; 
+        } else if (optionRadio === "hktvh") { 
+            finalPrice = selectedItem.price + 110000; 
+            optionLabel = "Kèm Hộp Khổng Tước VH (+110k)"; 
+        } else if (optionRadio === "hksnh") { 
+            finalPrice = selectedItem.price + 150000; 
+            optionLabel = "Kèm Hộp Kim Sắc NH (+150k)"; 
+        } else if (optionRadio === "hhvmn") { 
+            finalPrice = selectedItem.price + 170000; 
+            optionLabel = "Kèm Hộp Hạc Vũ MN (+170k)"; 
+        }
+
+        const cartItemId = `${selectedItem.id}_${optionRadio}_${textNote}`;
+        const existingIndex = cart.findIndex(cartItem => cartItem.cartItemId === cartItemId);
+
+        if (existingIndex > -1) { 
+            cart[existingIndex].quantity += currentQuantity; 
+        } 
+        else { 
+            cart.push({ 
+                cartItemId: cartItemId, 
+                id: selectedItem.id, 
+                name: selectedItem.name, 
+                weight: selectedItem.weight,
+                calculatedPrice: finalPrice, 
+                quantity: currentQuantity, 
+                optionLabel: optionLabel, 
+                badgeClass: badgeClass, 
+                textNote: textNote, 
+                highlighted: false 
+            }); 
+        }
+
+        selectedItem = null; currentQuantity = 1;
+        document.getElementById('quantity-val').innerText = '1'; document.getElementById('custom-note').value = ''; document.getElementById('search').value = '';
+        document.querySelectorAll('input[name="meal-option"]')[0].checked = true; toggleCustomNote(true); document.getElementById('add-btn').disabled = true;
+        filterMenu(); renderCart();
+    }
+
+    function updateCartItemQty(index, delta) {
+        cart[index].quantity += delta;
+        if (cart[index].quantity < 1) cart[index].quantity = 1;
+        renderCart();
+    }
+
+    function toggleHighlightItem(index, event) {
+        if (event.target.closest('.inline-stepper') || event.target.closest('.btn-delete')) return;
+        cart[index].highlighted = !cart[index].highlighted;
+        renderCart();
+    }
+
+    function removeFromCart(index) { cart.splice(index, 1); renderCart(); }
+
+    function renderCart() {
+        const placeholder2 = document.getElementById('cart-placeholder'); const table2 = document.getElementById('order-table'); const tbody2 = document.getElementById('cart-items'); 
+        const container2 = document.getElementById('cart-summary-container'); const totalQty2 = document.getElementById('cart-total-qty'); const totalPrice2 = document.getElementById('cart-total-price');
+        
+        const placeholder3 = document.getElementById('checkout-placeholder'); const table3 = document.getElementById('checkout-table'); const tbody3 = document.getElementById('checkout-items'); 
+        const container3 = document.getElementById('checkout-summary-container'); const totalQty3 = document.getElementById('checkout-total-qty'); const totalPrice3 = document.getElementById('checkout-total-price');
+        
+        const iosShareBtn = document.getElementById('ios-share-btn');
+
+        if (cart.length === 0) {
+            placeholder2.style.display = 'block'; table2.style.display = 'none'; container2.style.display = 'none';
+            placeholder3.style.display = 'block'; table3.style.display = 'none'; container3.style.display = 'none'; iosShareBtn.style.display = 'none';
+            return;
+        }
+
+        placeholder2.style.display = 'none'; table2.style.display = 'table'; container2.style.display = 'flex';
+        placeholder3.style.display = 'none'; table3.style.display = 'table'; container3.style.display = 'flex'; iosShareBtn.style.display = 'flex';
+
+        tbody2.innerHTML = ''; tbody3.innerHTML = '';
+        let totalOrderPrice = 0; let totalQuantity = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.calculatedPrice * item.quantity;
+            totalOrderPrice += itemTotal;
+            totalQuantity += item.quantity;
+
+            const showBadge = item.optionLabel !== "Hộp thường";
+            const showNote = item.textNote && item.textNote.length > 0;
+
+            const metaHTML = `
+                ${showBadge || showNote ? `
+                    <div class="item-meta-text">
+                        ${showBadge ? `<span class="${item.badgeClass}">${item.optionLabel}</span>` : ''}
+                        ${showNote ? `<span style="font-style: italic; color:#7f8c8d; ${showBadge ? 'margin-left: 5px;' : ''}">- GC: ${item.textNote}</span>` : ''}
+                    </div>
+                ` : ''}
+            `;
+
+            // RENDERING GIỎ HÀNG THỰC TẾ (SECTION 2)
+            const tr2 = document.createElement('tr');
+            if (item.highlighted) tr2.classList.add('highlighted');
+            tr2.onclick = (e) => toggleHighlightItem(index, e);
+            tr2.innerHTML = `
+                <td><strong>${item.name}</strong> <span class="badge-option">${item.weight}</span>${metaHTML}</td>
+                <td style="text-align: center;">
+                    <div class="inline-stepper">
+                        <div class="btn-step" onclick="updateCartItemQty(${index}, -1)">-</div>
+                        <span class="step-value">${item.quantity}</span>
+                        <div class="btn-step" onclick="updateCartItemQty(${index}, 1)">+</div>
+                    </div>
+                </td>
+                <td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+                <td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>
+            `;
+            tbody2.appendChild(tr2);
+
+            // RENDERING ẢNH CHỐT ĐƠN (SECTION 3)
+            const tr3 = document.createElement('tr');
+            if (item.highlighted) tr3.classList.add('highlighted');
+            tr3.innerHTML = `
+                <td><strong>${item.name}</strong> <span class="badge-option" style="background:#8c1d1d; color:#fff;">${item.weight}</span>${metaHTML}</td>
+                <td style="text-align: center; font-weight: 600;">${item.quantity}</td>
+                <td style="text-align: right; font-weight: 600; color: #8c1d1d;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+            `;
+            tbody3.appendChild(tr3);
+        });
+
+        const formattedPrice = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
+        const formattedQty = `${totalQuantity} sản phẩm`;
+        
+        totalQty2.innerText = formattedQty;
+        totalPrice2.innerText = formattedPrice;
+
+        totalQty3.innerText = formattedQty;
+        totalPrice3.innerText = formattedPrice;
+    }
+
+    async function shareOrderAsImage() {
+        if (cart.length === 0) return;
+        const iosBtn = document.getElementById('ios-share-btn');
+        iosBtn.style.pointerEvents = 'none'; iosBtn.style.opacity = '0.5';
+
+        try {
+            const printArea = document.getElementById('print-area');
+            const titleText = document.getElementById('checkout-title').innerText;
+
+            const canvas = await html2canvas(printArea, {
+                scale: 2, 
+                backgroundColor: '#fcf8f2',
+                useCORS: true
+            });
+
+            canvas.toBlob(async (blob) => {
+                if (!blob) { alert("Không thể xuất file ảnh."); iosBtn.style.pointerEvents = 'auto'; iosBtn.style.opacity = '1'; return; }
+                const file = new File([blob], `DonHang_${titleText.replace(/[\s()\/]/g, '_')}.png`, { type: 'image/png' });
+
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share({ files: [file] });
+                    } catch (shareError) {
+                        console.log("Hủy chia sẻ hoặc lỗi xảy ra:", shareError);
+                    }
+                } else {
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = `DonHang_TrungThu_2026.png`;
+                    a.click();
+                    alert("Trình duyệt không hỗ trợ Share trực tiếp. Hệ thống đã tự động TẢI FILE ẢNH đơn hàng về thiết bị!");
+                }
+                
+                setTimeout(() => {
+                    iosBtn.style.pointerEvents = 'auto'; 
+                    iosBtn.style.opacity = '1';
+                }, 300);
+            }, 'image/png');
+
+        } catch (error) {
+            console.error("Lỗi xuất ảnh:", error);
+            alert("Có lỗi phát sinh khi xuất ảnh.");
+            iosBtn.style.pointerEvents = 'auto'; iosBtn.style.opacity = '1';
+        }
+    }
+
+    initTitleDate(); 
+    document.getElementById('order-table').style.display = 'none'; 
+    document.getElementById('checkout-table').style.display = 'none'; 
+    renderMenu(menuData);
+</script>
+</body>
+</html>

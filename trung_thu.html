@@ -221,6 +221,21 @@
         .item-meta-text { display: block; font-size: 0.8rem; color: #5c401c; margin-top: 4px; }
         .badge-option { display: inline-block; padding: 1px 6px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; background-color: #ebdcb9; color: var(--primary-color); }
 
+        /* Giá gốc nhỏ và gạch ngang nhẹ */
+        .price-original {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            text-decoration: line-through;
+            display: block;
+        }
+        /* Giá sau giảm màu đỏ nổi bật */
+        .price-discounted {
+            font-size: 1rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            display: block;
+        }
+
         /* SECTION 3: TĂNG SIZE FONT ĐỂ XUẤT ẢNH CHỐT ĐƠN CHẤT LƯỢNG */
         .capture-area {
             background: var(--card-bg);
@@ -259,6 +274,8 @@
 
         .capture-area .item-meta-text { font-size: calc(0.8rem * 1.2); }
         .capture-area .badge-option { font-size: calc(0.75rem * 1.2); }
+        .capture-area .price-original { font-size: calc(0.85rem * 1.2); }
+        .capture-area .price-discounted { font-size: calc(1rem * 1.2); }
 
         .capture-area .footer-summary {
             margin-top: 20px;
@@ -354,10 +371,10 @@
         <table id="order-table" class="order-table">
             <thead>
                 <tr>
-                    <th style="width: 50%;">Vị bánh / Hộp</th>
+                    <th style="width: 48%;">Vị bánh / Hộp</th>
                     <th style="text-align: center; width: 22%;">SL</th>
-                    <th style="text-align: right; width: 20%;">Thành tiền</th>
-                    <th style="text-align: center; width: 8%;">Xóa</th>
+                    <th style="text-align: right; width: 24%;">Thành tiền</th>
+                    <th style="text-align: center; width: 6%;">Xóa</th>
                 </tr>
             </thead>
             <tbody id="cart-items"></tbody>
@@ -368,9 +385,13 @@
                 <span class="text-label">Tổng số bánh & hộp:</span>
                 <span class="text-value" id="cart-total-qty">0 chiếc</span>
             </div>
+            <div class="summary-row">
+                <span class="text-label">Tổng tiền gốc (tạm tính):</span>
+                <span class="text-value" id="cart-total-price">0 đ</span>
+            </div>
             <div class="summary-row total-price-row">
-                <span class="text-label">Tổng chi phí tạm tính:</span>
-                <span class="text-value highlight" id="cart-total-price">0 đ</span>
+                <span class="text-label" style="color: var(--primary-color);">Tổng tiền sau chiết khấu (Giảm 27%):</span>
+                <span class="text-value highlight" id="cart-discounted-price">0 đ</span>
             </div>
         </div>
     </div>
@@ -383,9 +404,9 @@
             <table id="checkout-table" class="order-table">
                 <thead>
                     <tr>
-                        <th style="width: 55%;">Chi tiết vị bánh & phụ kiện</th>
+                        <th style="width: 50%;">Chi tiết vị bánh & phụ kiện</th>
                         <th style="text-align: center; width: 15%;">SL</th>
-                        <th style="text-align: right; width: 30%;">Thành tiền</th>
+                        <th style="text-align: right; width: 35%;">Thành tiền</th>
                     </tr>
                 </thead>
                 <tbody id="checkout-items"></tbody>
@@ -396,9 +417,13 @@
                     <span class="text-label">Tổng số lượng đặt:</span>
                     <span class="text-value" id="checkout-total-qty">0 cái</span>
                 </div>
+                <div class="summary-row">
+                    <span class="text-label">Tổng tiền gốc (tạm tính):</span>
+                    <span class="text-value" id="checkout-total-price">0 đ</span>
+                </div>
                 <div class="summary-row total-price-row">
-                    <span class="text-label">Tổng tiền thanh toán:</span>
-                    <span class="text-value highlight" id="checkout-total-price">0 đ</span>
+                    <span class="text-label" style="color: var(--primary-color);">Tổng tiền sau chiết khấu (Giảm 27%):</span>
+                    <span class="text-value highlight" id="checkout-discounted-price">0 đ</span>
                 </div>
             </div>
         </div>
@@ -645,11 +670,15 @@
     function removeFromCart(index) { cart.splice(index, 1); renderCart(); }
 
     function renderCart() {
+        // Section 2 elements
         const placeholder2 = document.getElementById('cart-placeholder'); const table2 = document.getElementById('order-table'); const tbody2 = document.getElementById('cart-items'); 
-        const container2 = document.getElementById('cart-summary-container'); const totalQty2 = document.getElementById('cart-total-qty'); const totalPrice2 = document.getElementById('cart-total-price');
+        const container2 = document.getElementById('cart-summary-container'); const totalQty2 = document.getElementById('cart-total-qty'); 
+        const totalPrice2 = document.getElementById('cart-total-price'); const discountedPrice2 = document.getElementById('cart-discounted-price');
         
+        // Section 3 elements
         const placeholder3 = document.getElementById('checkout-placeholder'); const table3 = document.getElementById('checkout-table'); const tbody3 = document.getElementById('checkout-items'); 
-        const container3 = document.getElementById('checkout-summary-container'); const totalQty3 = document.getElementById('checkout-total-qty'); const totalPrice3 = document.getElementById('checkout-total-price');
+        const container3 = document.getElementById('checkout-summary-container'); const totalQty3 = document.getElementById('checkout-total-qty'); 
+        const totalPrice3 = document.getElementById('checkout-total-price'); const discountedPrice3 = document.getElementById('checkout-discounted-price');
         
         const iosShareBtn = document.getElementById('ios-share-btn');
 
@@ -663,11 +692,14 @@
         placeholder3.style.display = 'none'; table3.style.display = 'table'; container3.style.display = 'flex'; iosShareBtn.style.display = 'flex';
 
         tbody2.innerHTML = ''; tbody3.innerHTML = '';
-        let totalOrderPrice = 0; let totalQuantity = 0;
+        let totalOriginalPrice = 0; let totalQuantity = 0;
 
         cart.forEach((item, index) => {
-            const itemTotal = item.calculatedPrice * item.quantity;
-            totalOrderPrice += itemTotal;
+            const itemTotalOriginal = item.calculatedPrice * item.quantity;
+            // Áp dụng chiết khấu 27% (nhân với 0.73)
+            const itemTotalDiscounted = Math.round(itemTotalOriginal * 0.73);
+            
+            totalOriginalPrice += itemTotalOriginal;
             totalQuantity += item.quantity;
 
             const showBadge = item.optionLabel !== "Hộp thường";
@@ -695,7 +727,10 @@
                         <div class="btn-step" onclick="updateCartItemQty(${index}, 1)">+</div>
                     </div>
                 </td>
-                <td style="text-align: right; font-weight: 600;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+                <td style="text-align: right;">
+                    <span class="price-original">${itemTotalOriginal.toLocaleString('vi-VN')} đ</span>
+                    <span class="price-discounted">${itemTotalDiscounted.toLocaleString('vi-VN')} đ</span>
+                </td>
                 <td style="text-align: center;"><button class="btn-delete" onclick="removeFromCart(${index})">✕</button></td>
             `;
             tbody2.appendChild(tr2);
@@ -706,19 +741,29 @@
             tr3.innerHTML = `
                 <td><strong>${item.name}</strong> <span class="badge-option" style="background:#8c1d1d; color:#fff;">${item.weight}</span>${metaHTML}</td>
                 <td style="text-align: center; font-weight: 600;">${item.quantity}</td>
-                <td style="text-align: right; font-weight: 600; color: #8c1d1d;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+                <td style="text-align: right;">
+                    <span class="price-original">${itemTotalOriginal.toLocaleString('vi-VN')} đ</span>
+                    <span class="price-discounted">${itemTotalDiscounted.toLocaleString('vi-VN')} đ</span>
+                </td>
             `;
             tbody3.appendChild(tr3);
         });
 
-        const formattedPrice = `${totalOrderPrice.toLocaleString('vi-VN')} đ`;
+        const totalDiscountedPrice = Math.round(totalOriginalPrice * 0.73);
+
+        const formattedOriginal = `${totalOriginalPrice.toLocaleString('vi-VN')} đ`;
+        const formattedDiscounted = `${totalDiscountedPrice.toLocaleString('vi-VN')} đ`;
         const formattedQty = `${totalQuantity} sản phẩm`;
         
+        // Cập nhật giao diện Section 2
         totalQty2.innerText = formattedQty;
-        totalPrice2.innerText = formattedPrice;
+        totalPrice2.innerText = formattedOriginal;
+        discountedPrice2.innerText = formattedDiscounted;
 
+        // Cập nhật giao diện Section 3
         totalQty3.innerText = formattedQty;
-        totalPrice3.innerText = formattedPrice;
+        totalPrice3.innerText = formattedOriginal;
+        discountedPrice3.innerText = formattedDiscounted;
     }
 
     async function shareOrderAsImage() {

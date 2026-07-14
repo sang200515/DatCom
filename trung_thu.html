@@ -67,13 +67,49 @@
             gap: 8px;
         }
 
+        /* KHU VỰC THANH TÌM KIẾM CÓ NÚT XÓA CHỮ */
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
         .search-box {
-            width: 100%; padding: 12px; border: 1px solid var(--border-color);
-            border-radius: 8px; font-size: 1rem; box-sizing: border-box; margin-bottom: 15px;
+            width: 100%; 
+            padding: 12px 40px 12px 12px; /* Dành khoảng trống bên phải cho nút X */
+            border: 1px solid var(--border-color);
+            border-radius: 8px; 
+            font-size: 1rem; 
+            box-sizing: border-box;
             background-color: #fffdf9;
         }
         .search-box:focus {
             outline: 1.5px solid var(--primary-color);
+        }
+        .search-clear-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #a0aec0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            display: none; /* Chỉ hiện khi có chữ */
+            line-height: 1;
+        }
+        .search-clear-btn:hover {
+            color: var(--primary-color);
+        }
+
+        /* HIGHLIGHT TEXT KHI TIM KIEM */
+        .highlight-text {
+            background-color: #f1c40f; /* Màu vàng gold sáng */
+            color: #000;
+            border-radius: 2px;
+            padding: 0 2px;
+            font-weight: bold;
         }
 
         .menu-list {
@@ -267,7 +303,10 @@
     <!-- SECTION 1: CHỌN BÁNH & TÙY CHỌN HỘP -->
     <div class="section">
         <h2>🛍️ 1. Chọn Bánh Trung Thu</h2>
-        <input type="text" id="search" class="search-box" placeholder="Tìm kiếm vị bánh (vị xá xíu, vi cá, đậu xanh, khoai môn...)" oninput="filterMenu()">
+        <div class="search-container">
+            <input type="text" id="search" class="search-box" placeholder="Tìm kiếm vị bánh (vị xá xíu, vi cá, đậu xanh, khoai môn...)" oninput="filterMenu()">
+            <button id="search-clear" class="search-clear-btn" onclick="clearSearch()">✕</button>
+        </div>
         <div class="menu-list" id="menu-container"></div>
 
         <div class="options-group">
@@ -389,9 +428,9 @@
         lastTouchEnd = now;
     }, false);
 
-    // Nạp dữ liệu Bảng Giá Bánh Trung Thu 2026 chính xác từ ảnh của bạn
+    // Nạp dữ liệu Bảng Giá Bánh Trung Thu 2026 chính xác từ ảnh của bạn[span_0](start_span)[span_0](end_span)
     const menuData = [
-        // BÁNH 2 TRỨNG 210G (Set 01 - Set 03 & Menu lẻ)
+        // BÁNH 2 TRỨNG 210G (Set 01 - Set 03 & Menu lẻ)[span_1](start_span)[span_1](end_span)
         { id: 1, name: "Bánh Nhân Vi Cá Gà Quay (2 Trứng)", price: 196000, weight: "210g" },
         { id: 2, name: "Bánh Nhân Thập Cẩm Tôm (2 Trứng)", price: 188000, weight: "210g" },
         { id: 3, name: "Bánh Nhân Môn Dứa (2 Trứng)", price: 145000, weight: "210g" },
@@ -411,7 +450,7 @@
         { id: 17, name: "Bánh Nhân Bào Ngư Gà Quay (2 Trứng)", price: 201000, weight: "210g" },
         { id: 18, name: "Bánh Nhân Đậu Đỏ Hạnh Nhân (2 Trứng)", price: 140000, weight: "210g" },
 
-        // BÁNH 1 TRỨNG 150G
+        // BÁNH 1 TRỨNG 150G[span_2](start_span)[span_2](end_span)
         { id: 101, name: "Bánh Nhân Thập Cẩm Jambon (1 Trứng)", price: 104000, weight: "150g" },
         { id: 102, name: "Bánh Nhân Hạt Sen (1 Trứng)", price: 91000, weight: "150g" },
         { id: 103, name: "Bánh Nhân Đậu Xanh (1 Trứng)", price: 89000, weight: "150g" },
@@ -425,7 +464,7 @@
         { id: 111, name: "Bánh Nhân Hạt Sen Lá Dứa (1 Trứng)", price: 92000, weight: "150g" },
         { id: 112, name: "Bánh Nhân Bí Đỏ Hạt Dưa (1 Trứng)", price: 91000, weight: "150g" },
 
-        // BÁNH ĐẶC BIỆT CAO CẤP 250G
+        // BÁNH ĐẶC BIỆT CAO CẤP 250G[span_3](start_span)[span_3](end_span)
         { id: 201, name: "Đặc Biệt Vi Cá Bào Ngư Gà Quay (2 Trứng)", price: 262000, weight: "250g" },
         { id: 202, name: "Đặc Biệt Bào Ngư Gà Quay (2 Trứng)", price: 232000, weight: "250g" },
         { id: 203, name: "Đặc Biệt Vi Cá Gà Quay (2 Trứng)", price: 222000, weight: "250g" },
@@ -454,18 +493,45 @@
         const dayName = days[today.getDay()];
         const dd = String(today.getDate()).padStart(2, '0');
         const mm = String(today.getMonth() + 1).padStart(2, '0');
-        document.getElementById('checkout-title').innerText = `Chốt deal - ${dayName} (${dd}/${mm}/2026)`;
+        document.getElementById('checkout-title').innerText = `Đơn Đi Chợ Trung Thu - ${dayName} (${dd}/${mm}/2026)`;
     }
 
+    // Hàm tiện ích để escape ký tự đặc biệt khi dùng Regex
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    // RENDER MENU BÁNH CÓ HIGHLIGHT KÝ TỰ KHỚP
     function renderMenu(items) {
-        const container = document.getElementById('menu-container'); container.innerHTML = '';
-        if(items.length === 0) { container.innerHTML = '<div style="padding:15px; color:#999; text-align:center;">Không tìm thấy vị bánh</div>'; return; }
+        const container = document.getElementById('menu-container'); 
+        container.innerHTML = '';
+        
+        const rawKeyword = document.getElementById('search').value.trim();
+        
+        if(items.length === 0) { 
+            container.innerHTML = '<div style="padding:15px; color:#999; text-align:center;">Không tìm thấy vị bánh</div>'; 
+            return; 
+        }
+        
         items.forEach(item => {
+            let displayName = item.name;
+            
+            // Xử lý highlight chữ khớp
+            if (rawKeyword !== "") {
+                try {
+                    const escapedKeyword = escapeRegExp(rawKeyword);
+                    const regex = new RegExp(`(${escapedKeyword})`, 'gi');
+                    displayName = item.name.replace(regex, '<mark class="highlight-text">$1</mark>');
+                } catch(e) {
+                    console.error("Regex Highlight Error: ", e);
+                }
+            }
+
             const div = document.createElement('div');
             div.className = `menu-item ${selectedItem && selectedItem.id === item.id ? 'selected' : ''}`;
             div.innerHTML = `
                 <div>
-                    <span>${item.name}</span>
+                    <span>${displayName}</span>
                     <span class="weight-badge">${item.weight}</span>
                 </div> 
                 <span>${item.price.toLocaleString('vi-VN')} đ</span>`;
@@ -474,10 +540,30 @@
         });
     }
 
+    // LỌC VÀ HIỂN THỊ NÚT XÓA TÌM KIẾM
     function filterMenu() {
-        const keyword = document.getElementById('search').value.toLowerCase().trim();
+        const searchInput = document.getElementById('search');
+        const clearBtn = document.getElementById('search-clear');
+        const keyword = searchInput.value.toLowerCase().trim();
+        
+        // Hiện hoặc ẩn nút xóa nhanh dựa vào việc có chữ hay không
+        if (searchInput.value.length > 0) {
+            clearBtn.style.display = 'block';
+        } else {
+            clearBtn.style.display = 'none';
+        }
+
         const filtered = menuData.filter(item => item.name.toLowerCase().includes(keyword));
         renderMenu(filtered);
+    }
+
+    // HÀM XÓA NHANH CHỮ TÌM KIẾM
+    function clearSearch() {
+        const searchInput = document.getElementById('search');
+        searchInput.value = '';
+        document.getElementById('search-clear').style.display = 'none';
+        filterMenu();
+        searchInput.focus();
     }
 
     function selectItem(item) { selectedItem = item; document.getElementById('add-btn').disabled = false; filterMenu(); }
@@ -490,7 +576,6 @@
     
     function toggleCustomNote(show) { 
         const customNoteInput = document.getElementById('custom-note'); 
-        // Luôn cho phép ghi chú cho giỏ hàng linh hoạt hơn
         customNoteInput.disabled = false; 
         customNoteInput.style.opacity = "1"; 
     }
@@ -540,6 +625,7 @@
 
         selectedItem = null; currentQuantity = 1;
         document.getElementById('quantity-val').innerText = '1'; document.getElementById('custom-note').value = ''; document.getElementById('search').value = '';
+        document.getElementById('search-clear').style.display = 'none'; // Ẩn nút xóa khi reset form
         document.querySelectorAll('input[name="meal-option"]')[0].checked = true; toggleCustomNote(true); document.getElementById('add-btn').disabled = true;
         filterMenu(); renderCart();
     }
